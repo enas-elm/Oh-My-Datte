@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Allura&display=swap");
+@import "tailwindcss";
+
+:root {
+  /* ===== Brand Colors (inchangés) ===== */
+  --rose-50:  #FDF4F4;
+  --rose-100: #FBE6E4;
+  --rose-300: #F9C8C9;
+  --rose-500: #F7DAD9;
+  --rose-700: #E6A6A1;
+
+  --pink-100: #FCD0DA;
+  --pink-500: #F25C7E;
+  --pink-600: #DB4E72;
+  --pink-700: #C94564;
+
+  --choco-100: #8C6D62;
+  --choco-500: #5A3E36;
+  --choco-700: #3E2A24;
+
+  --vanilla: #FFF9F0;
+  --beige:   #F9E9DB;
+
+  --gold-300: #FBE1CF;
+  --gold-500: #F9D6BF;
+  --gold-600: #EFC3A4;
+
+  --lilac-100: #EFE3F5;
+  --lilac-500: #E4D1EC;
+  --lilac-600: #CDB3DA;
+
+  --pistachio-500: #A8B692;
+
+}
+
+@theme inline {
+  /* Primary = Chocolat */
+  --color-primary-100: var(--choco-100);
+  --color-primary:     var(--choco-500);
+  --color-primary-700: var(--choco-700);
+
+  /* Secondary = Pink */
+  --color-secondary-100: var(--pink-100);
+  --color-secondary:     var(--pink-500);
+  --color-secondary-600: var(--pink-600);
+  --color-secondary-700: var(--pink-700);
+
+  /* Secondary-2 = Rose */
+  --color-secondary-2-100: var(--rose-100);
+  --color-secondary-2:     var(--rose-500);
+  --color-secondary-2-700: var(--rose-700);
+
+  /* Neutres et accents utiles */
+  --color-vanilla: var(--vanilla);
+  --color-beige: var(--beige);
+
+  --color-gold-300: var(--gold-300);
+  --color-gold-500: var(--gold-500);
+  --color-gold-600: var(--gold-600);
+
+  --color-lilac-100: var(--lilac-100);
+  --color-lilac-500: var(--lilac-500);
+  --color-lilac-600: var(--lilac-600);
+
+  --color-pistachio-500: var(--pistachio-500);
+
+  /* Fonts */
+  --font-times: "Times New Roman", Times, serif;
+  --font-allura: "Allura", cursive;
+}
