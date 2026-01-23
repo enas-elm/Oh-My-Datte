@@ -1,19 +1,15 @@
-"use client";
-
-import React from "react";
-
-import { ReactNode } from "react";
+import { cn } from '@/lib/utils';
+import { HTMLAttributes, ReactNode } from "react";
 
 type ButtonProps = {
   children: ReactNode;
-};
+} & HTMLAttributes<HTMLButtonElement>;
 
-export function Button({ children }: ButtonProps) {
+export function Button({ children, className = "", ...props }: ButtonProps) {
   return (
     <button
-      className={
-        "bg-choco-500 text-vanilla font-times py-2 px-4 w-fit shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
-      }
+      className={cn("bg-choco-500 text-vanilla py-2 pt-3 px-4 shadow-button text-xl", className)}
+      {...props}
     >
       {children}
     </button>

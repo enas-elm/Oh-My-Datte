@@ -35,6 +35,8 @@
   /* Fonts */
   --font-times: "Times New Roman", Times, serif;
   --font-allura: "Allura", cursive;
+  
+  --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* -----------------------------
