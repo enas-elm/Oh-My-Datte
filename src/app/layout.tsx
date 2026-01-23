@@ -9,7 +9,7 @@ import { Navbar } from "@/components/Navbar";
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="fr">
-      <body className="bg-vanilla text-neutral-900 antialiased">
+      <body className="bg-vanilla text-choco-500 font-times antialiased">
         <SmoothScrollProvider>
           <Navbar />
           <main>{children}</main>
