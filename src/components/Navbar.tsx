@@ -1,12 +1,19 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
 import { Button } from "@/components/Button";
 
 export function Navbar() {
+
+  const navLinks = [
+    {href: "#vos-dattes", label:"Vos dat(t)es"},
+    {href: "#coffrets", label:"Les coffrets"},
+    {href: "#qualite", label:"Qualité"},
+    {href: "#contact", label:"Contact"},
+  ]
+
   return (
-    <header className="max-w-7xl mx-auto">
-      <nav className=" navbar mx-8 sm:mx-20 border z-50 border-choco-500 bg-vanilla sticky top-0 flex max-w-7xl items-center justify-between px-6 py-4 rounded-b-2xl">
+    <header className="w-full">
+      <nav className="max-w-7xl w-full mx-8 sm:mx-20 text-xl flex items-center gap-24 fixed top-0 border z-50 border-choco-500 bg-vanilla px-6 py-4 rounded-b-2xl shadow-navbar">
         <Link href="/">
           <Image
             src="/images/icon_omd.svg"
@@ -15,16 +22,17 @@ export function Navbar() {
             height={60}
           />
         </Link>
-
-        <div className="hidden md:flex gap-8 font-times items-center text-choco-500">
-          <Link href="/produits">Qualité</Link>
-
-          <Link href="/a-propos">Vos dattes</Link>
-
-          <Link href="/contact">Contact</Link>
-
+        {navLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+          >
+            {link.label}
+          </Link>
+        ))}
+        <Link href="#contact" className='ml-auto'>
           <Button>COMMANDER</Button>
-        </div>
+        </Link>
       </nav>
     </header>
   );

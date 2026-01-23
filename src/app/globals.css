@@ -14,6 +14,8 @@
   --gold-600: #EFC3A4;
 
   --pistachio-500: #A8B692;
+
+  --navbar-height: 94px;
 }
 
 @theme inline {
@@ -35,8 +37,9 @@
   /* Fonts */
   --font-times: "Times New Roman", Times, serif;
   --font-allura: "Allura", cursive;
-  
+
   --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-navbar: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 /* -----------------------------
