@@ -7,15 +7,13 @@
   --choco-700: #3E2A24;
 
   --vanilla: #FFF9F0;
-  --beige:   #F9E9DB;
+  --beige: #F9E9DB;
 
   --gold-300: #FBE1CF;
   --gold-500: #F9D6BF;
   --gold-600: #EFC3A4;
 
   --pistachio-500: #A8B692;
-
-  --navbar-height: 94px;
 }
 
 @theme inline {
@@ -40,6 +38,9 @@
 
   --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-navbar: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+  /* Custom variable */
+  --navbar-height: 94px;
 }
 
 /* -----------------------------
