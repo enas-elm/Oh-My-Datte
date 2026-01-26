@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
+import { Button } from './Button';
 
 export default function MobileMenu({
   links,
@@ -24,11 +25,14 @@ export default function MobileMenu({
               key={link.href}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="block px-4 py-2 hover:bg-choco-100 hover:text-vanilla transition-colors"
+              className="block text-center px-4 py-2 hover:bg-choco-100 hover:text-vanilla transition-colors"
             >
               {link.label}
             </Link>
           ))}
+          <Link href="#contact" className="flex justify-center mt-2">
+            <Button>COMMANDER</Button>
+          </Link>
         </div>
       )}
     </div>
