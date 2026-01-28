@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Allura&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -35,6 +36,7 @@
   /* Fonts */
   --font-times: "Times New Roman", Times, serif;
   --font-allura: "Allura", cursive;
+  --font-archivo: "Archivo", sans-serif;
 
   --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-navbar: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -59,17 +61,3 @@ body::before {
 /* -----------------------------
   Speific styles
 ----------------------------- */
-.navbar-shadow {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-}
-
-.crunch {
-  text-shadow:
-    0 0 0 var(--vanilla),
-    1px 0 var(--vanilla),
-    -1px 0 var(--vanilla),
-    0 1px var(--vanilla),
-    0 -1px var(--vanilla),
-    2px 2px var(--vanilla),
-    -2px -2px var(--vanilla);
-}
