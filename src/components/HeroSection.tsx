@@ -19,8 +19,8 @@ export default function HeroSection() {
 
   return (
     // 400vh définit la durée du scroll
-    <section ref={targetRef} className="mt-[calc(var(--navbar-height)+100px)] h-[400vh] relative">
-      <div className="sticky top-[calc(var(--navbar-height)+100px)] h-screen text-center overflow-hidden">
+    <section ref={targetRef} className="my-[calc(var(--navbar-height)+100px)] h-[400vh] relative">
+      <div className="sticky top-[calc(var(--navbar-height)+100px)] text-center overflow-hidden">
         <h1 className="font-times text-center">
           <span className="block text-[clamp(2rem,5vw,7rem)] select-none">
             VOTRE NOUVEAU
