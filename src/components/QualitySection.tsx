@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export default function ProductSection() {
+export default function QualitySection() {
   return (
     <section className='my-64'>
         <div className='flex w-full justify-between mx-auto items-center gap-8 sm:gap-20 px-5 sm:px-12 mb-24'>
