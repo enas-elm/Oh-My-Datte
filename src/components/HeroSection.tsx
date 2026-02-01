@@ -59,7 +59,7 @@ export default function HeroSection() {
             className="object-contain w-[22vw] max-w-[242px] h-auto rotate-12"
           />
         </motion.div>
-        <p className="mb-14">
+        <p className="text-lg mb-14">
           Artisanal <span className="block sm:inline font-bold text-2xl mx-2">~</span>{' '}
           Ingrédients de qualité{' '}
           <span className=" block sm:inline font-bold text-2xl mx-2">~</span> Prêt à déguster
