@@ -12,7 +12,7 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="w-full max-w-7xl text-xl flex items-center border border-choco-500 bg-vanilla lg:gap-14 xl:gap-24 px-4 sm:px-6 py-4 rounded-b-2xl shadow-navbar">
+    <nav className="text-xl flex items-center border border-choco-500 bg-vanilla gap-24 px-4 sm:px-6 py-4 rounded-b-2xl shadow-navbar">
       <Link href="/" className=" shrink-0">
         <Image
           src="/images/icon_omd.svg"
