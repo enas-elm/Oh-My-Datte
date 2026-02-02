@@ -25,28 +25,28 @@ export default function ProductSection() {
         </h2>
       </div>
       <div className="grid grid-flow-col  grid-cols-1 sm:grid-cols-2 grid-rows-4 sm:grid-rows-2">
-        <div className='flex flex-col justify-center'>
-            <Image src={products[0].imagePath} alt={`Datte au ${products[0].subtitle}`} width={200} height={200}/>
+        <div className='flex flex-col items-center'>
+            <Image src={products[0].imagePath} alt={`Datte au ${products[0].subtitle}`} width={210} height={210}/>
             <h4 className='uppercase'>{products[0].title}</h4>
             <p>{products[0].subtitle}</p>
             <p>{products[0].description}</p>
         </div>
 
-        <div className='flex flex-col justify-center'>
-            <Image src={products[1].imagePath} alt={`Datte au ${products[1].subtitle}`} width={200} height={200}/>
+        <div className='flex flex-col items-center'>
+            <Image src={products[1].imagePath} alt={`Datte au ${products[1].subtitle}`} width={220} height={220} className='rotate-45'/>
             <h4 className='uppercase'>{products[1].title}</h4>
             <p>{products[1].subtitle}</p>
             <p>{products[1].description}</p>
         </div>
 
-        <div className='flex flex-col justify-center'>
+        <div className='flex flex-col items-center'>
             <Image src={products[2].imagePath} alt={`Datte au ${products[2].subtitle}`} width={200} height={200}/>
             <h4 className='uppercase'>{products[2].title}</h4>
             <p>{products[2].subtitle}</p>
             <p>{products[2].description}</p>
         </div>
 
-        <div className='flex flex-col justify-center'>
+        <div className='flex flex-col items-center'>
             <Image src={products[3].imagePath} alt={`Datte au ${products[3].subtitle}`} width={200} height={200}/>
             <h4 className='uppercase'>{products[3].title}</h4>
             <p>{products[3].subtitle}</p>
