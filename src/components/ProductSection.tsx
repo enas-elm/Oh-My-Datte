@@ -20,8 +20,8 @@ export default function ProductSection() {
     <section className="my-64 container mx-auto px-4 sm:px-6 lg:px-8">
       <div>
         <h2 className="text-[clamp(1.5rem,4vw,7rem)] leading-snug">
-          <span className="uppercase">Rencontrez vos</span>
-          <span className="font-allura">Dattes</span>
+          <span className="uppercase block">Rencontrez vos</span>
+          <span className="font-allura leading-none font text-[clamp(1.5rem,7vw,11rem)]">Dattes</span>
         </h2>
       </div>
       <div className="grid grid-flow-col  grid-cols-1 sm:grid-cols-2 grid-rows-4 sm:grid-rows-2">
