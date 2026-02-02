@@ -26,8 +26,8 @@ export default function ProductSection() {
       </div>
       <div className="grid grid-flow-col  grid-cols-1 sm:grid-cols-2 grid-rows-4 sm:grid-rows-2">
         {products.map((product)=>(
-            <div className='flex flex-col justify-center'>
-                <Image src={product.imagePath} alt={`Datte au ${product.subtitle}`}/>
+            <div className='flex flex-col justify-center' key={product.title}>
+                <Image src={product.imagePath} alt={`Datte au ${product.subtitle}`} width={200} height={200}/>
                 <h4 className='uppercase'>{product.title}</h4>
                 <p>{product.subtitle}</p>
                 <p>{product.description}</p>
