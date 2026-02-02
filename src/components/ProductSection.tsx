@@ -17,7 +17,13 @@ export default function ProductSection() {
   ]
 
   return (
-    <section className="my-64 py-80 relative overflow-hidden">
+    <section className="my-64 py-80 relative text-vanilla overflow-hidden">
+        <Image 
+          src="/images/product-bg.svg" 
+          alt="" 
+          fill
+          className="-rotate-6 scale-150 translate-y-[4%] object-contain z-0"
+        />
       <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
         <h2 className="text-[clamp(1.5rem,4vw,7rem)] leading-snug mb-28">
             <span className="uppercase block">Rencontrez vos</span>
