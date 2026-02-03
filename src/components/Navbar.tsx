@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from '@/components/Button';
 import MobileMenu from './MobileMenu';
 
 export function Navbar() {
@@ -30,8 +29,8 @@ export function Navbar() {
         ))}
       </div>
 
-      <Link href="#contact" className="ml-auto hidden lg:flex focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm">
-        <Button tabIndex={1}>COMMANDER</Button>
+      <Link href="#contact" className="ml-auto hidden lg:flex bg-choco-500 text-vanilla py-3 pb-2 px-4 shadow-button text-xl focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm">
+        COMMANDER
       </Link>
 
       <MobileMenu links={navLinks} />
