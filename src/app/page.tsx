@@ -1,3 +1,4 @@
+import ContactSection from '@/components/ContactSection';
 import HeroSection from '@/components/HeroSection';
 import ParagraphSection from '@/components/ParagraphSection';
 import ProductSection from '@/components/ProductSection';
@@ -10,6 +11,7 @@ export default function Home() {
       <ParagraphSection/>
       <QualitySection/>
       <ProductSection/>
+      <ContactSection/>
     </>
   );
 }
