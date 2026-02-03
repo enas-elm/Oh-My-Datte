@@ -13,7 +13,7 @@ export function Navbar() {
 
   return (
     <nav className="text-xl flex items-center border border-choco-500 bg-vanilla gap-24 px-4 sm:px-6 py-4 rounded-b-2xl shadow-navbar">
-      <Link href="/" className=" shrink-0">
+      <Link href="/" className=" shrink-0 focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm">
         <Image
           src="/images/icon_omd.svg"
           alt="Logo de Oh My Datte"
@@ -24,14 +24,14 @@ export function Navbar() {
 
       <div className="hidden lg:flex items-center lg:gap-14 xl:gap-24">
         {navLinks.map((link) => (
-          <Link key={link.href} href={link.href}>
+          <Link key={link.href} href={link.href} className='focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm'>
             {link.label}
           </Link>
         ))}
       </div>
 
-      <Link href="#contact" className="ml-auto hidden lg:flex">
-        <Button>COMMANDER</Button>
+      <Link href="#contact" className="ml-auto hidden lg:flex focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm">
+        <Button tabIndex={1}>COMMANDER</Button>
       </Link>
 
       <MobileMenu links={navLinks} />
