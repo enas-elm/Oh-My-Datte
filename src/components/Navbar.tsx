@@ -30,8 +30,8 @@ export function Navbar() {
         ))}
       </div>
 
-      <Link href="#contact" className="ml-auto hidden lg:flex">
-        <Button>COMMANDER</Button>
+      <Link href="#contact" className="ml-auto hidden lg:flex bg-choco-500 text-vanilla py-3 pb-2 px-4 shadow-button text-xl">
+        COMMANDER
       </Link>
 
       <MobileMenu links={navLinks} />
