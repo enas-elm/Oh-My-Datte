@@ -9,6 +9,7 @@
 
   --vanilla: #FFF9F0;
   --beige: #F9E9DB;
+  --red: #AE3232;
 
   --gold-300: #FBE1CF;
   --gold-500: #F9D6BF;
@@ -26,6 +27,7 @@
   /* Neutral and accents */
   --color-vanilla: var(--vanilla);
   --color-beige: var(--beige);
+  --color-red: var(--red);
 
   --color-gold-300: var(--gold-300);
   --color-gold-500: var(--gold-500);
