@@ -20,7 +20,7 @@ export default function HeroSection() {
   return (
     // 400vh définit la durée du scroll
     <section ref={targetRef} className="mt-[calc(var(--navbar-height)+100px)] h-[400vh] relative">
-      <div className="sticky top-[calc(var(--navbar-height)+100px)] text-center overflow-hidden">
+      <div className="sticky top-[calc(var(--navbar-height)+100px)] py-2 text-center overflow-hidden">
         <h1 className="font-times text-center">
           <span className="block text-[clamp(2rem,5vw,7rem)] select-none">
             VOTRE NOUVEAU
@@ -64,8 +64,8 @@ export default function HeroSection() {
           Ingrédients de qualité{' '}
           <span className=" block sm:inline font-bold text-2xl mx-2">~</span> Prêt à déguster
         </p>
-        <Link href="#contact">
-          <Button>COMMANDER</Button>
+        <Link href="#contact" className='bg-choco-500 text-vanilla py-4 pb-3 px-4 shadow-button text-xl'>
+          COMMANDER
         </Link>
       </div>
     </section>
