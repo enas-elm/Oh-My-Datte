@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from '@/components/Button';
 import MobileMenu from './MobileMenu';
 
 export function Navbar() {
