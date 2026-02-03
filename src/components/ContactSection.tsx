@@ -26,7 +26,7 @@ export default function ContactSection() {
                         <textarea className='border border-vanilla p-2 pb-1 focus-visible:outline focus-visible:outline-vanilla' rows={8} name="message" id="message" placeholder="Bonjour, vos dattes ont l'air succulentes, j'aimerais commander un coffret de 6 dattes de chaque assortiment !"/>
                     </div>
 
-                    <Button className='bg-vanilla text-red focus:outline-2 focus:outline-offset-2 focus:outline-vanilla focus:rounded-sm'>Envoyer</Button>
+                    <Button className='block ml-auto bg-vanilla text-red focus:outline-2 focus:outline-offset-2 focus:outline-vanilla focus:rounded-sm'>Envoyer</Button>
                 </form>
             </div>
         </div>
