@@ -14,7 +14,7 @@ export default function MobileMenu({
 
   return (
     <div className="flex items-center ml-auto lg:hidden">
-      <button onClick={() => setIsOpen(!isOpen)} className="p-2 cursor-pointer">
+      <button onClick={() => setIsOpen(!isOpen)} className="p-2 cursor-pointer focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm">
         <Menu />
       </button>
 
@@ -25,13 +25,13 @@ export default function MobileMenu({
               key={link.href}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="block text-center px-4 py-2 hover:bg-choco-100 hover:text-vanilla transition-colors"
+              className="block text-center px-4 py-2 hover:bg-choco-100 hover:text-vanilla transition-colors focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm"
             >
               {link.label}
             </Link>
           ))}
-          <Link href="#contact" className="flex justify-center mt-2">
-            <Button>COMMANDER</Button>
+          <Link href="#contact" className="flex justify-center mt-2 focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm">
+            <Button tabIndex={1}>COMMANDER</Button>
           </Link>
         </div>
       )}
