@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { SmoothScrollProvider } from '@/components/animations/SmoothScrollProvider';
 
 import { Navbar } from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <main>{children}</main>
         </SmoothScrollProvider>
       </body>
+      <Footer/>
     </html>
   );
 }
