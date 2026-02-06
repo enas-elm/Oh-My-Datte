@@ -16,8 +16,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <SmoothScrollProvider>
           <main>{children}</main>
         </SmoothScrollProvider>
+        
+        <Footer/>
       </body>
-      <Footer/>
     </html>
   );
 }
