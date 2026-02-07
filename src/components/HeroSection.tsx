@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import SmoothLink from "@/components/animations/SmoothLink"
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef } from 'react';
 
 export default function HeroSection() {
