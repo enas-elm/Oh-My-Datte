@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import MobileMenu from './MobileMenu';
 import SmoothLink from "@/components/animations/SmoothLink"
+import motion from "motion/react-client"
 
 export function Navbar() {
   const navLinks = [
@@ -9,10 +10,17 @@ export function Navbar() {
     { href: '#contact', label: 'Contact' },
   ];
 
-  return (
-    <nav className="font-times text-xl flex items-center bg-vanilla gap-16 px-4 sm:px-6 py-4 rounded-b-xl shadow-navbar">
-      <SmoothLink href="/" className="shrink-0 focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-choco-500"
-      >
+  return (  
+    <motion.nav 
+      initial={{transform: "translateY(-105%)", opacity: 0}} 
+      animate={{transform: "translateY(0%)", opacity: 1}} 
+      transition={{
+        duration: 0.4,
+        transform: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+      }}
+      className="font-times text-xl flex items-center bg-vanilla gap-24 px-4 sm:px-6 py-4 rounded-b-2xl shadow-navbar"
+    >
+      <SmoothLink href="/" className="shrink-0 focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-choco-500">
         <Image
           src="/images/icon_ohmydatte.svg"
           alt="Logo de Oh My Datte"
@@ -34,6 +42,6 @@ export function Navbar() {
       </SmoothLink>
 
       <MobileMenu links={navLinks} />
-    </nav>
+    </motion.nav>
   );
 }
