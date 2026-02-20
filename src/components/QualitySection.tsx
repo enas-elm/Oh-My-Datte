@@ -1,7 +1,8 @@
 'use client'
 
+import Image from 'next/image';
+import { motion } from "motion/react";
 import { useRef, useEffect } from 'react'
-import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -45,6 +46,7 @@ const states = [
     bottomImage: { src: '/images/datte-2-shadow.png', alt: 'Datte fourrée au chocolat', w: 160, h: 240, rotation: 10 },
   },
 ]
+
 
 export default function QualitySection() {
   const pinnedRef = useRef<HTMLDivElement>(null)
@@ -154,10 +156,66 @@ export default function QualitySection() {
           <div ref={dot1Ref} className="w-2 h-2 rounded-full bg-choco-500 opacity-30" />
           <div ref={dot2Ref} className="w-2 h-2 rounded-full bg-choco-500 opacity-30" />
         </div>
+        <div className='grid grid-flow-col grid-cols-2 grid-rows-4 md:grid-cols-3 md:grid-rows-2 gap-y-16 md:gap-y-32 lg:gap-y-42 xl:gap-y-58 gap-x-10 lg:gap-x-24 mx-auto'>
+          <motion.div 
+            className='space-y-2'
+            initial={{ opacity: 0, filter: "blur(10px)", y: 20 }}
+            whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: "easeOut" as const, delay: 0.15 }}
+          >
+            <h4 className='uppercase text-[clamp(1.125rem,4vw,1.75rem)]'>Naturel</h4>
+            <p className='md:text-lg'>Chic et décontracté : chocolat noir et cœur praliné. Apporte la bonne énergie à chaque bouchée.</p>
+            <p className='md:text-lg'>Manteau chocolat noir, cœur peanut butter, éclats croquants. Simple, généreuse et audacieuse.</p>
+          </motion.div>
+          
+          <motion.div 
+            className='space-y-2'
+            initial={{ opacity: 0, filter: "blur(5px)", y: 20 }}
+            whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: "easeOut" as const, delay: 0.15 }}
+          >
+            <h4 className='uppercase text-[clamp(1.125rem,4vw,1.75rem)]'>Naturel</h4>
+            <p className='md:text-lg'>Chic et décontracté : chocolat noir et cœur praliné. Apporte la bonne énergie à chaque bouchée.</p>
+            <p className='md:text-lg'>Manteau chocolat noir, cœur peanut butter, éclats croquants. Simple, généreuse et audacieuse.</p>
+          </motion.div>
 
-        {/* Three-column layout: Left text | Center brush + elements | Right text */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-          <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-6 lg:gap-10 xl:gap-16 w-full">
+          <div className='row-span-2 md:row-span-2 bg-[url(/images/green-brush-bg.svg)] bg-no-repeat bg-center bg-contain space-y-16 lg:space-y-12 hidden md:flex flex-col items-center justify-center'>
+            <Image src="/images/pistachio.png" alt="" width={152} height={152} className='object-contain'/>
+            <Image src="/images/chocolate.png" alt="" width={200} height={252} className='object-contain -rotate-[20deg]'/>
+          </div>
+
+          <motion.div 
+            className='space-y-2'
+            initial={{ opacity: 0, filter: "blur(5px)", y: 20 }}
+            whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: "easeOut" as const, delay: 0.15 }}
+          >
+            <h4 className='uppercase text-[clamp(1.125rem,4vw,1.75rem)]'>Naturel</h4>
+            <p className='md:text-lg'>Chic et décontracté : chocolat noir et cœur praliné. Apporte la bonne énergie à chaque bouchée.</p>
+            <p className='md:text-lg'>Manteau chocolat noir, cœur peanut butter, éclats croquants. Simple, généreuse et audacieuse.</p>
+          </motion.div>
+
+          <motion.div 
+            className='space-y-2'
+            initial={{ opacity: 0, filter: "blur(5px)", y: 20 }}
+            whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: "easeOut" as const, delay: 0.15 }}
+          >
+            <h4 className='uppercase text-[clamp(1.125rem,4vw,1.75rem)]'>Naturel</h4>
+            <p className='md:text-lg'>Chic et décontracté : chocolat noir et cœur praliné. Apporte la bonne énergie à chaque bouchée.</p>
+            <p className='md:text-lg'>Manteau chocolat noir, cœur peanut butter, éclats croquants. Simple, généreuse et audacieuse.</p>
+          </motion.div>
+
+          {/* Image mobile */}
+          <div className='row-span-2 md:row-span-2 bg-[url(/images/green-brush-bg.svg)] bg-no-repeat bg-center bg-contain space-y-16 lg:space-y-12 flex md:hidden flex-col items-center justify-center overflow-hidden sticky top-1/3 self-center'>
+            <Image src="/images/pistachio.png" alt="" width={152} height={152} className='object-contain'/>
+            <Image src="/images/chocolate.png" alt="" width={200} height={252} className='object-contain -rotate-[20deg]'/>
+          </div>
+        </div>
 
             {/* LEFT — text panels */}
             <div className="relative min-h-[40vh] flex items-center justify-end">
@@ -276,42 +334,7 @@ export default function QualitySection() {
             </div>
 
           </div>
-        </div>
-      </div>
-
-      {/* Mobile — simple stacked layout with all 4 steps */}
-      <div className="md:hidden container mx-auto px-4 space-y-20">
-        {states.flatMap((state, si) => [
-          { ...state.left, image: si === 0 ? state.topImage : state.topImage, index: si * 2 },
-          { ...state.right, image: si === 0 ? state.bottomImage : state.bottomImage, index: si * 2 + 1 },
-        ]).map((step, i) => (
-          <div key={i} className="space-y-6">
-            <div className="flex items-center justify-center relative h-48">
-              <Image
-                src="/images/green-brush-bg.svg"
-                alt=""
-                width={100}
-                height={350}
-                className="absolute h-full w-auto pointer-events-none select-none"
-              />
-              <Image
-                src={step.image.src}
-                alt={step.image.alt}
-                width={Math.round(step.image.w * 0.55)}
-                height={Math.round(step.image.h * 0.55)}
-                className="object-contain relative z-10"
-                style={{ transform: `rotate(${'rotation' in step.image ? step.image.rotation : 0}deg)` }}
-              />
-            </div>
-            <div className="space-y-2">
-              <h4 className="uppercase text-[clamp(1.125rem,4vw,1.75rem)]">{step.title}</h4>
-              {step.paragraphs.map((p, j) => (
-                <p key={j} className="text-base">{p}</p>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+       
     </section>
   )
 }
