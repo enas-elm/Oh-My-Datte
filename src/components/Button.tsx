@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils';
-import { HTMLAttributes, ReactNode } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 
 type ButtonProps = {
   children: ReactNode;
-} & HTMLAttributes<HTMLButtonElement>;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function Button({ children, className = "", ...props }: ButtonProps) {
   return (
