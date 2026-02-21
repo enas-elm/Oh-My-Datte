@@ -22,14 +22,14 @@ export default function ProductSection() {
           src="/images/product-bg.svg" 
           alt="" 
           fill
-          className="-rotate-6 scale-x-150 translate-y-[4%] object-cover z-0"
+          className="scale-x-150 translate-y-[4%] object-cover z-0"
         />
       <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
         <h2 className="text-[clamp(1.5rem,4vw,7rem)] leading-snug mb-16 sm:mb-28">
             <span className="uppercase block">Rencontrez vos</span>
-            <span className="font-allura leading-none font text-[clamp(3rem,7vw,11rem)]">Dattes</span>
+            <span className="font-allura leading-none font text-[clamp(4rem,8vw,12rem)]">Dattes</span>
         </h2>
-        <div className="grid grid-flow-col grid-cols-2 grid-rows-2 gap-8 gap-y-32 sm:gap-y-42">
+        <div className="grid grid-flow-col grid-cols-4 gap-8 gap-y-32 sm:gap-y-42">
             <div className='flex flex-col items-center max-w-72 mx-auto'>
                 <Image src={products[0].imagePath} alt={`Datte au ${products[0].subtitle}`} width={200} height={200} className='object-contain aspect-square mb-8'/>
                 <h4 className='uppercase text-[clamp(1.125rem,4vw,1.5rem)]'>{products[0].title}</h4>

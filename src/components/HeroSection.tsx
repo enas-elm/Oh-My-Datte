@@ -63,7 +63,7 @@ export default function HeroSection() {
           Ingrédients de qualité{' '}
           <span className=" block sm:inline font-bold text-2xl mx-2">~</span> Prêt à déguster
         </p>
-        <Link href="#contact" className='bg-choco-500 text-vanilla py-4 pb-3 px-4 shadow-button text-xl focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm'>
+        <Link href="#contact" className='font-times bg-choco-500 text-vanilla py-4 pb-3 px-4 shadow-button text-xl focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm'>
           COMMANDER
         </Link>
       </div>

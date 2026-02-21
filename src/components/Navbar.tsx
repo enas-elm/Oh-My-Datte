@@ -11,7 +11,7 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="text-xl flex items-center border border-choco-500 bg-vanilla gap-24 px-4 sm:px-6 py-4 rounded-b-2xl shadow-navbar">
+    <nav className="font-times text-xl flex items-center bg-vanilla gap-24 px-4 sm:px-6 py-4 rounded-b-xl shadow-navbar">
       <Link href="/" className=" shrink-0 focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm">
         <Image
           src="/images/icon_omd.svg"

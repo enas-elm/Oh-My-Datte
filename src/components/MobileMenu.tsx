@@ -30,7 +30,7 @@ export default function MobileMenu({
               {link.label}
             </Link>
           ))}
-          <Link href="#contact" className=" w-fit block mt-2 mx-auto bg-choco-500 text-vanilla py-3 pb-2 px-4 shadow-button text-xl focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm">
+          <Link href="#contact" className="font-times w-fit block mt-2 mx-auto bg-choco-500 text-vanilla py-3 pb-2 px-4 shadow-button text-xl focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm">
             COMMANDER
           </Link>
         </div>
