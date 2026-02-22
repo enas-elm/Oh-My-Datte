@@ -59,11 +59,11 @@ export default function HeroSection() {
           />
         </motion.div>
         <p className="text-lg mb-14">
-          Artisanal <span className="block sm:inline font-bold text-2xl mx-2">~</span>{' '}
+          Artisanal <span className="font-times block sm:inline text-2xl mx-2">~</span>{' '}
           Ingrédients de qualité{' '}
-          <span className=" block sm:inline font-bold text-2xl mx-2">~</span> Prêt à déguster
+          <span className="font-times block sm:inline text-2xl mx-2">~</span> Prêt à déguster
         </p>
-        <Link href="#contact" className='font-times bg-choco-500 text-vanilla py-4 pb-3 px-4 shadow-button text-xl focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm'>
+        <Link href="#contact" className='inline-flex border border-choco-500 font-times bg-choco-500 text-vanilla py-3 px-4 shadow-button text-xl focus:outline-1 focus:outline-offset-3 focus:outline-choco-500  hover:bg-transparent hover:text-choco-500 transition-colors duration-300 ease-in-out focus:outline-none focus:ring-1 focus:ring-choco-500'>
           COMMANDER
         </Link>
       </div>

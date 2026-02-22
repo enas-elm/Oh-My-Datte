@@ -41,10 +41,10 @@
   --font-archivo: "Archivo", sans-serif;
 
   --shadow-button: 0 6px 16px rgba(50, 20, 20, 0.08);
-  --shadow-navbar: 0 8px 24px rgba(50, 20, 20, 0.10);
+  --shadow-navbar: 0 8px 14px rgba(50, 20, 20, 0.16);
   --shadow-section: 0 8px 24px rgba(50, 20, 20, 0.25);
   --shadow-footer:
-    0 -12px 40px rgba(50, 20, 20, 0.30);
+    0 -12px 14px rgba(50, 20, 20, 0.30);
 
 
   /* Custom variable */
@@ -76,3 +76,27 @@ h6 {
 /* -----------------------------
   Speific styles
 ----------------------------- */
+
+@utility animated-underline {
+  @apply relative;
+
+  &::after {
+    @apply content-[''] absolute w-full h-[1px] bottom-[-4px] left-0 bg-current scale-x-0 transition-transform duration-300 ease-out origin-right;
+  }
+
+  &:hover::after {
+    @apply scale-x-100 origin-left;
+  }
+}
+
+@utility group-animated-underline {
+  @apply relative;
+
+  &::after {
+    @apply content-[''] absolute w-full h-[1px] bottom-[-4px] left-0 bg-current scale-x-0 transition-transform duration-300 ease-out origin-right;
+  }
+
+  .group:hover &::after {
+    @apply scale-x-100 origin-left;
+  }
+}
