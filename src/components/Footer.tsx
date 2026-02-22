@@ -27,19 +27,19 @@ export default function Footer() {
       {/* Contenu */}
       <div className="relative z-10">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-8 md:gap-20 py-12 sm:py-24">
-          
+
           <div className="flex flex-row justify-center xl:justify-normal sm:flex-col xl:flex-row gap-[10cqw] sm:gap-4 xl:gap-16 min-w-fit w-full flex-1">
-            <a 
-                href="https://www.tiktok.com/@ohmydatte"  
-                target="_blank"  
-                className="flex items-center gap-2 md:gap-4  group cursor-pointer">
-                    <Image src="/images/tiktok.svg" width={32} height={32} className="scale-75 md:scale-100" alt=""/>
-                    <span className="uppercase md:text-lg animated-underline decoration-[1px]">TikTok</span>
+            <a
+              href="https://www.tiktok.com/@ohmydatte"
+              target="_blank"
+              className="flex items-center gap-2 md:gap-4 group cursor-pointer focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-vanilla">
+              <Image src="/images/tiktok.svg" width={32} height={32} className="scale-75 md:scale-100" alt="" />
+              <span className="uppercase md:text-lg group-animated-underline">TikTok</span>
             </a>
-            <a 
-              href="https://www.instagram.com/oh.my.datte" 
-              target="_blank" 
-              className="flex items-center gap-2 md:gap-4 group cursor-pointer"
+            <a
+              href="https://www.instagram.com/oh.my.datte"
+              target="_blank"
+              className="flex items-center gap-2 md:gap-4 group cursor-pointer focus-visible:outline-1 *: focus-visible:outline-offset-3 focus-visible:outline-vanilla"
             >
               <Image
                 src="/images/instagram.svg"
@@ -48,15 +48,15 @@ export default function Footer() {
                 className="scale-75 md:scale-100"
                 alt="Instagram"
               />
-              <span className="uppercase md:text-lg animated-underline decoration-[1px]">Instagram</span>
+              <span className="uppercase md:text-lg group-animated-underline">Instagram</span>
             </a>
           </div>
 
           {/* Réserve la place */}
           <div aria-hidden className="shrink-0 w-[215px] h-[104px]" />
 
-          <address className="flex-1 lg:text-lg not-italic">
-            Pour toute question, contactez <a className="font-bold animated-underline" href="mailto:ohmydate@gmail.com">ohmydate@gmail.com</a>
+          <address className="flex-1 lg:text-lg not-italic text-center lg:text-right">
+            Pour toute question, contactez <a className="font-bold animated-underline focus-visible:outline-1   focus-visible:outline-offset-3 focus-visible:outline-vanilla" href="mailto:ohmydate@gmail.com">ohmydate@gmail.com</a>
 
           </address>
         </div>
