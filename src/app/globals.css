@@ -74,8 +74,11 @@ h6 {
 
 
 /* -----------------------------
-  Speific styles
+  Specific styles
 ----------------------------- */
+.section-scroll-mt {
+  scroll-margin-top: calc(var(--navbar-height) + 2rem);
+}
 
 @utility animated-underline {
   @apply relative;

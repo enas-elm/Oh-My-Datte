@@ -37,7 +37,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section className="my-64 container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="section-scroll-mt my-64 container mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col lg:flex-row gap-16">
         <div className="flex-1">
           <h2 className="uppercase text-[clamp(1.5rem,4vw,7rem)] leading-snug mb-6 md:mb-10">
@@ -82,10 +82,10 @@ export default function ContactSection() {
                     Votre message a bien été envoyé
                   </motion.p>
                 )}
-              </AnimatePresence>
+              </AnimatePresence>  
             </div>
 
-            <Button type="submit" className="border border-vanilla font-times block ml-auto bg-vanilla text-red hover:bg-red hover:text-vanilla transition-colors duration-300 ease-in-out focus:outline-none focus:ring-1 focus:ring-vanilla focus:ring-offset-red" >
+            <Button type="submit" className="border border-vanilla font-times block ml-auto bg-vanilla text-red hover:bg-red hover:text-vanilla transition-colors duration-300 ease-in-out focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-vanilla" >
               {loading ? "Envoi..." : "Envoyer"}
             </Button>
           </form>
