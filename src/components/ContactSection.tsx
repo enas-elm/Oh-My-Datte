@@ -37,7 +37,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="section-scroll-mt my-64 container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="section-scroll-mt my-32 container mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col lg:flex-row gap-16">
         <div className="flex-1">
           <h2 className="uppercase text-[clamp(1.5rem,4vw,7rem)] leading-snug mb-6 md:mb-10">

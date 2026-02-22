@@ -17,7 +17,7 @@ export default function ProductSection() {
   ]
 
   return (
-    <section id='vos-dattes' className="section-scroll-mt my-64 py-52 sm:py-80 relative text-vanilla overflow-hidden">
+    <section id='vos-dattes' className="section-scroll-mt my-32 py-52 sm:py-80 relative text-vanilla overflow-hidden">
         <Image 
           src="/images/product-bg.svg" 
           alt="" 
@@ -25,7 +25,7 @@ export default function ProductSection() {
           className="scale-x-150 translate-y-[4%] object-cover z-0"
         />
       <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-        <h2 className="text-[clamp(1.5rem,4vw,7rem)] leading-snug mb-16 sm:mb-28">
+        <h2 className="text-[clamp(2rem,4vw,7rem)] leading-snug mb-16 sm:mb-28">
             <span className="uppercase block">Rencontrez vos</span>
             <span className="font-allura leading-none font text-[clamp(4rem,8vw,12rem)]">Dattes</span>
         </h2>

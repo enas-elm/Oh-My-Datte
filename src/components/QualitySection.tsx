@@ -2,10 +2,10 @@ import Image from 'next/image';
 
 export default function QualitySection() {
   return (
-    <section id='qualite' className='section-scroll-mt my-64 container mx-auto px-4 sm:px-6 lg:px-8'>
+    <section id='qualite' className='section-scroll-mt my-32 container mx-auto px-4 sm:px-6 lg:px-8'>
       <div className='flex w-full justify-between mx-auto items-center gap-8 sm:gap-20 mb-24'>
         <div className='bg-choco-500 pointer-events-none select-none h-[1px] w-full'/>
-        <h2 className='uppercase text-center text-[clamp(1.5rem,4vw,7rem)] leading-snug'>Des&nbsp;produits de&nbsp;qualités</h2>
+        <h2 className='uppercase text-center text-[clamp(2rem,4vw,7rem)] leading-snug'>Des&nbsp;produits de&nbsp;qualités</h2>
         <div className='bg-choco-500 pointer-events-none select-none h-[1px] w-full'/>
       </div>
       <div className='grid grid-flow-col grid-cols-2 grid-rows-4 md:grid-cols-3 md:grid-rows-2 gap-y-16 md:gap-y-32 lg:gap-y-42 xl:gap-y-58 gap-x-10 lg:gap-x-24 mx-auto'>
