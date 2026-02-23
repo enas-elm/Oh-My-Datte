@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import SmoothLink from "@/components/animations/SmoothLink"
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function MobileMenu({
   links,
