@@ -1,9 +1,21 @@
-import Image from "next/image"
-import React from "react"
+'use client';
+
+import Image from 'next/image';
+import { useRef } from 'react';
+import { motion, useInView } from 'motion/react';
 
 export default function Footer() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-40px' });
+
   return (
-    <footer className="text-vanilla relative container mx-auto px-4 sm:px-6 lg:px-12 rounded-t-2xl shadow-footer overflow-hidden [--lips-y:120px] sm:[--lips-y:100px]">
+    <motion.footer 
+        ref={ref}
+        className="text-vanilla relative container mx-auto px-4 sm:px-6 lg:px-12 rounded-t-2xl shadow-footer overflow-hidden [--lips-y:120px] sm:[--lips-y:100px]"
+        initial={{ opacity: 0, y: 60 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    >
 
       {/* Overlay beige avec trou */}
       <div
@@ -66,6 +78,6 @@ export default function Footer() {
           On se revoit ?
         </div>
       </div>
-    </footer>
+    </motion.footer>
   )
 }
