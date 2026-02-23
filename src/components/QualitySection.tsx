@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 'use client'
 
 import Image from 'next/image';
@@ -47,6 +48,12 @@ const states = [
   },
 ]
 
+=======
+'use client';
+
+import Image from 'next/image';
+import { motion } from 'motion/react';
+>>>>>>> 21abd8e (Add quality section animations)
 
 export default function QualitySection() {
   const pinnedRef = useRef<HTMLDivElement>(null)
@@ -336,5 +343,5 @@ export default function QualitySection() {
           </div>
        
     </section>
-  )
+  );
 }
