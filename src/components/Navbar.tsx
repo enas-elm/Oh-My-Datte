@@ -1,3 +1,5 @@
+"use client"
+
 import Image from 'next/image';
 import MobileMenu from './MobileMenu';
 import SmoothLink from "@/components/animations/SmoothLink"
