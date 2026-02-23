@@ -49,8 +49,9 @@ export default function ProductSection() {
   ];
 
   return (
-    <section id='vos-dattes' className="section-scroll-mt my-32 py-52 sm:py-80 relative text-vanilla overflow-hidden">
+    <section className="section-scroll-mt my-32 py-52 sm:py-80 relative text-vanilla overflow-hidden">
       <Image
+        id='vos-dattes'
         src="/images/product-bg.svg"
         alt=""
         fill
