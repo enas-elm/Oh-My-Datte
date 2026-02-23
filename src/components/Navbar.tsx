@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import MobileMenu from './MobileMenu';
 import SmoothLink from "@/components/animations/SmoothLink"
-import motion from "motion/react-client"
+import {motion} from "motion/react"
 
 export function Navbar() {
   const navLinks = [
