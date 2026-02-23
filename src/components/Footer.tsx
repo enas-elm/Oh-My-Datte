@@ -5,24 +5,29 @@ export default function Footer() {
   return (
     <footer className="text-vanilla relative container mx-auto px-4 sm:px-6 lg:px-12 rounded-t-2xl shadow-footer overflow-hidden [--lips-y:120px] sm:[--lips-y:100px]">
 
-      {/* Overlay beige avec trou */}
+      {/* Overlay with lip cutout + drop-shadow into the hole */}
       <div
-        className="absolute inset-0 bg-choco-500 pointer-events-none z-0"
-        style={{
-          WebkitMaskImage:
-            "linear-gradient(#000 0 0), url(/images/lips-cutout.svg)",
-          WebkitMaskRepeat: "no-repeat, no-repeat",
-          WebkitMaskPosition: "0 0, center var(--lips-y)",
-          WebkitMaskSize: "100% 100%, 215px 104px",
-          WebkitMaskComposite: "source-out",
-          maskImage:
-            "linear-gradient(#000 0 0), url(/images/lips-cutout.svg)",
-          maskRepeat: "no-repeat, no-repeat",
-          maskPosition: "0 0, center var(--lips-y)",
-          maskSize: "100% 100%, 215px 104px",
-          maskComposite: "exclude",
-        }}
-      />
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{ filter: "drop-shadow(0 0 12px rgba(0,0,0,0.6))" }}
+      >
+        <div
+          className="w-full h-full bg-choco-500"
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(#000 0 0), url(/images/lips-cutout.svg)",
+            WebkitMaskRepeat: "no-repeat, no-repeat",
+            WebkitMaskPosition: "0 0, center var(--lips-y)",
+            WebkitMaskSize: "100% 100%, 215px 104px",
+            WebkitMaskComposite: "source-out",
+            maskImage:
+              "linear-gradient(#000 0 0), url(/images/lips-cutout.svg)",
+            maskRepeat: "no-repeat, no-repeat",
+            maskPosition: "0 0, center var(--lips-y)",
+            maskSize: "100% 100%, 215px 104px",
+            maskComposite: "exclude",
+          }}
+        />
+      </div>
 
       {/* Contenu */}
       <div className="relative z-10">
