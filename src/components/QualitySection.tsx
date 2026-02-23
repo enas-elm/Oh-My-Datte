@@ -104,29 +104,6 @@ export default function QualitySection() {
             <Image src="/images/chocolate.png" alt="" width={200} height={252} className='object-contain -rotate-[20deg]'/>
           </div>
         </div>
-
-        <div className='row-span-2 md:row-span-2 bg-[url(/images/green-brush-bg.svg)] bg-no-repeat bg-center bg-contain space-y-16 lg:space-y-12 hidden md:flex flex-col items-center justify-center'>
-          <Image src="/images/pistachio.png" alt="" width={152} height={152} className='object-contain'/>
-          <Image src="/images/chocolate.png" alt="" width={200} height={252} className='object-contain -rotate-[20deg]'/>
-        </div>
-
-        <div className='space-y-2'>
-          <h4 className='uppercase text-[clamp(1.125rem,4vw,1.75rem)]'>Naturel</h4>
-          <p className='md:text-lg'>Chic et décontracté : chocolat noir et cœur praliné. Apporte la bonne énergie à chaque bouchée.</p>
-          <p className='md:text-lg'>Manteau chocolat noir, cœur peanut butter, éclats croquants. Simple, généreuse et audacieuse.</p>
-        </div>
-
-        <div className='space-y-2'>
-          <h4 className='uppercase text-[clamp(1.125rem,4vw,1.75rem)]'>Naturel</h4>
-          <p className='md:text-lg'>Chic et décontracté : chocolat noir et cœur praliné. Apporte la bonne énergie à chaque bouchée.</p>
-          <p className='md:text-lg'>Manteau chocolat noir, cœur peanut butter, éclats croquants. Simple, généreuse et audacieuse.</p>
-        </div>
-
-        {/* Image mobile */}
-        <div className='row-span-2 md:row-span-2 bg-[url(/images/green-brush-bg.svg)] bg-no-repeat bg-center bg-contain space-y-16 lg:space-y-12 flex md:hidden flex-col items-center justify-center overflow-hidden sticky top-1/3 self-center'>
-          <Image src="/images/pistachio.png" alt="" width={152} height={152} className='object-contain'/>
-          <Image src="/images/chocolate.png" alt="" width={200} height={252} className='object-contain -rotate-[20deg]'/>
-        </div>
     </section>
   );
 }
