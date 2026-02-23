@@ -52,59 +52,48 @@ export default function ContactSection() {
             transition={{ duration: 0.45, ease: 'easeOut' }}
           >
             Vous avez craquez ?
-<<<<<<< HEAD
-          </h2>
-          <p className="sm:text-lg">
-            Petite attention, cadeau d’anniversaire, mariage ou encore événement d’entreprise, nos créations apportent une touche de raffinement inattendue à vos célébrations.
-            <br />
-            <br />
-            <b>Découvrez nos élégants coffrets de 3 dattes. Un assortiment 100% personnalisable.</b>
-          </p>
-=======
-          </motion.h2>
+        </motion.h2>
 
-          <motion.p
-            className="sm:text-lg"
-            initial={{ opacity: 0, filter: 'blur(10px)' }}
-            animate={textInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-            transition={{ delay: 0.25, duration: 0.4, ease: 'easeOut' }}
-          >
-            Norem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus,
-          </motion.p>
->>>>>>> 604e0b4 (Add ContactSection animation)
-        </div>
-        <motion.div 
-            ref={formRef}
-            className="shadow-section flex-1 bg-red p-6 sm:p-16 text-vanilla rounded-xl"
-            initial={{ opacity: 0, scale: 0.93 }}
-            animate={formInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 0.15, duration: 0.5, ease: [0.34, 1.3, 0.64, 1] }}
+        <motion.p
+          className="sm:text-lg"
+          initial={{ opacity: 0, filter: 'blur(10px)' }}
+          animate={textInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
+          transition={{ delay: 0.25, duration: 0.4, ease: 'easeOut' }}
         >
-          <form onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-2 mb-8">
-              <label className="font-times" htmlFor="name">
-                Nom
-              </label>
-              <input className="rounded border-vanilla border-[0.5px] p-4 focus-visible:outline focus-visible:outline-vanilla" type="text" name="name" id="name" placeholder="Jane Austen" value={name} onChange={(e) => setName(e.target.value)} />
-            </div>
+          Petite attention, cadeau d’anniversaire, mariage ou encore événement d’entreprise, nos créations apportent une touche de raffinement inattendue à vos célébrations.
+          <br />
+          <br />
+          <b>Découvrez nos élégants coffrets de 3 dattes. Un assortiment 100% personnalisable.</b>          
+          </motion.p>
+      </div>
+      <motion.div
+        ref={formRef}
+        className="shadow-section flex-1 bg-red p-6 sm:p-16 text-vanilla rounded-xl"
+        initial={{ opacity: 0, scale: 0.93 }}
+        animate={formInView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ delay: 0.15, duration: 0.5, ease: [0.34, 1.3, 0.64, 1] }}
+      >
+        <form onSubmit={handleSubmit}>
+          <div className="flex flex-col gap-2 mb-8">
+            <label className="font-times" htmlFor="name">
+              Nom
+            </label>
+            <input className="rounded border-vanilla border-[0.5px] p-4 focus-visible:outline focus-visible:outline-vanilla" type="text" name="name" id="name" placeholder="Jane Austen" value={name} onChange={(e) => setName(e.target.value)} />
+          </div>
 
-            <div className="flex flex-col gap-2 mb-8">
-              <label className="font-times" htmlFor="email">
-                Votre email
-              </label>
-              <input className="rounded border-vanilla border-[0.5px] p-4 focus-visible:outline focus-visible:outline-vanilla" type="email" name="email" id="email" placeholder="jane.austen@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required
-              />
-            </div>
+          <div className="flex flex-col gap-2 mb-8">
+            <label className="font-times" htmlFor="email">
+              Votre email
+            </label>
+            <input className="rounded border-vanilla border-[0.5px] p-4 focus-visible:outline focus-visible:outline-vanilla" type="email" name="email" id="email" placeholder="jane.austen@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required
+            />
+          </div>
 
-            <div className="flex flex-col gap-2 mb-8 relative">
-              <label className="font-times" htmlFor="message">
-                Votre message
-              </label>
-<<<<<<< HEAD
-              <textarea className="rounded border border-vanilla border-[0.5px] p-4 resize-none focus-visible:outline focus-visible:outline-vanilla" rows={8} name="message" id="message" placeholder="Bonjour, vos dattes ont l'air succulentes, J'aimerais 20 coffrets avec l'Intrépide et l'Irrésistible, ainsi qu'une création sur-mesure au caramel beurre salé. Merci !" value={message} onChange={(e) => setMessage(e.target.value)} required />
-=======
+          <div className="flex flex-col gap-2 mb-8 relative">
+            <label className="font-times" htmlFor="message">
+              Votre message
+            </label>
               <textarea className="rounded border-vanilla border-[0.5px] p-4 resize-none focus-visible:outline focus-visible:outline-vanilla" rows={8} name="message" id="message" placeholder="Bonjour, vos dattes ont l'air succulentes, j'aimerais commander un coffret de 6 dattes de chaque assortiment !" value={message} onChange={(e) => setMessage(e.target.value)} required />
->>>>>>> 4097152 (Remove useless import and fix warning)
               <AnimatePresence>
                 {success && (
                   <motion.p
@@ -117,14 +106,14 @@ export default function ContactSection() {
                   </motion.p>
                 )}
               </AnimatePresence>  
-            </div>
+            </div >
 
-            <Button type="submit" className="border border-vanilla font-times block ml-auto bg-vanilla text-red hover:bg-red hover:text-vanilla transition-colors duration-300 ease-in-out focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-vanilla" >
-              {loading ? "Envoi..." : "Envoyer"}
-            </Button>
-          </form>
-        </motion.div>
-      </div>
-    </section>
+    <Button type="submit" className="border border-vanilla font-times block ml-auto bg-vanilla text-red hover:bg-red hover:text-vanilla transition-colors duration-300 ease-in-out focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-vanilla" >
+      {loading ? "Envoi..." : "Envoyer"}
+    </Button>
+          </form >
+        </motion.div >
+      </div >
+    </section >
   );
 }

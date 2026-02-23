@@ -9,18 +9,18 @@ export default function Footer() {
   const inView = useInView(ref, { once: true, margin: '-40px' });
 
   return (
-    <motion.footer 
-        ref={ref}
-        className="text-vanilla relative container mx-auto px-4 sm:px-6 lg:px-12 rounded-t-2xl shadow-footer overflow-hidden [--lips-y:120px] sm:[--lips-y:100px]"
-        initial={{ opacity: 0, y: 60 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    <motion.footer
+      ref={ref}
+      className="text-vanilla relative container mx-auto px-4 sm:px-6 lg:px-12 rounded-t-2xl shadow-footer overflow-hidden [--lips-y:120px] sm:[--lips-y:100px]"
+      initial={{ opacity: 0, y: 60 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
 
       {/* Overlay with lip cutout + drop-shadow into the hole */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
-        style={{ filter: "drop-shadow(0 0 12px rgba(0,0,0,0.6))" }}
+        style={{ filter: "drop-shadow(0 -4px 6px rgba(50, 20, 20, 0.70))" }}
       >
         <div
           className="w-full h-full bg-choco-500"

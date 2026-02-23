@@ -25,10 +25,10 @@ export default function HeroSection() {
   }
 
   // Effet de bounce sur les images avec le scroll
-  const scale1 = useTransform(scrollYProgress, percentRange(), valueRange(0.9,1.1));
-  const scale2 = useTransform(scrollYProgress, percentRange(), valueRange(0.9,1.1));
-  const scale3 = useTransform(scrollYProgress, percentRange(), valueRange(0.9,1.1));
-  const scale4 = useTransform(scrollYProgress, percentRange(), valueRange(0.9,1.1));
+  const scale1 = useTransform(scrollYProgress, percentRange(), valueRange(0.9, 1.1));
+  const scale2 = useTransform(scrollYProgress, percentRange(), valueRange(0.9, 1.1));
+  const scale3 = useTransform(scrollYProgress, percentRange(), valueRange(0.9, 1.1));
+  const scale4 = useTransform(scrollYProgress, percentRange(), valueRange(0.9, 1.1));
 
   const MotionLink = motion.create(SmoothLink);
   const MotionImage = motion.create(Image);
@@ -38,24 +38,24 @@ export default function HeroSection() {
     <section ref={targetRef} className="mt-[calc(var(--navbar-height)+100px)] h-[350vh] relative">
       <div className="sticky top-[calc(var(--navbar-height)+100px)] py-3 text-center overflow-hidden">
         <h1 className="font-times text-center">
-          <motion.span 
-            className="text-[clamp(2rem,5vw,7rem)] select-none"
+          <motion.span
+            className="text-[clamp(2.5rem,5vw,7rem)] select-none"
             initial={{ opacity: 0, filter: 'blur(10px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
             VOTRE{' '}
           </motion.span>
-          <motion.span 
-            className="text-[clamp(2rem,5vw,7rem)] select-none"
+          <motion.span
+            className="text-[clamp(2.5rem,5vw,7rem)] select-none"
             initial={{ opacity: 0, filter: 'blur(10px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.4, delay: 0.2 }}
           >
             NOUVEAU
           </motion.span>
-          <motion.span 
-            className="font-allura block text-[clamp(5rem,20vw,192px)] leading-none mt-8 relative z-10 select-none"
+          <motion.span
+            className="font-allura block text-[clamp(6rem,20vw,192px)] leading-none mt-8 relative z-10 select-none"
             initial={{ opacity: 0, filter: 'blur(10px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.4, delay: 0.3 }}
@@ -71,10 +71,10 @@ export default function HeroSection() {
             height={208}
             className="object-contain w-[clamp(88px,18vw,208px)] max-w-[208px] h-auto"
             style={{ scale: scale1 }}
-            initial={{scale: 0.8, opacity: 0}}
-            animate={{scale: 1, opacity: 1}}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
             transition={{
-              duration: 0.3, 
+              duration: 0.3,
               delay: 0.1,
               scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
             }}
@@ -86,10 +86,10 @@ export default function HeroSection() {
             height={224}
             className="object-contain w-[clamp(88px,20vw,208px)] max-w-[224px] h-auto relative"
             style={{ scale: scale2 }}
-            initial={{scale: 0.8, opacity: 0}}
-            animate={{scale: 1, opacity: 1}}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
             transition={{
-              duration: 0.3, 
+              duration: 0.3,
               delay: 0.1,
               scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
             }}
@@ -101,8 +101,8 @@ export default function HeroSection() {
             height={232}
             className="object-contain w-[clamp(88px,22vw,208px)] max-w-[232px] h-auto relative top-4"
             style={{ scale: scale3 }}
-            initial={{scale: 0.8, opacity: 0}}
-            animate={{scale: 1, opacity: 1}}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
             transition={{
               duration: 0.3,
               delay: 0.2,
@@ -116,8 +116,8 @@ export default function HeroSection() {
             height={242}
             className="object-contain w-[22vw] max-w-[242px] h-auto rotate-12"
             style={{ scale: scale4 }}
-            initial={{scale: 0.8, opacity: 0}}
-            animate={{scale: 1, opacity: 1}}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
             transition={{
               duration: 0.3,
               delay: 0.1,
@@ -125,50 +125,52 @@ export default function HeroSection() {
             }}
           />
         </motion.div>
-        <p className="text-lg mt-7 mb-14">
+
+        <p className="flex items-center justify-center gap-3 sm:gap-8 mt-7 mb-14 flex-col md:flex-row md:flex-wrap">
           <motion.span
             initial={{ opacity: 0, filter: 'blur(10px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.4, delay: 0.2 }}
+            className="uppercase tracking-[0.25em] text-[13px] sm:text-[15px] font-times"
           >
-            Artisanal
+            Dattes d&apos;Exception
           </motion.span>
-          <motion.span 
-            className="font-times block sm:inline text-2xl mx-2"
-            initial={{ opacity: 0, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
+          <motion.span
+            className="inline-block w-6 h-[1.5px] bg-red shrink-0 "
+            aria-hidden="true"
+            initial={{ opacity: 0, filter: "blur(10px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
             transition={{ duration: 0.4, delay: 0.3 }}
-          >
-            ~
-          </motion.span>
+          />
           <motion.span
             initial={{ opacity: 0, filter: 'blur(10px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.4, delay: 0.4 }}
+            className="uppercase tracking-[0.25em] text-[13px] sm:text-[15px] font-times"
           >
-            Ingrédients de qualité
+            Événements
           </motion.span>
-          <motion.span 
-            className="font-times block sm:inline text-2xl mx-2"
-            initial={{ opacity: 0, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
-            transition={{ duration: 0.4, delay: 0.5 }}
-          >
-            ~
-          </motion.span>
+          <motion.span
+            className="inline-block w-6 h-[1.5px] bg-red shrink-0"
+            aria-hidden="true"
+            initial={{ opacity: 0, filter: "blur(10px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+          />
           <motion.span
             initial={{ opacity: 0, filter: 'blur(10px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.4, delay: 0.6 }}
+            className="uppercase tracking-[0.25em] text-[13px] sm:text-[15px] font-times"
           >
-            Prêt à déguster
+            Atelier Artisanal
           </motion.span>
         </p>
-        <MotionLink 
-          href="#contact" 
+        <MotionLink
+          href="#contact"
           className='inline-flex border border-choco-500 font-times bg-choco-500 text-vanilla py-4 pb-3 px-4 shadow-button text-xl focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm'
-          initial={{ opacity: 0, filter: 'blur(10px)'}}
-          animate={{ opacity: 1, filter: 'blur(0px)'}}
+          initial={{ opacity: 0, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, filter: 'blur(0px)' }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
           COMMANDER
