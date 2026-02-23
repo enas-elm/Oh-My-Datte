@@ -16,10 +16,6 @@ export default function HeroSection() {
   // On transforme le scroll (0 à 1) en translation x (de 0% à -50%)
   const x = useTransform(scrollYProgress, [0, 1], ['0%', '-35%']);
 
-  scrollYProgress.on("change", (value)=>{
-    console.log(value)
-  })
-
   const percentRange = () => {
     return Array.from({ length: 10 }, (_, i) => i / (10 - 1))
   }
