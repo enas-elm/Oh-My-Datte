@@ -223,6 +223,7 @@ export default function QualitySection() {
             <Image src="/images/chocolate.png" alt="" width={200} height={252} className='object-contain -rotate-[20deg]'/>
           </div>
         </div>
+<<<<<<< HEAD
 
             {/* LEFT — text panels */}
             <div className="relative min-h-[40vh] flex items-center justify-end">
@@ -342,6 +343,8 @@ export default function QualitySection() {
 
           </div>
        
+=======
+>>>>>>> c85e3f3 (Fix duplicate content)
     </section>
   );
 }
