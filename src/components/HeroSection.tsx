@@ -14,11 +14,11 @@ export default function HeroSection() {
   });
 
   // On transforme le scroll (0 à 1) en translation x (de 0% à -50%)
-  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-50%']);
+  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-35%']);
 
   return (
     // 400vh définit la durée du scroll
-    <section ref={targetRef} className="mt-[calc(var(--navbar-height)+100px)] h-[400vh] relative">
+    <section ref={targetRef} className="mt-[calc(var(--navbar-height)+100px)] h-[300vh] relative">
       <div className="sticky top-[calc(var(--navbar-height)+100px)] py-3 text-center overflow-hidden">
         <h1 className="font-times text-center">
           <span className="block text-[clamp(2.5rem,5vw,7rem)] select-none">
