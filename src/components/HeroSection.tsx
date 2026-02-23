@@ -58,9 +58,14 @@ export default function HeroSection() {
           >
             NOUVEAU
           </motion.span>
-          <span className="font-allura block text-[clamp(5rem,20vw,192px)] leading-none mt-8 relative z-10 select-none">
+          <motion.span 
+            className="font-allura block text-[clamp(5rem,20vw,192px)] leading-none mt-8 relative z-10 select-none"
+            initial={{ opacity: 0, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+          >
             Crunsh
-          </span>
+          </motion.span>
         </h1>
         <motion.div style={{ x }} className="absolute left-16 sm:left-44 right-0 top-8 sm:top-0 flex items-center gap-[18vw] w-full px-4 pointer-events-none">
           <MotionImage
