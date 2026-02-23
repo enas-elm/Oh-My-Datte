@@ -1,7 +1,7 @@
-"use client"
+'use client';
 
 import Image from 'next/image';
-import { motion } from "motion/react";
+import { motion } from 'motion/react';
 
 export default function QualitySection() {
   return (
@@ -128,5 +128,5 @@ export default function QualitySection() {
           <Image src="/images/chocolate.png" alt="" width={200} height={252} className='object-contain -rotate-[20deg]'/>
         </div>
     </section>
-  )
+  );
 }
