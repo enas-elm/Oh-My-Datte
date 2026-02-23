@@ -14,10 +14,10 @@ export function Navbar() {
       <SmoothLink href="/" className="shrink-0 focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-choco-500"
       >
         <Image
-          src="/images/icon_omd.svg"
+          src="/images/icon_ohmydatte.svg"
           alt="Logo de Oh My Datte"
-          width={60}
-          height={60}
+          width={80}
+          height={80}
         />
       </SmoothLink>
 

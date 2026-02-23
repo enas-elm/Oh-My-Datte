@@ -58,13 +58,13 @@ export default function HeroSection() {
             className="object-contain w-[22vw] max-w-[242px] h-auto rotate-12"
           />
         </motion.div>
-        <p className="text-lg mt-7 mb-14">
-          Dattes d'Exception
-          <span className="font-times block sm:inline text-2xl mx-2">~</span>{' '}
-          Événements{' '}
-          <span className="font-times block sm:inline text-2xl mx-2">~</span>
-          Atelier Artisanal
-        </p>
+        <div className="flex items-center justify-center gap-5 sm:gap-8 mt-7 mb-14 flex-wrap">
+          <span className="uppercase tracking-[0.25em] text-[13px] sm:text-[15px] font-times">Dattes d&apos;Exception</span>
+          <span className="w-6 h-[1.5px] bg-red shrink-0" aria-hidden="true" />
+          <span className="uppercase tracking-[0.25em] text-[13px] sm:text-[15px] font-times">Événements</span>
+          <span className="w-6 h-[1.5px] bg-red shrink-0" aria-hidden="true" />
+          <span className="uppercase tracking-[0.25em] text-[13px] sm:text-[15px] font-times">Atelier Artisanal</span>
+        </div>
         <SmoothLink href="#contact" className='inline-flex border border-choco-500 font-times bg-choco-500 text-vanilla py-3 px-4 shadow-button text-xl focus:outline-1 focus:outline-offset-3 focus:outline-choco-500  hover:bg-transparent hover:text-choco-500 transition-colors duration-300 ease-in-out focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-choco-500'>
           COMMANDER
         </SmoothLink>
