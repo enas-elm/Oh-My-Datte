@@ -9,6 +9,10 @@ interface SmoothLinkProps {
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
+interface LenisInstance {
+  scrollTo: (target: Element, options: { offset: number; duration: number }) => void;
+}
+
 export default function SmoothLink({
   href,
   children,
@@ -25,7 +29,7 @@ export default function SmoothLink({
     const target = document.getElementById(href.slice(1))
     if (!target) return
 
-    const lenis = (window as any).lenis
+    const lenis = (window as Window & {lenis?: LenisInstance}).lenis
 
     if (lenis?.scrollTo) {
       lenis.scrollTo(target, {
