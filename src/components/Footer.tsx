@@ -56,7 +56,7 @@ export default function Footer() {
           <div aria-hidden className="shrink-0 w-[215px] h-[104px]" />
 
           <address className="flex-1 lg:text-lg not-italic text-center lg:text-right">
-            Pour toute question, contactez <a className="font-bold animated-underline focus-visible:outline-1   focus-visible:outline-offset-3 focus-visible:outline-vanilla" href="mailto:ohmydate@gmail.com">ohmydate@gmail.com</a>
+            Pour toute question, contactez <a className="font-bold animated-underline focus-visible:outline-1   focus-visible:outline-offset-3 focus-visible:outline-vanilla" href="mailto:contact@ohmydatte.com">contact@ohmydatte.com</a>
 
           </address>
         </div>

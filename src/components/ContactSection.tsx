@@ -44,9 +44,10 @@ export default function ContactSection() {
             Vous avez craquez ?
           </h2>
           <p className="sm:text-lg">
-            Norem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-            turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus
-            nec fringilla accumsan, risus sem sollicitudin lacus,
+            Petite attention, cadeau d’anniversaire, mariage ou encore événement d’entreprise, nos créations apportent une touche de raffinement inattendue à vos célébrations.
+            <br />
+            <br />
+            <b>Découvrez nos élégants coffrets de 3 dattes. Un assortiment 100% personnalisable.</b>
           </p>
         </div>
         <div className="shadow-section flex-1 bg-red p-6 sm:p-16 text-vanilla rounded-xl">
@@ -70,7 +71,7 @@ export default function ContactSection() {
               <label className="font-times" htmlFor="message">
                 Votre message
               </label>
-              <textarea className="rounded border border-vanilla border-[0.5px] p-4 resize-none focus-visible:outline focus-visible:outline-vanilla" rows={8} name="message" id="message" placeholder="Bonjour, vos dattes ont l'air succulentes, j'aimerais commander un coffret de 6 dattes de chaque assortiment !" value={message} onChange={(e) => setMessage(e.target.value)} required />
+              <textarea className="rounded border border-vanilla border-[0.5px] p-4 resize-none focus-visible:outline focus-visible:outline-vanilla" rows={8} name="message" id="message" placeholder="Bonjour, vos dattes ont l'air succulentes, J'aimerais 20 coffrets avec l'Intrépide et l'Irrésistible, ainsi qu'une création sur-mesure au caramel beurre salé. Merci !" value={message} onChange={(e) => setMessage(e.target.value)} required />
               <AnimatePresence>
                 {success && (
                   <motion.p

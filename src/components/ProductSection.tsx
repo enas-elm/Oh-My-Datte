@@ -10,10 +10,10 @@ interface Product {
 
 export default function ProductSection() {
   const products: Product[] = [
-    {imagePath: "/images/datte-2-shadow.png", title: "L'Irrésistible", subtitle: "Blanc · Pistache", description: "Chocolat blanc ivoire et pistaches finement broyées. Douce, élégante — la star qui fait chavirer les cœurs."},
-    {imagePath: "/images/datte-5-shadow.png", title: "L'Irrésistible", subtitle: "Blanc · Pistache", description: "Chocolat blanc ivoire et pistaches finement broyées. Douce, élégante — la star qui fait chavirer les cœurs."},
-    {imagePath: "/images/datte-4-shadow.png", title: "L'Irrésistible", subtitle: "Blanc · Pistache", description: "Chocolat blanc ivoire et pistaches finement broyées. Douce, élégante — la star qui fait chavirer les cœurs."},
-    {imagePath: "/images/datte-6-shadow.png", title: "L'Irrésistible", subtitle: "Blanc · Pistache", description: "Chocolat blanc ivoire et pistaches finement broyées. Douce, élégante — la star qui fait chavirer les cœurs."}
+    {imagePath: "/images/datte-2-shadow.png", title: "L'Intrépide", subtitle: "Noir · Cacahuète", description: "L’Intrépide ne demande pas la permission. Sous sa carapace de chocolat noir intense, elle cache un cœur de beurre de cacahuète généreux et des éclats croquants qui bousculent les codes.\n\nC’est la datte des audacieux : directe, efficace, et terriblement addictive."},
+    {imagePath: "/images/datte-5-shadow.png", title: "L'Irrésistible", subtitle: "Blanc · Pistache", description: "Elle entre en scène et le temps s’arrête. Vêtue d’un velouté de chocolat blanc et d’un cœur fondant à la pistache, L'Irrésistible mise sur l’éclat.\n\nDouce mais affirmée, elle offre un équilibre précieux entre luxe et délicatesse. On ne lui résiste pas, on succombe."},
+    {imagePath: "/images/datte-4-shadow.png", title: "Le Cool Kid", subtitle: "Noir · Praliné", description: "L’allure chic, l’esprit libre. Le Cool Kid revisite le classique avec un praliné noisette-amande qui fond en bouche. Enrobé de chocolat noir, il impose son style sans en faire trop.\n\nC’est la gourmandise chill par excellence, celle qu’on invite à toutes les occasions."},
+    {imagePath: "/images/datte-6-shadow.png", title: "Le Sage", subtitle: "Noir · Coco", description: "L’équilibre trouvé entre l’intensité du cacao et la sérénité des îles. Le Sage apaise le caractère du beurre de cacahuète par un voile léger de noix de coco râpée.\n\nUn voyage intérieur, posé et réfléchi, pour ceux qui cherchent la profondeur sous la gourmandise."}
   ]
 
   return (
@@ -34,28 +34,28 @@ export default function ProductSection() {
                 <Image src={products[0].imagePath} alt={`Datte au ${products[0].subtitle}`} width={200} height={200} className='object-contain aspect-square mb-8'/>
                 <h4 className='uppercase text-[clamp(1.125rem,4vw,1.5rem)]'>{products[0].title}</h4>
                 <p className='text-sm md:text-base mb-6'>{products[0].subtitle}</p>
-                <p className="text-center md:text-lg">{products[0].description}</p>
+                <p className="text-center md:text-lg whitespace-pre-line">{products[0].description}</p>
             </div>
 
             <div className='flex flex-col items-center max-w-72 mx-auto'>
                 <Image src={products[1].imagePath} alt={`Datte au ${products[1].subtitle}`} width={200} height={200} className='scale-105 object-contain aspect-square mb-8'/>
                 <h4 className='uppercase text-[clamp(1.125rem,4vw,1.5rem)]'>{products[1].title}</h4>
                 <p className='text-sm md:text-base mb-6'>{products[1].subtitle}</p>
-                <p className="text-center md:text-lg">{products[1].description}</p>
+                <p className="text-center md:text-lg whitespace-pre-line">{products[1].description}</p>
             </div>
 
             <div className='flex flex-col items-center max-w-72 mx-auto'>
                 <Image src={products[2].imagePath} alt={`Datte au ${products[2].subtitle}`} width={200} height={200} className='scale-105 object-contain aspect-square mb-8'/>
                 <h4 className='uppercase text-[clamp(1.125rem,4vw,1.5rem)]'>{products[2].title}</h4>
                 <p className='text-sm md:text-base mb-6'>{products[2].subtitle}</p>
-                <p className="text-center md:text-lg">{products[2].description}</p>
+                <p className="text-center md:text-lg whitespace-pre-line">{products[2].description}</p>
             </div>
 
             <div className='flex flex-col items-center max-w-72 mx-auto'>
                 <Image src={products[3].imagePath} alt={`Datte au ${products[3].subtitle}`} width={200} height={200} className='object-contain aspect-square mb-8'/>
                 <h4 className='uppercase text-[clamp(1.125rem,4vw,1.5rem)]'>{products[3].title}</h4>
                 <p className='text-sm md:text-base mb-6'>{products[3].subtitle}</p>
-                <p className="text-center md:text-lg">{products[3].description}</p>
+                <p className="text-center md:text-lg whitespace-pre-line">{products[3].description}</p>
             </div>
         </div>
       </div>

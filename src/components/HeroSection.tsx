@@ -59,11 +59,11 @@ export default function HeroSection() {
           />
         </motion.div>
         <p className="text-lg mt-7 mb-14">
-          Artisanal 
+          Dattes d'Exception
           <span className="font-times block sm:inline text-2xl mx-2">~</span>{' '}
-          Ingrédients de qualité{' '}
-          <span className="font-times block sm:inline text-2xl mx-2">~</span> 
-          Prêt à déguster
+          Événements{' '}
+          <span className="font-times block sm:inline text-2xl mx-2">~</span>
+          Atelier Artisanal
         </p>
         <SmoothLink href="#contact" className='inline-flex border border-choco-500 font-times bg-choco-500 text-vanilla py-3 px-4 shadow-button text-xl focus:outline-1 focus:outline-offset-3 focus:outline-choco-500  hover:bg-transparent hover:text-choco-500 transition-colors duration-300 ease-in-out focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-choco-500'>
           COMMANDER
