@@ -18,10 +18,10 @@ export default function ProductSection() {
   const titleRef = useRef(null);
   const titleInView = useInView(titleRef, { once: true, margin: '-60px' });
 
-  
+
   const products: Product[] = [
     {
-      imagePath: '/images/datte-2-shadow.png',
+      imagePath: '/images/Groupdattes.png',
       title: "L'Intrépide",
       subtitle: 'Noir · Cacahuète',
       description:
@@ -92,9 +92,9 @@ export default function ProductSection() {
           </motion.span>
         </h2>
 
-        <div className="grid grid-flow-col grid-cols-2 grid-rows-2 gap-8 gap-y-32 sm:gap-y-42">
+        <div className="grid grid-flow-col grid-cols-2 grid-rows-2 gap-8 sm:gap-12 gap-y-32 md:gap-y-42">
           {products.map((product, i) => (
-            <ProductCard key={i} product={product}/>
+            <ProductCard key={i} product={product} />
           ))}
         </div>
       </div>

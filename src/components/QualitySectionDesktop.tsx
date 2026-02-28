@@ -83,9 +83,9 @@ export default function QualitySectionDesktop({ states, refs }: { states: Qualit
             </div>
 
             {/* Pinned area */}
-            <div ref={pinnedRef} className="h-screen relative">
+            <div ref={pinnedRef} className="h-screen relative overflow-hidden">
                 {/* dots */}
-                <div className="absolute -right-10 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3">
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3">
                     <div ref={dot1Ref} className="w-2 h-2 rounded-full bg-choco-500 opacity-30" />
                     <div ref={dot2Ref} className="w-2 h-2 rounded-full bg-choco-500 opacity-30" />
                 </div>

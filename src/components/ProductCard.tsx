@@ -6,12 +6,12 @@ import { useInView } from 'motion/react';
 import { useRef } from 'react';
 import { Product } from './ProductSection';
 
-export function ProductCard({ product }: { product: Product}) {
+export function ProductCard({ product }: { product: Product }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <div ref={ref} className="flex flex-col items-center max-w-72 mx-auto">
+    <div ref={ref} className="flex flex-col items-center lg:max-w-100 mx-auto">
       {/* 1. Image — scale + opacity + bounce */}
       <motion.div
         initial={{ opacity: 0, scale: 0.72 }}
@@ -44,12 +44,14 @@ export function ProductCard({ product }: { product: Product}) {
 
       {/* 3. Subtitle — blur + opacity */}
       <motion.p
-        className="text-sm md:text-base mb-6"
+        className=" text-sm md:text-base mb-6"
         initial={{ opacity: 0, filter: 'blur(8px)' }}
         animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
         transition={{ delay: 0.4 + 0.34, duration: 0.3, ease: 'easeOut' }}
       >
-        {product.subtitle}
+        <p className='opacity-[.6]'>
+          {product.subtitle}
+        </p>
       </motion.p>
 
       {/* 4. Description — blur + opacity */}
