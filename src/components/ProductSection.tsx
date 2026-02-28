@@ -13,38 +13,40 @@ export interface Product {
   description: string;
 }
 
+
 export default function ProductSection() {
   const titleRef = useRef(null);
   const titleInView = useInView(titleRef, { once: true, margin: '-60px' });
 
+  
   const products: Product[] = [
     {
       imagePath: '/images/datte-2-shadow.png',
-      title: "L'Irrésistible",
-      subtitle: 'Blanc · Pistache',
+      title: "L'Intrépide",
+      subtitle: 'Noir · Cacahuète',
       description:
-        'Chocolat blanc ivoire et pistaches finement broyées. Douce, élégante — la star qui fait chavirer les cœurs.',
+        'L’Intrépide ne demande pas la permission. Sous sa carapace de chocolat noir intense, elle cache un cœur de beurre de cacahuète généreux et des éclats croquants qui bousculent les codes.\n\nC’est la datte des audacieux : directe, efficace, et terriblement addictive.',
     },
     {
       imagePath: '/images/datte-5-shadow.png',
       title: "L'Irrésistible",
       subtitle: 'Blanc · Pistache',
       description:
-        'Chocolat blanc ivoire et pistaches finement broyées. Douce, élégante — la star qui fait chavirer les cœurs.',
+        'Elle entre en scène et le temps s’arrête. Vêtue d’un velouté de chocolat blanc et d’un cœur fondant à la pistache, L\'Irrésistible mise sur l’éclat.\n\nDouce mais affirmée, elle offre un équilibre précieux entre luxe et délicatesse. On ne lui résiste pas, on succombe.',
     },
     {
       imagePath: '/images/datte-4-shadow.png',
-      title: "L'Irrésistible",
-      subtitle: 'Blanc · Pistache',
+      title: "Le Cool Kid",
+      subtitle: 'Noir · Praliné',
       description:
-        'Chocolat blanc ivoire et pistaches finement broyées. Douce, élégante — la star qui fait chavirer les cœurs.',
+        'L’allure chic, l’esprit libre. Le Cool Kid revisite le classique avec un praliné noisette-amande qui fond en bouche. Enrobé de chocolat noir, il impose son style sans en faire trop.\n\nC’est la gourmandise chill par excellence, celle qu’on invite à toutes les occasions.',
     },
     {
       imagePath: '/images/datte-6-shadow.png',
-      title: "L'Irrésistible",
-      subtitle: 'Blanc · Pistache',
+      title: "Le Sage",
+      subtitle: 'Noir · Coco',
       description:
-        'Chocolat blanc ivoire et pistaches finement broyées. Douce, élégante — la star qui fait chavirer les cœurs.',
+        'L’équilibre trouvé entre l’intensité du cacao et la sérénité des îles. Le Sage apaise le caractère du beurre de cacahuète par un voile léger de noix de coco râpée.\n\nUn voyage intérieur, posé et réfléchi, pour ceux qui cherchent la profondeur sous la gourmandise.',
     },
   ];
 
