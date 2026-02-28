@@ -49,9 +49,9 @@ export function ProductCard({ product }: { product: Product }) {
         animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
         transition={{ delay: 0.4 + 0.34, duration: 0.3, ease: 'easeOut' }}
       >
-        <p className='opacity-[.6]'>
+        <span className='opacity-[.6]'>
           {product.subtitle}
-        </p>
+        </span>
       </motion.p>
 
       {/* 4. Description — blur + opacity */}
