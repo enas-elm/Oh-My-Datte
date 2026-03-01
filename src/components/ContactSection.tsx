@@ -12,38 +12,55 @@ export default function ContactSection() {
 
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
-  const [quantity, setQuantity] = useState(3)
+  const [quantity, setQuantity] = useState<string>("")
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (loading) return
+
     setLoading(true)
 
     try {
+      const quantityNumber = Number(quantity)
+
+      const safeQuantity = Math.min(
+        500,
+        Math.max(1, quantityNumber || 1)
+      )
+
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          quantity: safeQuantity,
+        }),
       })
 
-      if (res.ok) {
-        setSuccess(true)
-        setName("")
-        setEmail("")
-        setMessage("")
-        setTimeout(() => setSuccess(false), 5000)
-      }
-    } catch (error) {
-      console.error("Erreur:", error)
-    }
+      if (!res.ok) throw new Error("Erreur serveur")
 
-    setLoading(false)
+      setSuccess(true)
+      setName("")
+      setEmail("")
+      setMessage("")
+      setQuantity("")
+
+      setTimeout(() => setSuccess(false), 5000)
+
+    } catch (error) {
+      console.error("Erreur :", error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
-    <section id="contact" className="section-scroll-mt my-32 container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className=" my-20 md:my-32 container mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col lg:flex-row gap-16">
         <div ref={textRef} className="flex-1">
           <motion.h2
@@ -103,6 +120,7 @@ export default function ContactSection() {
                 type="number"
                 id="quantity"
                 name="quantity"
+                placeholder="Quantité"
                 min={1}
                 max={500}
                 inputMode="numeric"
@@ -113,11 +131,11 @@ export default function ContactSection() {
                   if (isNaN(number)) return
 
                   if (number > 500) {
-                    setQuantity(500)
+                    setQuantity("500")
                   } else if (number < 1) {
-                    setQuantity(1)
+                    setQuantity("1")
                   } else {
-                    setQuantity(number)
+                    setQuantity(String(number))
                   }
                 }}
                 className="mt-2 rounded border border-vanilla border-[0.5px] p-4 focus-visible:outline focus-visible:outline-vanilla"
@@ -131,8 +149,6 @@ export default function ContactSection() {
                 Votre message
               </label>
               <span className="text-sm text-vanilla/70">
-                Vous avez sélectionné <span className="font-bold">{quantity || 0}</span>{" "}
-                {quantity === 1 ? "coffret" : "coffrets"}.
                 Indiquez-nous ici les assortiments souhaités, la date de livraison désirée ou toute précision utile concernant votre commande.
               </span>
               <textarea className="mt-2 rounded border-vanilla border-[0.5px] p-4 resize-none focus-visible:outline focus-visible:outline-vanilla" rows={8} name="message" id="message" placeholder="Bonjour, vos dattes ont l'air succulentes, j'aimerais commander un coffret de 6 dattes de chaque assortiment !" value={message} onChange={(e) => setMessage(e.target.value)} required />
