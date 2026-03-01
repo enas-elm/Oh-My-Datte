@@ -84,8 +84,8 @@ export default function QualitySection() {
     mm.add("(min-width: 768px)", () => {
       const h = brush.offsetHeight
       const entryY = h * 0.6
-      const topRest = -h * 0.17
-      const bottomRest = h * 0.17
+      const topRest = -h * 0.20
+      const bottomRest = h * 0.20
 
       gsap.set(topImg2Ref.current, { y: topRest + 12, autoAlpha: 0, filter: "blur(6px)" })
       gsap.set(bottomImg2Ref.current, { y: bottomRest + 12, autoAlpha: 0, filter: "blur(6px)" })

@@ -137,11 +137,11 @@ export default function QualitySectionDesktop({ states, refs }: { states: Qualit
                                 className="absolute h-full w-auto pointer-events-none select-none"
                             />
 
-                            <div ref={topImg1Ref} className="absolute inset-0 z-10 flex items-center justify-center">
+                            <div ref={topImg1Ref} className="absolute inset-0 z-10 flex items-center justify-center scale-[1.35]">
                                 <Image src={states[0].topImage.src} alt={states[0].topImage.alt} width={states[0].topImage.w} height={states[0].topImage.h} className="object-contain drop-shadow-lg" />
                             </div>
 
-                            <div ref={topImg2Ref} className="absolute inset-0 z-10 flex items-center justify-center">
+                            <div ref={topImg2Ref} className="absolute inset-0 z-10 flex items-center justify-center scale-[1.35]">
                                 <Image
                                     src={states[1].topImage.src}
                                     alt={states[1].topImage.alt}
@@ -152,11 +152,11 @@ export default function QualitySectionDesktop({ states, refs }: { states: Qualit
                                 />
                             </div>
 
-                            <div ref={bottomImg1Ref} className="absolute inset-0 z-10 flex items-center justify-center">
+                            <div ref={bottomImg1Ref} className="absolute inset-0 z-10 flex items-center justify-center scale-[1.35]">
                                 <Image src={states[0].bottomImage.src} alt={states[0].bottomImage.alt} width={states[0].bottomImage.w} height={states[0].bottomImage.h} className="object-contain drop-shadow-lg" />
                             </div>
 
-                            <div ref={bottomImg2Ref} className="absolute inset-0 z-10 flex items-center justify-center">
+                            <div ref={bottomImg2Ref} className="absolute inset-0 z-10 flex items-center justify-center scale-[1.35]">
                                 <Image
                                     src={states[1].bottomImage.src}
                                     alt={states[1].bottomImage.alt}
