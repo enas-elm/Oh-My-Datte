@@ -149,9 +149,9 @@ export default function ContactSection() {
                 Votre message
               </label>
               <span className="text-sm text-vanilla/70">
-                Indiquez-nous ici les assortiments souhaités, la date de livraison désirée ou toute précision utile concernant votre commande.
+                Indiquez les assortiments souhaités, la date de livraison désirée ou toute précision utile concernant votre commande.
               </span>
-              <textarea className="mt-2 rounded border-vanilla border-[0.5px] p-4 resize-none focus-visible:outline focus-visible:outline-vanilla" rows={8} name="message" id="message" placeholder="Bonjour, vos dattes ont l'air succulentes, j'aimerais commander un coffret de 6 dattes de chaque assortiment !" value={message} onChange={(e) => setMessage(e.target.value)} required />
+              <textarea className="mt-2 rounded border-vanilla border-[0.5px] p-4 resize-none focus-visible:outline focus-visible:outline-vanilla" rows={8} name="message" id="message" placeholder="Bonjour, vos dattes ont l'air succulentes, j'aimerais varier le plus possible les assortiments !" value={message} onChange={(e) => setMessage(e.target.value)} required />
               <AnimatePresence>
                 {success && (
                   <motion.p
