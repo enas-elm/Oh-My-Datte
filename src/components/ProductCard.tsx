@@ -10,19 +10,20 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
-  // Stagger: even-index cards enter slightly before odd ones
-  const stagger = (index % 2) * 0.15;
+  // Start after the "Dattes" title blur-fade finishes (0.28 delay + 0.45 duration)
+  const baseDelay = 0.45;
+  const stagger = 0;
 
   return (
     <div ref={ref} className="flex flex-col items-center lg:max-w-120 mx-auto">
-      {/* 1. Image — scale + opacity + bounce */}
+      {/* 1. Image — blur + opacity */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.72 }}
-        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+        initial={{ opacity: 0, filter: 'blur(14px)' }}
+        animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
         transition={{
-          delay: 0.4 + stagger,
-          duration: 0.55,
-          ease: [0.34, 1.56, 0.64, 1], // spring-like bounce
+          delay: baseDelay + stagger,
+          duration: 0.45,
+          ease: 'easeOut',
         }}
         className="mb-8 relative"
       >
@@ -44,9 +45,9 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
       {/* 2. Title — blur + opacity */}
       <motion.h4
         className="uppercase text-[clamp(1.125rem,4vw,1.5rem)]"
-        initial={{ opacity: 0, filter: 'blur(10px)' }}
+        initial={{ opacity: 0, filter: 'blur(14px)' }}
         animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-        transition={{ delay: 0.4 + stagger + 0.22, duration: 0.35, ease: 'easeOut' }}
+        transition={{ delay: baseDelay + stagger + 0.14, duration: 0.45, ease: 'easeOut' }}
       >
         {product.title}
       </motion.h4>
@@ -54,17 +55,17 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
       {/* 3. Decorative accent line */}
       <motion.div
         className="w-8 h-[1.5px] bg-gold-600 rounded-full mt-2 mb-3"
-        initial={{ opacity: 0, scaleX: 0 }}
-        animate={isInView ? { opacity: 1, scaleX: 1 } : {}}
-        transition={{ delay: 0.4 + stagger + 0.3, duration: 0.4, ease: 'easeOut' }}
+        initial={{ opacity: 0, filter: 'blur(14px)' }}
+        animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
+        transition={{ delay: baseDelay + stagger + 0.28, duration: 0.45, ease: 'easeOut' }}
       />
 
       {/* 4. Subtitle — blur + opacity */}
       <motion.p
         className="text-sm md:text-base mb-6"
-        initial={{ opacity: 0, filter: 'blur(8px)' }}
+        initial={{ opacity: 0, filter: 'blur(14px)' }}
         animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-        transition={{ delay: 0.4 + stagger + 0.34, duration: 0.3, ease: 'easeOut' }}
+        transition={{ delay: baseDelay + stagger + 0.42, duration: 0.45, ease: 'easeOut' }}
       >
         <span className='opacity-[.6]'>
           {product.subtitle}
@@ -74,9 +75,9 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
       {/* 5. Description — blur + opacity */}
       <motion.div
         className="text-center md:text-lg"
-        initial={{ opacity: 0, filter: 'blur(6px)' }}
+        initial={{ opacity: 0, filter: 'blur(14px)' }}
         animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-        transition={{ delay: 0.4 + stagger + 0.45, duration: 0.3, ease: 'easeOut' }}
+        transition={{ delay: baseDelay + stagger + 0.56, duration: 0.45, ease: 'easeOut' }}
       >
         {product.description.split('\n\n').map((paragraph, i) => (
           <p key={i} className={i > 0 ? 'mt-6 text-base md:text-[1.05rem] italic opacity-70' : ''}>
