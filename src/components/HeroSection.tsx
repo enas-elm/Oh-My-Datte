@@ -30,7 +30,6 @@ export default function HeroSection() {
   const scale3 = useTransform(scrollYProgress, percentRange(), valueRange(0.9, 1.1));
   const scale4 = useTransform(scrollYProgress, percentRange(), valueRange(0.9, 1.1));
 
-  const MotionLink = motion.create(SmoothLink);
   const MotionImage = motion.create(Image);
 
   return (
@@ -166,15 +165,19 @@ export default function HeroSection() {
             Atelier Artisanal
           </motion.span>
         </p>
-        <MotionLink
-          href="#contact"
-          className='inline-flex border border-choco-500 font-times bg-choco-500 text-vanilla py-3 px-4 shadow-button text-xl hover:bg-transparent hover:text-choco-500 transition-colors duration-300 ease-in-out focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-choco-500'
+        <motion.div
+          className="inline-block"
           initial={{ opacity: 0, filter: 'blur(10px)' }}
           animate={{ opacity: 1, filter: 'blur(0px)' }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.4, delay: 0.8 }}
         >
-          COMMANDER
-        </MotionLink>
+          <SmoothLink
+            href="#contact"
+            className='inline-flex border border-choco-500 font-times bg-choco-500 text-vanilla py-3 px-4 shadow-button text-xl hover:bg-transparent hover:text-choco-500 transition-colors duration-300 ease-in-out focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-choco-500'
+          >
+            COMMANDER
+          </SmoothLink>
+        </motion.div>
       </div>
     </section>
   );
