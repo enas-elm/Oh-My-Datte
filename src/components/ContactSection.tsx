@@ -108,27 +108,22 @@ export default function ContactSection() {
                 inputMode="numeric"
                 value={quantity}
                 onChange={(e) => {
-                  const value = e.target.value
+                  const number = Number(e.target.value)
 
-                  // Permet de vider le champ
-                  if (value === "") {
-                    setQuantity("")
-                    return
-                  }
-
-                  const number = Number(value)
+                  if (isNaN(number)) return
 
                   if (number > 500) {
-                    setQuantity("500")
+                    setQuantity(500)
                   } else if (number < 1) {
-                    setQuantity("1")
+                    setQuantity(1)
                   } else {
-                    setQuantity(value)
+                    setQuantity(number)
                   }
                 }}
-                className="mt-2 rounded border-vanilla border-[0.5px] p-4 focus-visible:outline focus-visible:outline-vanilla"
+                className="mt-2 rounded border border-vanilla border-[0.5px] p-4 focus-visible:outline focus-visible:outline-vanilla"
                 required
               />
+
             </div>
 
             <div className="flex flex-col mb-8 relative">
