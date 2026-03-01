@@ -121,7 +121,7 @@ export default function QualitySection() {
   }, [])
 
   return (
-    <section id="qualite" className="section-scroll-mt my-32">
+    <section id="qualite" className="my-32">
       {/* Header */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-24">
         <div className="flex w-full justify-between mx-auto items-center gap-8 sm:gap-20">

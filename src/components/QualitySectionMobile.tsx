@@ -61,7 +61,7 @@ export default function QualitySectionMobile({ states }: { states: QualityState[
     const state2Bottom = states[1].bottomImage
 
     return (
-        <section id="qualite" className="md:hidden section-scroll-mt my-32 container mx-auto px-4 sm:px-6">
+        <section id="qualite" className="md:hidden my-14 container mx-auto px-4 sm:px-6 overflow-x-clip">
             {/* Header */}
             <div className="flex w-full justify-between mx-auto items-center gap-8 sm:gap-20 mb-24">
                 <motion.div
@@ -103,7 +103,7 @@ export default function QualitySectionMobile({ states }: { states: QualityState[
             </div>
 
             {/* Grid (ta version mobile) */}
-            <div className="grid grid-flow-col grid-cols-2 grid-rows-4 gap-y-16 mx-auto">
+            <div className="grid grid-flow-col grid-cols-[3fr_2fr] grid-rows-4 gap-y-16 mx-auto">
                 {blocks.map((b, i) => (
                     <div key={i}>
 
@@ -116,13 +116,7 @@ export default function QualitySectionMobile({ states }: { states: QualityState[
                             />
                         )}
 
-                        <motion.div
-                            className="space-y-2"
-                            initial={{ opacity: 0, filter: "blur(10px)", y: 20 }}
-                            whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                            viewport={{ once: true, amount: 0.5 }}
-                            transition={{ duration: 0.6, ease: "easeOut" as const, delay: 0.15 }}
-                        >
+                        <div className="space-y-2">
                             <h4 className="uppercase text-[clamp(1.125rem,4vw,1.75rem)]">
                                 {b.title}
                             </h4>
@@ -130,48 +124,48 @@ export default function QualitySectionMobile({ states }: { states: QualityState[
                             {b.paragraphs.map((p, idx) => (
                                 <p key={idx}>{p}</p>
                             ))}
-                        </motion.div>
+                        </div>
 
                     </div>
                 ))}
 
-                <div className="row-span-2 sticky top-1/3 self-center overflow-hidden">
-                    <div className="relative bg-[url(/images/green-brush-bg.svg)] bg-no-repeat bg-center bg-contain w-[260px] h-[420px]">
+                <div className="row-span-4 sticky top-1/3 self-start justify-self-end -mr-10">
+                    <div className="relative bg-[url(/images/green-brush-bg.svg)] bg-no-repeat bg-center bg-contain w-[230px] h-[370px]">
                         {/* STATE 1 : datte-1 + pistachio */}
-                        <div ref={set1Ref} className="absolute inset-0 flex flex-col items-center justify-center gap-16">
+                        <div ref={set1Ref} className="absolute inset-0 flex flex-col items-center justify-center gap-12">
                             <Image
                                 src={state1Top.src}
                                 alt={state1Top.alt}
-                                width={state1Top.w}
-                                height={state1Top.h}
+                                width={123}
+                                height={172}
                                 className="object-contain"
                                 style={{ rotate: `${state1Top.rotation ?? 0}deg` }}
                             />
                             <Image
                                 src={state1Bottom.src}
                                 alt={state1Bottom.alt}
-                                width={state1Bottom.w}
-                                height={state1Bottom.h}
+                                width={100}
+                                height={100}
                                 className="object-contain"
                                 style={{ rotate: `${state1Bottom.rotation ?? 0}deg` }}
                             />
                         </div>
 
                         {/* STATE 2 : chocolate + datte-2-shadow */}
-                        <div ref={set2Ref} className="absolute inset-0 flex flex-col items-center justify-center gap-16">
+                        <div ref={set2Ref} className="absolute inset-0 flex flex-col items-center justify-center gap-12">
                             <Image
                                 src={state2Top.src}
                                 alt={state2Top.alt}
-                                width={state2Top.w}
-                                height={state2Top.h}
+                                width={123}
+                                height={154}
                                 className="object-contain"
                                 style={{ rotate: `${state2Top.rotation ?? 0}deg` }}
                             />
                             <Image
                                 src={state2Bottom.src}
                                 alt={state2Bottom.alt}
-                                width={state2Bottom.w}
-                                height={state2Bottom.h}
+                                width={123}
+                                height={185}
                                 className="object-contain"
                                 style={{ rotate: `${state2Bottom.rotation ?? 0}deg` }}
                             />

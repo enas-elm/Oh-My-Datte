@@ -41,9 +41,9 @@ export default function QualitySectionDesktop({ states, refs }: { states: Qualit
     } = refs
 
     return (
-        <section id="qualite" className="section-scroll-mt hidden md:block my-32 container mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="qualite" className="hidden md:block my-32 container mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header */}
-            <div className="flex w-full justify-between mx-auto items-center gap-8 sm:gap-20 mb-24">
+            <div className="flex w-full justify-between mx-auto items-center gap-8 sm:gap-20 mb-0">
                 <motion.div
                     initial={{ scaleX: 0 }}
                     whileInView={{ scaleX: 1 }}
@@ -90,7 +90,7 @@ export default function QualitySectionDesktop({ states, refs }: { states: Qualit
                     <div ref={dot2Ref} className="w-2 h-2 rounded-full bg-choco-500 opacity-30" />
                 </div>
 
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center pt-20">
                     <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-6 lg:gap-10 xl:gap-16 w-full">
                         {/* LEFT */}
                         <div className="relative min-h-[40vh] flex items-center justify-end">
@@ -137,11 +137,11 @@ export default function QualitySectionDesktop({ states, refs }: { states: Qualit
                                 className="absolute h-full w-auto pointer-events-none select-none"
                             />
 
-                            <div ref={topImg1Ref} className="absolute inset-0 z-10 flex items-center justify-center">
+                            <div ref={topImg1Ref} className="absolute inset-0 z-10 flex items-center justify-center scale-[1.35]">
                                 <Image src={states[0].topImage.src} alt={states[0].topImage.alt} width={states[0].topImage.w} height={states[0].topImage.h} className="object-contain drop-shadow-lg" />
                             </div>
 
-                            <div ref={topImg2Ref} className="absolute inset-0 z-10 flex items-center justify-center">
+                            <div ref={topImg2Ref} className="absolute inset-0 z-10 flex items-center justify-center scale-[1.35]">
                                 <Image
                                     src={states[1].topImage.src}
                                     alt={states[1].topImage.alt}
@@ -152,11 +152,11 @@ export default function QualitySectionDesktop({ states, refs }: { states: Qualit
                                 />
                             </div>
 
-                            <div ref={bottomImg1Ref} className="absolute inset-0 z-10 flex items-center justify-center">
+                            <div ref={bottomImg1Ref} className="absolute inset-0 z-10 flex items-center justify-center scale-[1.35]">
                                 <Image src={states[0].bottomImage.src} alt={states[0].bottomImage.alt} width={states[0].bottomImage.w} height={states[0].bottomImage.h} className="object-contain drop-shadow-lg" />
                             </div>
 
-                            <div ref={bottomImg2Ref} className="absolute inset-0 z-10 flex items-center justify-center">
+                            <div ref={bottomImg2Ref} className="absolute inset-0 z-10 flex items-center justify-center scale-[1.35]">
                                 <Image
                                     src={states[1].bottomImage.src}
                                     alt={states[1].bottomImage.alt}

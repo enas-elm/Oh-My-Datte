@@ -21,28 +21,28 @@ export default function ProductSection() {
 
   const products: Product[] = [
     {
-      imagePath: '/images/Groupdattes.png',
+      imagePath: '/images/nosdattes/intrepide.png',
       title: "L'Intrépide",
       subtitle: 'Noir · Cacahuète',
       description:
         'L’Intrépide ne demande pas la permission. Sous sa carapace de chocolat noir intense, elle cache un cœur de beurre de cacahuète généreux et des éclats croquants qui bousculent les codes.\n\nC’est la datte des audacieux : directe, efficace, et terriblement addictive.',
     },
     {
-      imagePath: '/images/datte-5-shadow.png',
+      imagePath: '/images/nosdattes/irresistible.png',
       title: "L'Irrésistible",
       subtitle: 'Blanc · Pistache',
       description:
         'Elle entre en scène et le temps s’arrête. Vêtue d’un velouté de chocolat blanc et d’un cœur fondant à la pistache, L\'Irrésistible mise sur l’éclat.\n\nDouce mais affirmée, elle offre un équilibre précieux entre luxe et délicatesse. On ne lui résiste pas, on succombe.',
     },
     {
-      imagePath: '/images/datte-4-shadow.png',
+      imagePath: '/images/nosdattes/cool-kid.png',
       title: "Le Cool Kid",
       subtitle: 'Noir · Praliné',
       description:
         'L’allure chic, l’esprit libre. Le Cool Kid revisite le classique avec un praliné noisette-amande qui fond en bouche. Enrobé de chocolat noir, il impose son style sans en faire trop.\n\nC’est la gourmandise chill par excellence, celle qu’on invite à toutes les occasions.',
     },
     {
-      imagePath: '/images/datte-6-shadow.png',
+      imagePath: '/images/nosdattes/sage.png',
       title: "Le Sage",
       subtitle: 'Noir · Coco',
       description:
@@ -51,7 +51,7 @@ export default function ProductSection() {
   ];
 
   return (
-    <section className="section-scroll-mt my-32 py-52 sm:py-80 relative text-vanilla overflow-hidden">
+    <section className="my-20 md:my-32 py-52 sm:py-80 relative text-vanilla overflow-hidden">
       <Image
         id='vos-dattes'
         src="/images/product-bg.svg"
@@ -92,9 +92,9 @@ export default function ProductSection() {
           </motion.span>
         </h2>
 
-        <div className="grid grid-flow-col grid-cols-2 grid-rows-2 gap-8 sm:gap-12 gap-y-32 md:gap-y-42">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 gap-y-32 md:gap-y-42">
           {products.map((product, i) => (
-            <ProductCard key={i} product={product} />
+            <ProductCard key={i} product={product} index={i} />
           ))}
         </div>
       </div>
