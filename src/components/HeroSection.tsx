@@ -168,7 +168,7 @@ export default function HeroSection() {
         </p>
         <MotionLink
           href="#contact"
-          className='inline-flex border border-choco-500 font-times bg-choco-500 text-vanilla py-4 pb-3 px-4 shadow-button text-xl focus:outline-2 focus:outline-offset-2 focus:outline-choco-500 focus:rounded-sm'
+          className='inline-flex border border-choco-500 font-times bg-choco-500 text-vanilla py-3 px-4 shadow-button text-xl hover:bg-transparent hover:text-choco-500 transition-colors duration-300 ease-in-out focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-choco-500'
           initial={{ opacity: 0, filter: 'blur(10px)' }}
           animate={{ opacity: 1, filter: 'blur(0px)' }}
           transition={{ duration: 0.6, delay: 0.8 }}
