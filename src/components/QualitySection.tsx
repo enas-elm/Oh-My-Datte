@@ -84,11 +84,11 @@ export default function QualitySection() {
     mm.add("(min-width: 768px)", () => {
       const h = brush.offsetHeight
       const entryY = h * 0.6
-      const exitY = -h * 0.6
       const topRest = -h * 0.17
       const bottomRest = h * 0.17
 
-      gsap.set([topImg2Ref.current, bottomImg2Ref.current], { y: entryY, autoAlpha: 0 })
+      gsap.set(topImg2Ref.current, { y: topRest + 12, autoAlpha: 0, filter: "blur(6px)" })
+      gsap.set(bottomImg2Ref.current, { y: bottomRest + 12, autoAlpha: 0, filter: "blur(6px)" })
       gsap.set(topImg1Ref.current, { y: entryY, autoAlpha: 0 })
       gsap.set(bottomImg1Ref.current, { y: entryY, autoAlpha: 0 })
 
@@ -103,14 +103,14 @@ export default function QualitySection() {
         autoAlpha: 1,
         duration: 1,
         ease: "power2.out",
-        scrollTrigger: { trigger: pinned, start: "top 50%", end: "top top", scrub: 0.6 },
+        scrollTrigger: { trigger: pinned, start: "top 50%", end: "top top", scrub: 0.4 },
       })
       gsap.to(bottomImg1Ref.current, {
         y: bottomRest,
         autoAlpha: 1,
         duration: 1,
         ease: "power2.out",
-        scrollTrigger: { trigger: pinned, start: "top 45%", end: "top top", scrub: 0.6 },
+        scrollTrigger: { trigger: pinned, start: "top 45%", end: "top top", scrub: 0.4 },
       })
 
       const tl = gsap.timeline({
@@ -119,14 +119,14 @@ export default function QualitySection() {
           start: "top top",
           end: () => `+=${window.innerHeight * 2}`,
           pin: true,
-          scrub: 0.8,
+          scrub: 0.5,
         },
       })
 
-      tl.to({}, { duration: 0.5 })
+      tl.to({}, { duration: 0.6 })
 
-      tl.to(topImg1Ref.current, { y: exitY, autoAlpha: 0, duration: 1, ease: "power2.in" })
-      tl.to(bottomImg1Ref.current, { y: exitY, autoAlpha: 0, duration: 1, ease: "power2.in" }, "<0.1")
+      tl.to(topImg1Ref.current, { autoAlpha: 0, y: topRest - 12, filter: "blur(6px)", duration: 1, ease: "power1.out" })
+      tl.to(bottomImg1Ref.current, { autoAlpha: 0, y: bottomRest - 12, filter: "blur(6px)", duration: 1, ease: "power1.out" }, "<")
 
       tl.to([leftText1Ref.current, rightText1Ref.current], { autoAlpha: 0, duration: 0.6, ease: "power1.in" }, "<0.2")
       tl.to([leftText2Ref.current, rightText2Ref.current], { autoAlpha: 1, duration: 0.6, ease: "power1.out" }, ">-0.1")
@@ -134,31 +134,10 @@ export default function QualitySection() {
       tl.to(dot1Ref.current, { scale: 1, opacity: 0.3, duration: 0.4 }, "<")
       tl.to(dot2Ref.current, { scale: 1.6, opacity: 1, duration: 0.4 }, "<")
 
-      tl.to(topImg2Ref.current, { y: topRest, autoAlpha: 1, duration: 1.2, ease: "power2.out" }, "<0.1")
-      tl.to(bottomImg2Ref.current, { y: bottomRest, autoAlpha: 1, duration: 1.2, ease: "power2.out" }, "<0.15")
+      tl.to(topImg2Ref.current, { y: topRest, autoAlpha: 1, filter: "blur(0px)", duration: 1, ease: "power1.out" }, "<0.1")
+      tl.to(bottomImg2Ref.current, { y: bottomRest, autoAlpha: 1, filter: "blur(0px)", duration: 1, ease: "power1.out" }, "<0.15")
 
-      tl.to({}, { duration: 0.5 })
-
-      gsap.fromTo(
-        topImg2Ref.current,
-        { y: topRest, autoAlpha: 1 },
-        {
-          y: exitY,
-          autoAlpha: 0,
-          immediateRender: false,
-          scrollTrigger: { trigger: postPinRef.current, start: "top 70%", end: "top 20%", scrub: 0.6 },
-        }
-      )
-      gsap.fromTo(
-        bottomImg2Ref.current,
-        { y: bottomRest, autoAlpha: 1 },
-        {
-          y: exitY,
-          autoAlpha: 0,
-          immediateRender: false,
-          scrollTrigger: { trigger: postPinRef.current, start: "top 75%", end: "top 25%", scrub: 0.6 },
-        }
-      )
+      tl.to({}, { duration: 0.6 })
     })
 
     return () => mm.revert()
