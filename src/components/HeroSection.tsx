@@ -64,7 +64,7 @@ export default function HeroSection() {
         </h1>
         <motion.div style={{ x }} className="absolute left-16 sm:left-44 right-0 top-8 sm:top-0 flex items-center gap-[18vw] w-full px-4 pointer-events-none">
           <MotionImage
-            src="/images/datte-1.png"
+            src="/images/inside-datte.png"
             alt="Bowl of dates"
             width={208}
             height={208}
@@ -79,7 +79,7 @@ export default function HeroSection() {
             }}
           />
           <MotionImage
-            src="/images/datte-2.png"
+            src="/images/irresistible-irl.png"
             alt="Bowl of dates"
             width={224}
             height={224}
@@ -94,7 +94,7 @@ export default function HeroSection() {
             }}
           />
           <MotionImage
-            src="/images/datte-3.png"
+            src="/images/intrepide-irl.png"
             alt="Bowl of dates"
             width={232}
             height={232}

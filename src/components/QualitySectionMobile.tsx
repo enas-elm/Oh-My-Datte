@@ -130,7 +130,7 @@ export default function QualitySectionMobile({ states }: { states: QualityState[
                 ))}
 
                 <div className="row-span-4 sticky top-1/3 self-start justify-self-end -mr-10">
-                    <div className="relative bg-[url(/images/green-brush-bg.svg)] bg-no-repeat bg-center bg-contain w-[200px] h-[323px]">
+                    <div className="relative bg-[url(/images/green-brush-bg.svg)] bg-no-repeat bg-center bg-contain w-[230px] h-[370px]">
                         {/* STATE 1 : datte-1 + pistachio */}
                         <div ref={set1Ref} className="absolute inset-0 flex flex-col items-center justify-center gap-12">
                             <Image

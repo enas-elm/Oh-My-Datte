@@ -32,7 +32,7 @@ const states: QualityState[] = [
         "L'objectif ? Laisser s'exprimer le goût vrai et puissant de chaque noix, pour un équilibre parfait en bouche.",
       ],
     },
-    topImage: { src: "/images/datte-1.png", alt: "Datte deglet nour", w: 160, h: 224 },
+    topImage: { src: "/images/deglet-nour-datte-float.png", alt: "Dattes deglet nour", w: 160, h: 224 },
     bottomImage: { src: "/images/pistachio.png", alt: "Pistache", w: 130, h: 130 },
   },
   {
@@ -51,7 +51,7 @@ const states: QualityState[] = [
       ],
     },
     topImage: { src: "/images/chocolate.png", alt: "Chocolat noir", w: 160, h: 200, rotation: -20 },
-    bottomImage: { src: "/images/datte-2-shadow.png", alt: "Datte fourrée au chocolat", w: 160, h: 240, rotation: 10 },
+    bottomImage: { src: "/images/intrepide-irl.png", alt: "Datte fourrée au chocolat", w: 160, h: 240, rotation: 10 },
   },
 ]
 
