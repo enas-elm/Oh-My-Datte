@@ -107,7 +107,7 @@ export default function QualitySectionMobile({ states }: { states: QualityState[
         return () => mm.revert()
     }, [])
     return (
-        <section id="qualite" className="md:hidden section-scroll-mt my-32 container mx-auto px-4 sm:px-6">
+        <section id="qualite" className="md:hidden my-20 container mx-auto px-4 sm:px-6">
             {/* Header */}
             <div className="flex w-full justify-between mx-auto items-center gap-8 sm:gap-20 mb-24">
                 <motion.div

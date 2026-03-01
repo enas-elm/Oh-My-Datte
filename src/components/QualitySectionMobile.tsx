@@ -61,7 +61,7 @@ export default function QualitySectionMobile({ states }: { states: QualityState[
     const state2Bottom = states[1].bottomImage
 
     return (
-        <section id="qualite" className="md:hidden section-scroll-mt my-32 container mx-auto px-4 sm:px-6 overflow-x-clip">
+        <section id="qualite" className="md:hidden my-14 container mx-auto px-4 sm:px-6 overflow-x-clip">
             {/* Header */}
             <div className="flex w-full justify-between mx-auto items-center gap-8 sm:gap-20 mb-24">
                 <motion.div

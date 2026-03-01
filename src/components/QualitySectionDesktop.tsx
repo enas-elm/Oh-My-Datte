@@ -41,7 +41,7 @@ export default function QualitySectionDesktop({ states, refs }: { states: Qualit
     } = refs
 
     return (
-        <section id="qualite" className="section-scroll-mt hidden md:block my-32 container mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="qualite" className="hidden md:block my-32 container mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header */}
             <div className="flex w-full justify-between mx-auto items-center gap-8 sm:gap-20 mb-0">
                 <motion.div

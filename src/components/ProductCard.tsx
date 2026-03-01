@@ -16,7 +16,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
 
   return (
     <div ref={ref} className="flex flex-col items-center lg:max-w-120 mx-auto">
-      {/* 1. Image — blur + opacity */}
+      {/* Image — blur + opacity */}
       <motion.div
         initial={{ opacity: 0, filter: 'blur(14px)' }}
         animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
@@ -38,7 +38,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           alt={`Datte au ${product.subtitle}`}
           width={200}
           height={200}
-          className="object-contain aspect-square relative z-1 drop-shadow-[0_8px_6px_rgba(0,0,0,0.5)] max-w-[175px] sm:max-w-[200px]"
+          className="object-contain aspect-square relative z-1 drop-shadow-[0_8px_6px_rgba(0,0,0,0.5)] max-w-[160px] sm:max-w-[160px]"
         />
       </motion.div>
 
@@ -52,17 +52,9 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
         {product.title}
       </motion.h4>
 
-      {/* 3. Decorative accent line */}
-      <motion.div
-        className="w-8 h-[1.5px] bg-gold-600 rounded-full mt-2 mb-3"
-        initial={{ opacity: 0, filter: 'blur(14px)' }}
-        animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-        transition={{ delay: baseDelay + stagger + 0.28, duration: 0.45, ease: 'easeOut' }}
-      />
-
-      {/* 4. Subtitle — blur + opacity */}
+      {/* Subtitle — blur + opacity */}
       <motion.p
-        className="text-sm md:text-base mb-6"
+        className="text-sm md:text-base "
         initial={{ opacity: 0, filter: 'blur(14px)' }}
         animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
         transition={{ delay: baseDelay + stagger + 0.42, duration: 0.45, ease: 'easeOut' }}
@@ -72,7 +64,16 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
         </span>
       </motion.p>
 
-      {/* 5. Description — blur + opacity */}
+
+      {/* Decorative accent line */}
+      <motion.div
+        className="w-8 h-[1.5px] bg-gold-600 rounded-full my-4"
+        initial={{ opacity: 0, filter: 'blur(14px)' }}
+        animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
+        transition={{ delay: baseDelay + stagger + 0.28, duration: 0.45, ease: 'easeOut' }}
+      />
+
+      {/* Description — blur + opacity */}
       <motion.div
         className="text-center md:text-lg"
         initial={{ opacity: 0, filter: 'blur(14px)' }}

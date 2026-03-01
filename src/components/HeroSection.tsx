@@ -14,27 +14,26 @@ export default function HeroSection() {
   });
 
   // On transforme le scroll (0 à 1) en translation x (de 0% à -50%)
-  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-35%']);
+  const x = useTransform(scrollYProgress, [0, 1], ['16%', '-25%']);
 
   const percentRange = () => {
-    return Array.from({ length: 10 }, (_, i) => i / (10 - 1))
+    return Array.from({ length: 6 }, (_, i) => i / (6 - 1))
   }
 
   const valueRange = (min: number, max: number) => {
-    return Array.from({ length: 10 }, () => Math.random() * (max - min) + min)
+    return Array.from({ length: 6 }, () => Math.random() * (max - min) + min)
   }
 
   // Effet de bounce sur les images avec le scroll
   const scale1 = useTransform(scrollYProgress, percentRange(), valueRange(0.9, 1.1));
   const scale2 = useTransform(scrollYProgress, percentRange(), valueRange(0.9, 1.1));
   const scale3 = useTransform(scrollYProgress, percentRange(), valueRange(0.9, 1.1));
-  const scale4 = useTransform(scrollYProgress, percentRange(), valueRange(0.9, 1.1));
 
   const MotionImage = motion.create(Image);
 
   return (
     // 350vh définit la durée du scroll
-    <section ref={targetRef} className="mt-[calc(var(--navbar-height)+100px)] h-[350vh] relative">
+    <section ref={targetRef} className="mt-[calc(var(--navbar-height)+100px)] h-[200vh] relative">
       <div className="sticky top-[calc(var(--navbar-height)+100px)] py-3 text-center overflow-hidden">
         <h1 className="font-times text-center">
           <motion.span
@@ -62,13 +61,13 @@ export default function HeroSection() {
             Crunsh
           </motion.span>
         </h1>
-        <motion.div style={{ x }} className="absolute left-16 sm:left-44 right-0 top-8 sm:top-0 flex items-center gap-[18vw] w-full px-4 pointer-events-none">
+        <motion.div style={{ x }} className="absolute left-16 sm:left-44 right-0 top-8 sm:top-10 flex items-center gap-[18vw] w-full px-4 pointer-events-none">
           <MotionImage
             src="/images/inside-datte.png"
             alt="Bowl of dates"
             width={208}
             height={208}
-            className="object-contain w-[clamp(88px,18vw,208px)] max-w-[208px] h-auto"
+            className="object-contain w-[clamp(88px,18vw,208px)] max-w-[180px] h-auto"
             style={{ scale: scale1 }}
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -105,21 +104,6 @@ export default function HeroSection() {
             transition={{
               duration: 0.3,
               delay: 0.2,
-              scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-            }}
-          />
-          <MotionImage
-            src="/images/datte-2.png"
-            alt="Bowl of dates"
-            width={242}
-            height={242}
-            className="object-contain w-[22vw] max-w-[242px] h-auto rotate-12"
-            style={{ scale: scale4 }}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{
-              duration: 0.3,
-              delay: 0.1,
               scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
             }}
           />
