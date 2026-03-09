@@ -27,6 +27,26 @@ export default function ContactSection() {
   const [currentImage, setCurrentImage] = useState(0)
   const [direction, setDirection] = useState(1)
 
+  const getUnitPrice = (qty: number): number => {
+    if (qty >= 150) return 4.10
+    if (qty >= 100) return 4.29
+    if (qty >= 50) return 4.49
+    if (qty >= 20) return 4.99
+    return 5.50
+  }
+
+  const priceTiers = [
+    { min: 1, max: 19, price: 5.50 },
+    { min: 20, max: 49, price: 4.99 },
+    { min: 50, max: 99, price: 4.49 },
+    { min: 100, max: 149, price: 4.29 },
+    { min: 150, max: 500, price: 4.10 },
+  ]
+
+  const quantityNum = Number(quantity) || 0
+  const unitPrice = getUnitPrice(quantityNum)
+  const totalPrice = quantityNum > 0 ? (unitPrice * quantityNum) : 0
+
   const nextImage = useCallback(() => {
     setDirection(1)
     setCurrentImage((prev) => (prev + 1) % productImages.length)
@@ -211,6 +231,51 @@ export default function ContactSection() {
                 className="mt-2 rounded border border-vanilla border-[0.5px] p-4 focus-visible:outline focus-visible:outline-vanilla"
                 required
               />
+
+              {/* Price tiers */}
+              <div className="mt-4 space-y-3">
+                <div className="flex flex-wrap gap-1.5">
+                  {priceTiers.map((tier) => {
+                    const isActive = quantityNum >= tier.min && quantityNum <= tier.max
+                    return (
+                      <button
+                        key={tier.min}
+                        type="button"
+                        onClick={() => setQuantity(String(tier.min))}
+                        className={`px-2.5 py-1 rounded text-xs font-medium transition-all duration-300 ${
+                          isActive
+                            ? "bg-vanilla text-red scale-105"
+                            : "bg-vanilla/10 text-vanilla/60 hover:bg-vanilla/20 hover:text-vanilla"
+                        }`}
+                      >
+                        {tier.min === 1 ? `1–${tier.max}` : tier.min === 150 ? `${tier.min}+` : `${tier.min}–${tier.max}`}
+                        {" · "}
+                        {tier.price.toFixed(2).replace(".", ",")}€
+                      </button>
+                    )
+                  })}
+                </div>
+
+                <AnimatePresence mode="wait">
+                  {quantityNum > 0 && (
+                    <motion.div
+                      key={unitPrice}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                      className="flex items-baseline justify-between border-t border-vanilla/20 pt-3"
+                    >
+                      <span className="text-sm text-vanilla/70">
+                        {quantityNum} coffret{quantityNum > 1 ? "s" : ""} × {unitPrice.toFixed(2).replace(".", ",")}€
+                      </span>
+                      <span className="font-times text-2xl tracking-tight text-vanilla">
+                        {totalPrice.toFixed(2).replace(".", ",")}€
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
             </div>
 
