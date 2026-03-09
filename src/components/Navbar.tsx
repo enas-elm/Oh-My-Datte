@@ -33,7 +33,7 @@ export function Navbar() {
         >
           <Image
             src="/images/icon_ohmydatte.svg"
-            alt="Logo de Oh My Datte"
+            alt="Oh My Datte"
             width={80}
             height={80}
           />
