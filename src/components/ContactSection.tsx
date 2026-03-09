@@ -28,7 +28,6 @@ export default function ContactSection() {
   const [direction, setDirection] = useState(1)
 
   const getUnitPrice = (qty: number): number => {
-    if (qty >= 150) return 4.10
     if (qty >= 100) return 4.29
     if (qty >= 50) return 4.49
     if (qty >= 20) return 4.99
@@ -39,8 +38,7 @@ export default function ContactSection() {
     { min: 1, max: 19, price: 5.50 },
     { min: 20, max: 49, price: 4.99 },
     { min: 50, max: 99, price: 4.49 },
-    { min: 100, max: 149, price: 4.29 },
-    { min: 150, max: 500, price: 4.10 },
+    { min: 100, max: 500, price: 4.29 },
   ]
 
   const quantityNum = Number(quantity) || 0
@@ -216,14 +214,19 @@ export default function ContactSection() {
                 inputMode="numeric"
                 value={quantity}
                 onChange={(e) => {
-                  const number = Number(e.target.value)
+                  const val = e.target.value
+
+                  if (val === "") {
+                    setQuantity("")
+                    return
+                  }
+
+                  const number = Number(val)
 
                   if (isNaN(number)) return
 
                   if (number > 500) {
                     setQuantity("500")
-                  } else if (number < 1) {
-                    setQuantity("1")
                   } else {
                     setQuantity(String(number))
                   }
@@ -248,7 +251,7 @@ export default function ContactSection() {
                             : "bg-vanilla/10 text-vanilla/60 hover:bg-vanilla/20 hover:text-vanilla"
                         }`}
                       >
-                        {tier.min === 1 ? `1–${tier.max}` : tier.min === 150 ? `${tier.min}+` : `${tier.min}–${tier.max}`}
+                        {tier.min === 1 ? `1–${tier.max}` : tier.min === 100 ? `${tier.min}+` : `${tier.min}–${tier.max}`}
                         {" · "}
                         {tier.price.toFixed(2).replace(".", ",")}€
                       </button>
