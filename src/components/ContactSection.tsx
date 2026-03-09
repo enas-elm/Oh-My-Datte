@@ -1,8 +1,16 @@
 "use client";
 
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useEffect, useCallback } from "react"
+import Image from "next/image"
 import { Button } from "./Button"
 import { motion, AnimatePresence, useInView } from "motion/react"
+
+const productImages = [
+  "/images/product/img_0159.webp",
+  "/images/product/img_0102.webp",
+  "/images/product/img_0169.webp",
+  "/images/product/img_0150.webp",
+]
 
 export default function ContactSection() {
   const textRef = useRef(null);
@@ -16,6 +24,18 @@ export default function ContactSection() {
   const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [currentImage, setCurrentImage] = useState(0)
+  const [direction, setDirection] = useState(1)
+
+  const nextImage = useCallback(() => {
+    setDirection(1)
+    setCurrentImage((prev) => (prev + 1) % productImages.length)
+  }, [])
+
+  useEffect(() => {
+    const timer = setInterval(nextImage, 4000)
+    return () => clearInterval(timer)
+  }, [nextImage])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -83,6 +103,56 @@ export default function ContactSection() {
             <br />
             <b>Découvrez nos élégants coffrets de 3 dattes. Un assortiment 100% personnalisable.</b>
           </motion.p>
+
+          <motion.div
+            className="mt-8 md:mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={textInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.45, duration: 0.5, ease: 'easeOut' }}
+          >
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl shadow-lg">
+              <AnimatePresence mode="popLayout" initial={false} custom={direction}>
+                <motion.div
+                  key={currentImage}
+                  custom={direction}
+                  initial={{ opacity: 0, scale: 1.08 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={productImages[currentImage]}
+                    alt="Coffret Oh My Datte"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority={currentImage === 0}
+                  />
+                </motion.div>
+              </AnimatePresence>
+
+              <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent" />
+
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                {productImages.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setDirection(i > currentImage ? 1 : -1)
+                      setCurrentImage(i)
+                    }}
+                    className={`h-1.5 rounded-full transition-all duration-500 ${
+                      i === currentImage
+                        ? "w-6 bg-vanilla"
+                        : "w-1.5 bg-vanilla/50 hover:bg-vanilla/80"
+                    }`}
+                    aria-label={`Image ${i + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
         </div>
         <motion.div
           ref={formRef}
