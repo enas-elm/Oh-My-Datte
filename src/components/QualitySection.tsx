@@ -144,7 +144,7 @@ export default function QualitySection() {
   }, [])
 
   return (
-    <>
+    <section id="qualite">
       <QualitySectionMobile states={states} />
 
       <QualitySectionDesktop
@@ -165,6 +165,6 @@ export default function QualitySection() {
           dot2Ref,
         }}
       />
-    </>
+    </section>
   )
 }
