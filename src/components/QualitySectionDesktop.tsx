@@ -69,7 +69,7 @@ export default function QualitySectionDesktop({ states, refs }: { states: Qualit
                         transition={{ duration: 0.6, ease: "easeOut" as const, delay: 0.15 }}
                         className="block"
                     >
-                        de qualités
+                        de qualité
                     </motion.span>
                 </h2>
                 <motion.div

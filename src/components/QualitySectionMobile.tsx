@@ -89,7 +89,7 @@ export default function QualitySectionMobile({ states }: { states: QualityState[
                         transition={{ duration: 0.6, ease: "easeOut" as const, delay: 0.15 }}
                         className="block"
                     >
-                        de&nbsp;qualités
+                        de&nbsp;qualité
                     </motion.span>
                 </h2>
                 <motion.div

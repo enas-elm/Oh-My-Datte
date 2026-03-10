@@ -107,7 +107,7 @@ export default function ContactSection() {
             animate={textInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
             transition={{ duration: 0.45, ease: 'easeOut' }}
           >
-            Vous avez craquez ?
+            Vous avez craqué ?
           </motion.h2>
 
           <motion.p
