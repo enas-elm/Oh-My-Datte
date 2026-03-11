@@ -3,6 +3,7 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: light only;
   --choco-100: #8C6D62;
   --choco-500: #5A3E36;
   --choco-700: #3E2A24;
