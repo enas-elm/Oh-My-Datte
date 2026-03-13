@@ -30,6 +30,21 @@ export const metadata: Metadata = {
     siteName: 'Oh My Datte',
     locale: 'fr_FR',
     type: 'website',
+    images: [
+      {
+        url: '/images/product/img_0169.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Coffret Oh My Datte - Confiserie de dattes artisanales',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Oh My Datte - Confiserie de dattes artisanales',
+    description:
+      "Oh My Datte, c'est l'atelier artisanal qui transforme la datte en une véritable création pâtissière.",
+    images: ['/images/product/img_0169.webp'],
   },
   robots: {
     index: true,
