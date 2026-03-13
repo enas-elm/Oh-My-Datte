@@ -6,13 +6,9 @@ import { useInView } from 'motion/react';
 import { useRef } from 'react';
 import { Product } from './ProductSection';
 
-export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
+export function ProductCard({ product }: { product: Product }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
-
-  // Start after the "Dattes" title blur-fade finishes (0.28 delay + 0.45 duration)
-  const baseDelay = 0.45;
-  const stagger = 0;
 
   return (
     <div ref={ref} className="flex flex-col items-center lg:max-w-120 mx-auto">
@@ -21,7 +17,6 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
         initial={{ opacity: 0, filter: 'blur(14px)' }}
         animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
         transition={{
-          delay: baseDelay + stagger,
           duration: 0.45,
           ease: 'easeOut',
         }}
@@ -47,7 +42,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
         className="uppercase text-[clamp(1.125rem,4vw,1.5rem)]"
         initial={{ opacity: 0, filter: 'blur(14px)' }}
         animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-        transition={{ delay: baseDelay + stagger + 0.14, duration: 0.45, ease: 'easeOut' }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
       >
         {product.title}
       </motion.h4>
@@ -57,7 +52,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
         className="text-sm md:text-base "
         initial={{ opacity: 0, filter: 'blur(14px)' }}
         animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-        transition={{ delay: baseDelay + stagger + 0.42, duration: 0.45, ease: 'easeOut' }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
       >
         <span className='opacity-[.6]'>
           {product.subtitle}
@@ -70,7 +65,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
         className="w-8 h-[1.5px] bg-gold-600 rounded-full my-4"
         initial={{ opacity: 0, filter: 'blur(14px)' }}
         animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-        transition={{ delay: baseDelay + stagger + 0.28, duration: 0.45, ease: 'easeOut' }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
       />
 
       {/* Description — blur + opacity */}
@@ -78,7 +73,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
         className="text-center md:text-lg"
         initial={{ opacity: 0, filter: 'blur(14px)' }}
         animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-        transition={{ delay: baseDelay + stagger + 0.56, duration: 0.45, ease: 'easeOut' }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
       >
         {product.description.split('\n\n').map((paragraph, i) => (
           <p key={i} className={i > 0 ? 'mt-6 text-base md:text-[1.05rem] italic opacity-70' : ''}>

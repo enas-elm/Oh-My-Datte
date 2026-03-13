@@ -77,7 +77,7 @@ export default function ProductSection() {
             className="uppercase"
             initial={{ opacity: 0, filter: 'blur(14px)' }}
             animate={titleInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-            transition={{ delay: 0.14, duration: 0.45, ease: 'easeOut' }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
           >
             vos
           </motion.span>
@@ -86,7 +86,7 @@ export default function ProductSection() {
             className="block font-allura leading-none font text-[clamp(4rem,7vw,11rem)]"
             initial={{ opacity: 0, filter: 'blur(18px)' }}
             animate={titleInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-            transition={{ delay: 0.28, duration: 0.45, ease: 'easeOut' }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
           >
             Dattes
           </motion.span>
@@ -94,7 +94,7 @@ export default function ProductSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 gap-y-32 md:gap-y-42">
           {products.map((product, i) => (
-            <ProductCard key={i} product={product} index={i} />
+            <ProductCard key={i} product={product} />
           ))}
         </div>
       </div>
