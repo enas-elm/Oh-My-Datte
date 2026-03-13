@@ -64,10 +64,13 @@
 /* -----------------------------
   Base styles
 ----------------------------- */
-body {
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
   background-image: url("/images/bg-texture.svg");
   background-repeat: repeat;
-  background-attachment: fixed;
+  z-index: -1;
 }
 
 h1,

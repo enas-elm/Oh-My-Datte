@@ -13,7 +13,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: 'Oh My Datte - Confiserie de dattes artisanales',
+    default: 'Oh My Datte — Confiserie de dattes artisanales',
     template: '%s | Oh My Datte',
   },
   description:
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Oh My Datte - Confiserie de dattes artisanales',
+    title: 'Oh My Datte — Confiserie de dattes artisanales',
     description:
       "Oh My Datte, c'est l'atelier artisanal qui transforme la datte en une véritable création pâtissière. L'assurance d'offrir une confiserie originale qui surprendra vos convives. Dattes deglet nour, pistache, chocolat, chocolat blanc.",
     url: 'https://www.ohmydatte.com',
