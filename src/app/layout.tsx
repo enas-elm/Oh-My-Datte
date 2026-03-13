@@ -1,10 +1,15 @@
 import './globals.css';
 import type { ReactNode } from 'react';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { SmoothScrollProvider } from '@/components/animations/SmoothScrollProvider';
 
 import { Navbar } from '@/components/Navbar';
 import Footer from '@/components/Footer';
+
+export const viewport: Viewport = {
+  colorScheme: 'light',
+  themeColor: '#FFF9F0',
+};
 
 export const metadata: Metadata = {
   title: {

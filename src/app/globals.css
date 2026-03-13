@@ -52,6 +52,15 @@
   --navbar-height: 94px;
 }
 
+/* Force light appearance even when browser applies dark mode */
+@media (prefers-color-scheme: dark) {
+  html, body {
+    color-scheme: light only !important;
+    background-color: #FFF9F0 !important;
+    color: #5A3E36 !important;
+  }
+}
+
 /* -----------------------------
   Base styles
 ----------------------------- */
