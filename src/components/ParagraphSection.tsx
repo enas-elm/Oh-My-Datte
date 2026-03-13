@@ -30,7 +30,7 @@ export default function ParagraphSection() {
         animate={inView ? { opacity: 1, filter: 'blur(0px)' } : {}}
         transition={{ duration: 0.4, delay: 0.3 }}
       >
-        Découvrez l&apos;atelier artisanal qui transforme la datte
+        L&apos;atelier artisanal qui transforme la datte
         en une véritable création pâtissière.
       </motion.p>
 
