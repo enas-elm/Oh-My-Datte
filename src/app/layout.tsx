@@ -1,6 +1,7 @@
 import './globals.css';
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import { SmoothScrollProvider } from '@/components/animations/SmoothScrollProvider';
 
 import { Navbar } from '@/components/Navbar';
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </SmoothScrollProvider>
         
         <Footer/>
+        <Analytics />
       </body>
     </html>
   );
