@@ -31,11 +31,11 @@ export default function ContactSection() {
     if (qty >= 100) return 4.29
     if (qty >= 50) return 4.49
     if (qty >= 20) return 4.99
-    return 5.50
+    return 5.90
   }
 
   const priceTiers = [
-    { min: 1, max: 19, price: 5.50 },
+    { min: 1, max: 19, price: 5.90 },
     { min: 20, max: 49, price: 4.99 },
     { min: 50, max: 99, price: 4.49 },
     { min: 100, max: 500, price: 4.29 },
@@ -208,7 +208,7 @@ export default function ContactSection() {
                 type="number"
                 id="quantity"
                 name="quantity"
-                placeholder="Quantité"
+                placeholder="Nombre de coffrets"
                 min={1}
                 max={500}
                 inputMode="numeric"
@@ -237,6 +237,7 @@ export default function ContactSection() {
 
               {/* Price tiers */}
               <div className="mt-4 space-y-3">
+                <p className="text-xs text-vanilla/50 mb-1.5">Prix dégressifs par coffret</p>
                 <div className="flex flex-wrap gap-1.5">
                   {priceTiers.map((tier) => {
                     const isActive = quantityNum >= tier.min && quantityNum <= tier.max
@@ -252,8 +253,8 @@ export default function ContactSection() {
                         }`}
                       >
                         {tier.min === 1 ? `1–${tier.max}` : tier.min === 100 ? `${tier.min}+` : `${tier.min}–${tier.max}`}
-                        {" · "}
-                        {tier.price.toFixed(2).replace(".", ",")}€
+                        {" coffrets · "}
+                        {tier.price.toFixed(2).replace(".", ",")}€/coffret
                       </button>
                     )
                   })}
@@ -289,7 +290,7 @@ export default function ContactSection() {
               <span className="text-sm text-vanilla/70">
                 Indiquez les assortiments souhaités, la date de livraison désirée ou toute précision utile concernant votre commande.
               </span>
-              <textarea className="mt-2 rounded border-vanilla border-[0.5px] p-4 resize-none focus-visible:outline focus-visible:outline-vanilla" rows={8} name="message" id="message" placeholder="Bonjour, vos dattes ont l'air succulentes, j'aimerais varier le plus possible les assortiments pour la fin du mois !" value={message} onChange={(e) => setMessage(e.target.value)} required />
+              <textarea className="mt-2 rounded border-vanilla border-[0.5px] p-4 resize-none focus-visible:outline focus-visible:outline-vanilla" rows={8} name="message" id="message" placeholder="Bonjour, j'aimerais effectuer une commande pour la fin du mois avec l'Intrépide, l'Irrésistible et le Cool Kid dans chaque coffret. Merci !" value={message} onChange={(e) => setMessage(e.target.value)} required />
               <AnimatePresence>
                 {success && (
                   <motion.p
@@ -303,6 +304,14 @@ export default function ContactSection() {
                 )}
               </AnimatePresence>
             </div >
+
+            <div className="mb-6 space-y-2">
+              <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-vanilla/70">
+                <p><span className="text-vanilla/90 font-medium">Paiement</span> — Espèces à la livraison ou virement bancaire</p>
+                <p><span className="text-vanilla/90 font-medium">Livraison</span> — Remise en main propre uniquement</p>
+              </div>
+              <p className="text-xs text-vanilla/45 italic">Nous vous recontactons par email pour convenir des détails.</p>
+            </div>
 
             <Button type="submit" className="border border-vanilla font-times block ml-auto bg-vanilla text-red hover:bg-red hover:text-vanilla transition-colors duration-300 ease-in-out focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-vanilla" >
               {loading ? "Envoi..." : "Envoyer"}
