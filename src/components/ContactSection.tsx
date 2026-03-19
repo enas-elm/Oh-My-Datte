@@ -43,9 +43,7 @@ export default function ContactSection() {
 
   const quantityNum = Number(quantity) || 0
   const unitPrice = getUnitPrice(quantityNum)
-  const freeBoxes = Math.floor(quantityNum / 5)
-  const paidBoxes = quantityNum - freeBoxes
-  const totalPrice = quantityNum > 0 ? (unitPrice * paidBoxes) : 0
+  const totalPrice = quantityNum > 0 ? (unitPrice * quantityNum) : 0
 
   const nextImage = useCallback(() => {
     setDirection(1)
@@ -237,12 +235,6 @@ export default function ContactSection() {
                 required
               />
 
-              {/* Special offer */}
-              <div className="mt-4 flex items-center gap-2 rounded-lg bg-vanilla/10 border border-vanilla/20 px-3 py-2">
-                <span className="text-sm leading-none" aria-hidden="true">☪︎</span>
-                <span className="text-sm text-vanilla"><span className="font-medium">Offre spéciale Ramadan</span> · 4&nbsp;achetés = 1&nbsp;offert</span>
-              </div>
-
               {/* Price tiers */}
               <div className="mt-4 space-y-3">
                 <p className="text-xs text-vanilla/50 mb-1.5">Prix dégressifs par coffret</p>
@@ -278,16 +270,9 @@ export default function ContactSection() {
                       transition={{ duration: 0.25, ease: "easeOut" }}
                       className="flex items-baseline justify-between border-t border-vanilla/20 pt-3"
                     >
-                      <div className="flex flex-col gap-0.5">
-                        <span className="text-sm text-vanilla/70">
-                          {paidBoxes} coffret{paidBoxes > 1 ? "s" : ""} × {unitPrice.toFixed(2).replace(".", ",")}€
-                        </span>
-                        {freeBoxes > 0 && (
-                          <span className="text-xs text-vanilla/50">
-                            + {freeBoxes} coffret{freeBoxes > 1 ? "s" : ""} offert{freeBoxes > 1 ? "s" : ""}
-                          </span>
-                        )}
-                      </div>
+                      <span className="text-sm text-vanilla/70">
+                        {quantityNum} coffret{quantityNum > 1 ? "s" : ""} × {unitPrice.toFixed(2).replace(".", ",")}€
+                      </span>
                       <span className="font-times text-2xl tracking-tight text-vanilla">
                         {totalPrice.toFixed(2).replace(".", ",")}€
                       </span>
