@@ -28,17 +28,17 @@ export default function ContactSection() {
   const [direction, setDirection] = useState(1)
 
   const getUnitPrice = (qty: number): number => {
-    if (qty >= 100) return 4.29
-    if (qty >= 50) return 4.49
-    if (qty >= 20) return 4.99
+    if (qty >= 100) return 4.99
+    if (qty >= 50) return 5.19
+    if (qty >= 30) return 5.50
     return 5.90
   }
 
   const priceTiers = [
-    { min: 1, max: 19, price: 5.90 },
-    { min: 20, max: 49, price: 4.99 },
-    { min: 50, max: 99, price: 4.49 },
-    { min: 100, max: 500, price: 4.29 },
+    { min: 1, max: 29, price: 5.90 },
+    { min: 30, max: 49, price: 5.50 },
+    { min: 50, max: 99, price: 5.19 },
+    { min: 100, max: 500, price: 4.99 },
   ]
 
   const quantityNum = Number(quantity) || 0
