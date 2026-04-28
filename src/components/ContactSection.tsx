@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { Button } from "./Button"
 import { motion, AnimatePresence, useInView } from "motion/react"
+import { priceTiers, getUnitPrice } from "@/lib/pricing"
 
 const productImages = [
   "/images/product/img_0159.webp",
@@ -26,20 +27,6 @@ export default function ContactSection() {
   const [success, setSuccess] = useState(false)
   const [currentImage, setCurrentImage] = useState(0)
   const [direction, setDirection] = useState(1)
-
-  const getUnitPrice = (qty: number): number => {
-    if (qty >= 100) return 4.99
-    if (qty >= 50) return 5.19
-    if (qty >= 30) return 5.50
-    return 5.90
-  }
-
-  const priceTiers = [
-    { min: 1, max: 29, price: 5.90 },
-    { min: 30, max: 49, price: 5.50 },
-    { min: 50, max: 99, price: 5.19 },
-    { min: 100, max: 500, price: 4.99 },
-  ]
 
   const quantityNum = Number(quantity) || 0
   const unitPrice = getUnitPrice(quantityNum)
