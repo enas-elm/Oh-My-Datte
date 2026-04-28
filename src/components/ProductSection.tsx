@@ -46,7 +46,7 @@ export default function ProductSection() {
       title: "Le Sage",
       subtitle: 'Noir · Coco',
       description:
-        'L’équilibre trouvé entre l’intensité du cacao et la sérénité des îles. Le Sage apaise le caractère du beurre de cacahuète par un voile léger de noix de coco râpée.\n\nUn voyage intérieur, posé et réfléchi, pour ceux qui cherchent la profondeur sous la gourmandise.',
+        'L’équilibre trouvé entre l’intensité du cacao et la sérénité des îles. Le Sage apaise le caractère du chocolat noir par un cœur fondant de praliné coco.\n\nUn voyage intérieur, posé et réfléchi, pour ceux qui cherchent la profondeur sous la gourmandise.',
     },
   ];
 
@@ -94,7 +94,7 @@ export default function ProductSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 gap-y-32 md:gap-y-42">
           {products.map((product, i) => (
-            <ProductCard key={i} product={product} />
+            <ProductCard key={i} product={product} index={i} />
           ))}
         </div>
       </div>

@@ -37,6 +37,9 @@ yarn-error.log*
 .claude/
 .mcp.json
 
+# playwright
+.playwright-mcp/
+
 # vercel
 .vercel
 
