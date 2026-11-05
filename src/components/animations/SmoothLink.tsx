@@ -8,85 +8,41 @@ type SmoothLinkProps = {
   children: React.ReactNode
   className?: string
   onNavigate?: () => void
-}
+} & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick">
 
-export default function SmoothLink({ href, children, className, onNavigate }: SmoothLinkProps) {
+/**
+ * Lien d'ancre qui défile en douceur (Lenis si actif) et s'arrête sous la
+ * navbar. Les autres liens se comportent normalement.
+ */
+export default function SmoothLink({ href, children, className, onNavigate, ...rest }: SmoothLinkProps) {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!href.startsWith("#")) {
-      onNavigate?.()
-      return
-    }
+    onNavigate?.()
+    if (!href.startsWith("#")) return
 
+    const el = document.getElementById(href.slice(1))
+    if (!el) return
     e.preventDefault()
 
-    const id = href.slice(1)
-    const el = document.getElementById(id)
-    if (!el) return
-
-    // Update URL sans polluer l’historique
     window.history.replaceState(null, "", href)
 
-    const lenis = (window as any).lenis
+    const navbar = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--navbar-hauteur")) || 94
+    const offset = -(navbar + 16)
 
-    // Calcule une cible FIXE (le menu reste ouvert pendant le scroll => layout stable)
-    const offset = 0 // mets -80 si tu veux compenser une navbar sticky
-    const targetTop = el.getBoundingClientRect().top + window.scrollY + offset
-
-    // Lance le scroll (Lenis si dispo)
-    if (lenis?.scrollTo) {
-      lenis.scrollTo(targetTop, { duration: 1.0 })
+    if (window.lenis) {
+      window.lenis.scrollTo(el, { offset, duration: 1.1 })
     } else {
-      el.scrollIntoView({ behavior: "smooth", block: "start" })
+      const top = el.getBoundingClientRect().top + window.scrollY + offset
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      window.scrollTo({ top, behavior: reduce ? "auto" : "smooth" })
     }
 
-    // ✅ Fermer seulement quand on est arrivé ET que ça s'est stabilisé
-    const tolerance = 8 // px autour de la cible
-    const stableDelta = 0.5 // px de variation max entre frames
-    const requiredStableFrames = 6 // nombre de frames stables avant de fermer
-
-    let stableCount = 0
-    let lastY = window.scrollY
-    let closed = false
-    const startedAt = performance.now()
-    const hardTimeoutMs = 2200 // sécurité large (durée scroll + marge)
-
-    const tick = () => {
-      if (closed) return
-
-      const y = window.scrollY
-      const dist = Math.abs(y - targetTop)
-      const delta = Math.abs(y - lastY)
-
-      const near = dist <= tolerance
-      const stable = delta <= stableDelta
-
-      if (near && stable) stableCount += 1
-      else stableCount = 0
-
-      // Ferme uniquement si on est stable plusieurs frames d'affilée
-      if (stableCount >= requiredStableFrames) {
-        closed = true
-        onNavigate?.()
-        return
-      }
-
-      lastY = y
-
-      // Sécurité (si jamais l’utilisateur interrompt, etc.)
-      if (performance.now() - startedAt > hardTimeoutMs) {
-        closed = true
-        onNavigate?.()
-        return
-      }
-
-      requestAnimationFrame(tick)
-    }
-
-    requestAnimationFrame(tick)
+    // Le focus suit le lien, pour le clavier et les lecteurs d'écran
+    el.setAttribute("tabindex", "-1")
+    el.focus({ preventScroll: true })
   }
 
   return (
-    <Link href={href} onClick={handleClick} className={className}>
+    <Link href={href} onClick={handleClick} className={className} {...rest}>
       {children}
     </Link>
   )

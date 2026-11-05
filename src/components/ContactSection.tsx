@@ -1,230 +1,202 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useCallback } from "react"
-import Image from "next/image"
+import React, { useEffect, useRef, useState } from "react"
+import { motion, AnimatePresence } from "motion/react"
+import { Minus, Plus } from "lucide-react"
+import Reveal from "@/components/animations/Reveal"
 import { Button } from "./Button"
-import { motion, AnimatePresence, useInView } from "motion/react"
-import { priceTiers, getUnitPrice } from "@/lib/pricing"
+import PhotoCarousel from "./contact/PhotoCarousel"
+import CompositionPicker from "./contact/CompositionPicker"
+import { priceTiers, getUnitPrice, formatPrice, MAX_QUANTITY } from "@/lib/pricing"
+import { repartitionEquilibree, sommeDattes, totalAttendu, type Composition } from "@/lib/composition"
 
-const productImages = [
-  "/images/product/img_0159.webp",
-  "/images/product/img_0102.webp",
-  "/images/product/img_0169.webp",
-  "/images/product/img_0150.webp",
-]
+type Status = "idle" | "loading" | "success" | "error" | "composition"
+
+const fieldClass =
+  "mt-2 w-full rounded border-[0.5px] border-creme bg-transparent p-4 text-base text-creme placeholder:text-on-rouge-doux/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-creme"
+
+const stepperClass =
+  "flex w-14 shrink-0 items-center justify-center rounded border-[0.5px] border-creme transition-colors duration-200 hover:bg-creme hover:text-rouge disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:bg-transparent disabled:hover:text-creme focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-creme"
+
+function tierLabel(min: number, max: number) {
+  if (max >= MAX_QUANTITY) return `${min} coffrets et plus`
+  return `${min} à ${max} coffrets`
+}
 
 export default function ContactSection() {
-  const textRef = useRef(null);
-  const formRef = useRef(null);
-  const textInView = useInView(textRef, { once: true, margin: '-60px' });
-  const formInView = useInView(formRef, { once: true, margin: '-60px' });
-
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [quantity, setQuantity] = useState<string>("")
   const [message, setMessage] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const [currentImage, setCurrentImage] = useState(0)
-  const [direction, setDirection] = useState(1)
+  const [status, setStatus] = useState<Status>("idle")
+  const [composition, setComposition] = useState<Composition>({ mode: "equilibre", dattes: repartitionEquilibree(0) })
+  const compositionRef = useRef<HTMLDivElement>(null)
 
   const quantityNum = Number(quantity) || 0
   const unitPrice = getUnitPrice(quantityNum)
-  const totalPrice = quantityNum > 0 ? (unitPrice * quantityNum) : 0
-
-  const nextImage = useCallback(() => {
-    setDirection(1)
-    setCurrentImage((prev) => (prev + 1) % productImages.length)
-  }, [])
+  const totalPrice = quantityNum > 0 ? unitPrice * quantityNum : 0
 
   useEffect(() => {
-    const timer = setInterval(nextImage, 4000)
-    return () => clearInterval(timer)
-  }, [nextImage])
+    if (status !== "success") return
+    const t = setTimeout(() => setStatus("idle"), 8000)
+    return () => clearTimeout(t)
+  }, [status])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (loading) return
+    if (status === "loading") return
 
-    setLoading(true)
+    const safeQuantity = Math.min(MAX_QUANTITY, Math.max(1, Number(quantity) || 1))
+    const dattes = composition.mode === "equilibre" ? repartitionEquilibree(safeQuantity) : composition.dattes
 
+    // une composition sur mesure doit tomber juste avant l'envoi
+    if (composition.mode === "sur-mesure" && sommeDattes(dattes) !== totalAttendu(safeQuantity)) {
+      setStatus("composition")
+      compositionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
+      return
+    }
+
+    setStatus("loading")
     try {
-      const quantityNumber = Number(quantity)
-
-      const safeQuantity = Math.min(
-        500,
-        Math.max(1, quantityNumber || 1)
-      )
-
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          message,
-          quantity: safeQuantity,
-        }),
+        body: JSON.stringify({ name, email, message, quantity: safeQuantity, composition: { mode: composition.mode, dattes } }),
       })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
-      if (!res.ok) throw new Error("Erreur serveur")
-
-      setSuccess(true)
+      setStatus("success")
       setName("")
       setEmail("")
       setMessage("")
       setQuantity("")
-
-      setTimeout(() => setSuccess(false), 5000)
-
+      setComposition({ mode: "equilibre", dattes: repartitionEquilibree(0) })
     } catch (error) {
-      console.error("Erreur :", error)
-    } finally {
-      setLoading(false)
+      console.error("Envoi du formulaire :", error)
+      setStatus("error")
     }
   }
 
   return (
-    <section id="contact" className=" my-20 md:my-32 container mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col lg:flex-row gap-16">
-        <div ref={textRef} className="flex-1">
-          <motion.h2
-            className="uppercase text-[clamp(1.5rem,4vw,7rem)] leading-snug mb-6 md:mb-10"
-            initial={{ opacity: 0, filter: 'blur(14px)' }}
-            animate={textInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-            transition={{ duration: 0.45, ease: 'easeOut' }}
+    <section id="contact" aria-labelledby="contact-titre" className="section-ancre container mx-auto my-24 px-4 sm:px-6 md:my-32 lg:px-8">
+      <div className="flex flex-col gap-14 lg:flex-row lg:gap-16">
+        <div className="flex-1 lg:sticky lg:top-[calc(var(--navbar-hauteur)+2rem)] lg:self-start">
+          <Reveal
+            as="h2"
+            blur={14}
+            id="contact-titre"
+            className="mb-6 text-[clamp(2rem,4vw,3.5rem)] uppercase leading-[1.2] tracking-[0.02em] md:mb-10"
           >
-            Vous avez craqué ?
-          </motion.h2>
+            Vous avez craqué&nbsp;?
+          </Reveal>
 
-          <motion.p
-            className="sm:text-lg"
-            initial={{ opacity: 0, filter: 'blur(10px)' }}
-            animate={textInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-            transition={{ delay: 0.25, duration: 0.4, ease: 'easeOut' }}
-          >
-            Petite attention, cadeau d’anniversaire, mariage ou encore événement d’entreprise, nos créations apportent une touche de raffinement inattendue à vos célébrations.
-            <br />
-            <br />
-            <b>Découvrez nos élégants coffrets de 3 dattes. Un assortiment 100% personnalisable.</b>
-          </motion.p>
+          <Reveal blur={10} delay={0.2} className="max-w-lecture space-y-5 text-[1.05rem] leading-[1.75] sm:text-lg">
+            <p>
+              Petite attention, cadeau d&apos;anniversaire, mariage ou encore événement d&apos;entreprise, nos créations
+              apportent une touche de raffinement inattendue à vos célébrations.
+            </p>
+            <p className="font-medium text-chocolat-fonce">
+              Découvrez nos élégants coffrets de 3&nbsp;dattes. Un assortiment 100&nbsp;% personnalisable.
+            </p>
+          </Reveal>
 
-          <motion.div
-            className="mt-8 md:mt-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={textInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.45, duration: 0.5, ease: 'easeOut' }}
-          >
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl shadow-lg">
-              <AnimatePresence mode="popLayout" initial={false} custom={direction}>
-                <motion.div
-                  key={currentImage}
-                  custom={direction}
-                  initial={{ opacity: 0, scale: 1.08 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
-                  className="absolute inset-0"
-                >
-                  <Image
-                    src={productImages[currentImage]}
-                    alt="Coffret Oh My Datte"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    priority={currentImage === 0}
-                  />
-                </motion.div>
-              </AnimatePresence>
-
-              <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent" />
-
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-                {productImages.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => {
-                      setDirection(i > currentImage ? 1 : -1)
-                      setCurrentImage(i)
-                    }}
-                    className={`h-1.5 rounded-full transition-all duration-500 ${
-                      i === currentImage
-                        ? "w-6 bg-vanilla"
-                        : "w-1.5 bg-vanilla/50 hover:bg-vanilla/80"
-                    }`}
-                    aria-label={`Image ${i + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </motion.div>
+          <Reveal blur={10} delay={0.35} className="mt-10 md:mt-12">
+            <PhotoCarousel />
+          </Reveal>
         </div>
-        <motion.div
-          ref={formRef}
-          className="shadow-section flex-1 bg-red p-6 sm:px-12 sm:py-6 text-vanilla rounded-xl"
-          initial={{ opacity: 0, scale: 0.93 }}
-          animate={formInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ delay: 0.15, duration: 0.5, ease: [0.34, 1.3, 0.64, 1] }}
-        >
-          <form onSubmit={handleSubmit}>
-            <div className="flex flex-col mb-8">
-              <label className="font-times text-lg" htmlFor="name">
-                Votre Nom
+
+        <Reveal blur={10} delay={0.15} className="flex-1">
+          <form
+            onSubmit={handleSubmit}
+            aria-describedby="commande-infos"
+            className="rounded-xl bg-rouge px-5 py-8 text-creme shadow-section sm:px-10 sm:py-10 lg:px-12"
+          >
+            <p className="mb-8 font-display text-[1.75rem] font-medium uppercase leading-tight tracking-[0.02em]">
+              Votre commande
+            </p>
+
+            <div className="mb-7">
+              <label className="font-display text-lg font-semibold" htmlFor="name">
+                Votre nom
               </label>
-              <input className="mt-2 rounded border-vanilla border-[0.5px] p-4 focus-visible:outline focus-visible:outline-vanilla" type="text" name="name" id="name" placeholder="Jane Austen" value={name} onChange={(e) => setName(e.target.value)} />
+              <input
+                className={fieldClass}
+                type="text"
+                name="name"
+                id="name"
+                autoComplete="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </div>
 
-            <div className="flex flex-col mb-8">
-              <label className="font-times text-lg" htmlFor="email">
+            <div className="mb-7">
+              <label className="font-display text-lg font-semibold" htmlFor="email">
                 Votre email
               </label>
-              <input className="mt-2 rounded border-vanilla border-[0.5px] p-4 focus-visible:outline focus-visible:outline-vanilla" type="email" name="email" id="email" placeholder="jane.austen@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required
+              <input
+                className={fieldClass}
+                type="email"
+                name="email"
+                id="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
 
-            <div className="flex flex-col mb-8">
-              <label className="font-times text-lg " htmlFor="quantity">
-                Nombre de coffrets souhaités
+            <div className="mb-7">
+              <label className="font-display text-lg font-semibold" htmlFor="quantity">
+                Nombre de coffrets
               </label>
+              <p id="quantity-aide" className="text-[13px] leading-snug text-on-rouge-doux">
+                Un coffret contient 3&nbsp;dattes.
+              </p>
+              <div className="mt-2 flex items-stretch gap-2">
+                <button
+                  type="button"
+                  onClick={() => setQuantity(String(Math.max(1, quantityNum - 1)))}
+                  disabled={quantityNum <= 1}
+                  aria-label="Un coffret de moins"
+                  className={stepperClass}
+                >
+                  <Minus size={18} />
+                </button>
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  min={1}
+                  max={MAX_QUANTITY}
+                  inputMode="numeric"
+                  aria-describedby="quantity-aide paliers"
+                  value={quantity}
+                  onChange={(e) => {
+                    const val = e.target.value
+                    if (val === "") return setQuantity("")
+                    const number = Number(val)
+                    if (isNaN(number)) return
+                    setQuantity(String(Math.min(number, MAX_QUANTITY)))
+                  }}
+                  className={`${fieldClass.replace("mt-2 ", "")} min-w-0 flex-1 text-center font-display !text-xl font-semibold lining-nums tabular-nums [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none`}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setQuantity(String(Math.min(MAX_QUANTITY, quantityNum + 1)))}
+                  disabled={quantityNum >= MAX_QUANTITY}
+                  aria-label="Un coffret de plus"
+                  className={stepperClass}
+                >
+                  <Plus size={18} />
+                </button>
+              </div>
 
-              <span className="text-sm text-vanilla/70">
-                Un coffret contient 3 dattes
-              </span>
-
-              <input
-                type="number"
-                id="quantity"
-                name="quantity"
-                placeholder="Nombre de coffrets"
-                min={1}
-                max={500}
-                inputMode="numeric"
-                value={quantity}
-                onChange={(e) => {
-                  const val = e.target.value
-
-                  if (val === "") {
-                    setQuantity("")
-                    return
-                  }
-
-                  const number = Number(val)
-
-                  if (isNaN(number)) return
-
-                  if (number > 500) {
-                    setQuantity("500")
-                  } else {
-                    setQuantity(String(number))
-                  }
-                }}
-                className="mt-2 rounded border border-vanilla border-[0.5px] p-4 focus-visible:outline focus-visible:outline-vanilla"
-                required
-              />
-
-              {/* Price tiers */}
-              <div className="mt-4 space-y-3">
-                <p className="text-xs text-vanilla/50 mb-1.5">Prix dégressifs par coffret</p>
+              <div className="mt-5">
+                <p id="paliers" className="mb-2 text-[13px] text-on-rouge-doux">
+                  Prix dégressifs par coffret
+                </p>
                 <div className="flex flex-wrap gap-1.5">
                   {priceTiers.map((tier) => {
                     const isActive = quantityNum >= tier.min && quantityNum <= tier.max
@@ -232,80 +204,108 @@ export default function ContactSection() {
                       <button
                         key={tier.min}
                         type="button"
+                        aria-pressed={isActive}
                         onClick={() => setQuantity(String(tier.min))}
-                        className={`px-2.5 py-1 rounded text-xs font-medium transition-all duration-300 ${
-                          isActive
-                            ? "bg-vanilla text-red scale-105"
-                            : "bg-vanilla/10 text-vanilla/60 hover:bg-vanilla/20 hover:text-vanilla"
+                        className={`rounded px-2.5 py-1.5 text-[13px] font-medium tabular-nums transition-colors duration-300 focus-visible:outline-creme ${
+                          isActive ? "bg-creme text-rouge" : "bg-creme/10 text-on-rouge-doux hover:bg-creme/20 hover:text-creme"
                         }`}
                       >
-                        {tier.min === 1 ? `1–${tier.max}` : tier.min === 100 ? `${tier.min}+` : `${tier.min}–${tier.max}`}
-                        {" coffrets · "}
-                        {tier.price.toFixed(2).replace(".", ",")}€/coffret
+                        {tierLabel(tier.min, tier.max)} · {formatPrice(tier.price)}
                       </button>
                     )
                   })}
                 </div>
 
-                <AnimatePresence mode="wait">
+                <AnimatePresence initial={false}>
                   {quantityNum > 0 && (
                     <motion.div
-                      key={unitPrice}
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.25, ease: "easeOut" }}
-                      className="flex items-baseline justify-between border-t border-vanilla/20 pt-3"
+                      className="overflow-hidden"
                     >
-                      <span className="text-sm text-vanilla/70">
-                        {quantityNum} coffret{quantityNum > 1 ? "s" : ""} × {unitPrice.toFixed(2).replace(".", ",")}€
-                      </span>
-                      <span className="font-times text-2xl tracking-tight text-vanilla">
-                        {totalPrice.toFixed(2).replace(".", ",")}€
-                      </span>
+                      <div className="mt-4 flex items-baseline justify-between border-t border-ligne-sur-rouge pt-3" aria-live="polite">
+                        <span className="text-sm text-on-rouge-doux">
+                          {quantityNum}&nbsp;coffret{quantityNum > 1 ? "s" : ""} × {formatPrice(unitPrice)}
+                        </span>
+                        <span className="font-display text-2xl font-semibold lining-nums tabular-nums">{formatPrice(totalPrice)}</span>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
-
             </div>
 
-            <div className="flex flex-col mb-8 relative">
-              <label className="font-times text-lg" htmlFor="message">
+            <div ref={compositionRef} className="mb-7 scroll-mt-32">
+              <CompositionPicker
+                coffrets={quantityNum}
+                value={composition}
+                error={status === "composition"}
+                onChange={(c) => {
+                  setComposition(c)
+                  if (status === "composition") setStatus("idle")
+                }}
+              />
+            </div>
+
+            <div className="mb-8">
+              <label className="font-display text-lg font-semibold" htmlFor="message">
                 Votre message
               </label>
-              <span className="text-sm text-vanilla/70">
-                Indiquez les assortiments souhaités, la date de livraison désirée ou toute précision utile concernant votre commande.
-              </span>
-              <textarea className="mt-2 rounded border-vanilla border-[0.5px] p-4 resize-none focus-visible:outline focus-visible:outline-vanilla" rows={8} name="message" id="message" placeholder="Bonjour, j'aimerais effectuer une commande pour la fin du mois avec l'Intrépide, l'Irrésistible et le Cool Kid dans chaque coffret. Merci !" value={message} onChange={(e) => setMessage(e.target.value)} required />
-              <AnimatePresence>
-                {success && (
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute -bottom-6 right-0 text-vanilla font-medium text-sm flex"
-                  >
-                    Votre message a bien été envoyé
-                  </motion.p>
-                )}
-              </AnimatePresence>
-            </div >
-
-            <div className="mb-6 space-y-2">
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-vanilla/70">
-                <p><span className="text-vanilla/90 font-medium">Paiement</span> — Espèces à la livraison ou virement bancaire</p>
-                <p><span className="text-vanilla/90 font-medium">Livraison</span> — Remise en main propre uniquement</p>
-              </div>
-              <p className="text-xs text-vanilla/45 italic">Nous vous recontactons par email pour convenir des détails.</p>
+              <p id="message-aide" className="text-[13px] leading-snug text-on-rouge-doux">
+                Date de livraison souhaitée, occasion, toute précision utile.
+              </p>
+              <textarea
+                className={`${fieldClass} resize-none`}
+                rows={6}
+                name="message"
+                id="message"
+                aria-describedby="message-aide"
+                placeholder="Bonjour, nous aimerions recevoir nos coffrets le…"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                required
+              />
             </div>
 
-            <Button type="submit" className="border border-vanilla font-times block ml-auto bg-vanilla text-red hover:bg-red hover:text-vanilla transition-colors duration-300 ease-in-out focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-vanilla" >
-              {loading ? "Envoi..." : "Envoyer"}
-            </Button>
-          </form >
-        </motion.div >
-      </div >
-    </section >
-  );
+            <dl id="commande-infos" className="mb-8 space-y-1.5 text-[13px] leading-snug text-on-rouge-doux">
+              <div>
+                <dt className="inline font-semibold text-creme">Paiement&nbsp;: </dt>
+                <dd className="inline">espèces à la livraison ou virement bancaire</dd>
+              </div>
+              <div>
+                <dt className="inline font-semibold text-creme">Livraison&nbsp;: </dt>
+                <dd className="inline">remise en main propre uniquement</dd>
+              </div>
+              <div className="italic">Nous vous recontactons par email pour convenir des détails.</div>
+            </dl>
+
+            <div className="flex flex-col-reverse items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div role="status" aria-live="polite" className="min-h-6 text-sm">
+                {status === "success" && <p className="font-medium">Merci&nbsp;! Votre demande est bien partie, nous revenons vers vous très vite.</p>}
+                {status === "composition" && (
+                  <p className="font-medium">
+                    La composition ne tombe pas juste&nbsp;: ajustez-la ou choisissez «&nbsp;Répartir équitablement&nbsp;».
+                  </p>
+                )}
+                {status === "error" && (
+                  <p className="font-medium">
+                    L&apos;envoi n&apos;a pas abouti. Réessayez ou écrivez-nous à{" "}
+                    <a className="underline underline-offset-2" href="mailto:ohmydatte@gmail.com">
+                      ohmydatte@gmail.com
+                    </a>
+                    .
+                  </p>
+                )}
+              </div>
+              <Button type="submit" variant="creme" disabled={status === "loading"} className="shrink-0">
+                {status === "loading" ? "Envoi…" : "Envoyer"}
+              </Button>
+            </div>
+          </form>
+        </Reveal>
+      </div>
+    </section>
+  )
 }

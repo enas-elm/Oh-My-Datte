@@ -4,6 +4,11 @@ import Image from 'next/image';
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
 
+const reseaux = [
+  { href: 'https://www.tiktok.com/@ohmydatte', label: 'TikTok', icon: '/images/tiktok.svg' },
+  { href: 'https://www.instagram.com/oh.my.datte', label: 'Instagram', icon: '/images/instagram.svg' },
+];
+
 export default function Footer() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-40px' });
@@ -11,78 +16,70 @@ export default function Footer() {
   return (
     <motion.footer
       ref={ref}
-      className="text-vanilla relative container mx-auto px-4 sm:px-6 lg:px-12 rounded-t-2xl shadow-footer overflow-hidden [--lips-y:120px] sm:[--lips-y:100px]"
+      className="container relative mx-auto overflow-hidden rounded-t-2xl px-4 text-creme shadow-footer [--lips-y:120px] [container-type:inline-size] sm:px-6 sm:[--lips-y:100px] lg:px-12"
       initial={{ opacity: 0, y: 60 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
-
-      {/* Overlay with lip cutout + drop-shadow into the hole */}
+      {/* Aplat chocolat percé d'une bouche, ombre portée dans la découpe */}
       <div
-        className="absolute inset-0 pointer-events-none z-0"
-        style={{ filter: "drop-shadow(0 -4px 6px rgba(50, 20, 20, 0.70))" }}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{ filter: 'drop-shadow(0 -4px 6px rgba(50, 20, 20, 0.70))' }}
       >
         <div
-          className="w-full h-full bg-choco-500"
+          className="h-full w-full bg-chocolat"
           style={{
-            WebkitMaskImage:
-              "linear-gradient(#000 0 0), url(/images/lips-cutout.svg)",
-            WebkitMaskRepeat: "no-repeat, no-repeat",
-            WebkitMaskPosition: "0 0, center var(--lips-y)",
-            WebkitMaskSize: "100% 100%, 215px 104px",
-            WebkitMaskComposite: "source-out",
-            maskImage:
-              "linear-gradient(#000 0 0), url(/images/lips-cutout.svg)",
-            maskRepeat: "no-repeat, no-repeat",
-            maskPosition: "0 0, center var(--lips-y)",
-            maskSize: "100% 100%, 215px 104px",
-            maskComposite: "exclude",
+            WebkitMaskImage: 'linear-gradient(#000 0 0), url(/images/lips-cutout.svg)',
+            WebkitMaskRepeat: 'no-repeat, no-repeat',
+            WebkitMaskPosition: '0 0, center var(--lips-y)',
+            WebkitMaskSize: '100% 100%, 215px 104px',
+            WebkitMaskComposite: 'source-out',
+            maskImage: 'linear-gradient(#000 0 0), url(/images/lips-cutout.svg)',
+            maskRepeat: 'no-repeat, no-repeat',
+            maskPosition: '0 0, center var(--lips-y)',
+            maskSize: '100% 100%, 215px 104px',
+            maskComposite: 'exclude',
           }}
         />
       </div>
 
-      {/* Contenu */}
       <div className="relative z-10">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-8 md:gap-20 py-12 sm:py-24">
+        <div className="flex flex-col items-center justify-between gap-8 py-12 sm:flex-row md:gap-20 sm:py-24">
+          <ul className="flex w-full min-w-fit flex-1 flex-row justify-center gap-10 sm:flex-col sm:gap-4 xl:flex-row xl:justify-start xl:gap-16">
+            {reseaux.map((r) => (
+              <li key={r.label}>
+                <a
+                  href={r.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 focus-visible:outline-creme md:gap-4"
+                >
+                  <Image src={r.icon} width={32} height={32} className="size-6 md:size-8" alt="" />
+                  <span className="lien-anime uppercase tracking-[0.06em] md:text-lg">{r.label}</span>
+                  <span className="sr-only">(nouvel onglet)</span>
+                </a>
+              </li>
+            ))}
+          </ul>
 
-          <div className="flex flex-row justify-center xl:justify-normal sm:flex-col xl:flex-row gap-[10cqw] sm:gap-4 xl:gap-16 min-w-fit w-full flex-1">
-            <a
-              href="https://www.tiktok.com/@ohmydatte"
-              target="_blank"
-              className="flex items-center gap-2 md:gap-4 group cursor-pointer focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-vanilla">
-              <Image src="/images/tiktok.svg" width={32} height={32} className="scale-75 md:scale-100" alt="" />
-              <span className="uppercase md:text-lg group-animated-underline">TikTok</span>
+          {/* Réserve la place de la bouche */}
+          <div aria-hidden="true" className="h-[104px] w-[215px] shrink-0" />
+
+          <address className="flex-1 text-center not-italic lg:text-right lg:text-lg">
+            Pour toute question, contactez
+            <br className="hidden lg:block" />{' '}
+            <a className="lien-anime font-semibold focus-visible:outline-creme" href="mailto:ohmydatte@gmail.com">
+              ohmydatte@gmail.com
             </a>
-            <a
-              href="https://www.instagram.com/oh.my.datte"
-              target="_blank"
-              className="flex items-center gap-2 md:gap-4 group cursor-pointer focus-visible:outline-1 *: focus-visible:outline-offset-3 focus-visible:outline-vanilla"
-            >
-              <Image
-                src="/images/instagram.svg"
-                width={32}
-                height={32}
-                className="scale-75 md:scale-100"
-                alt="Instagram"
-              />
-              <span className="uppercase md:text-lg group-animated-underline">Instagram</span>
-            </a>
-          </div>
-
-          {/* Réserve la place */}
-          <div aria-hidden className="shrink-0 w-[215px] h-[104px]" />
-
-          <address className="flex-1 lg:text-lg not-italic text-center lg:text-right">
-            Pour toute question, contactez <a className="font-bold animated-underline focus-visible:outline-1   focus-visible:outline-offset-3 focus-visible:outline-vanilla" href="mailto:ohmydatte@gmail.com">ohmydatte@gmail.com</a>
-
           </address>
         </div>
 
-        <div className="bg-vanilla pointer-events-none select-none h-[1px] w-full" />
-        <div className="font-times text-center text-[13cqw] leading-snug max-w-full overflow-hidden whitespace-nowrap my-6 sm:my-0">
-          On se revoit ?
-        </div>
+        <div aria-hidden="true" className="h-px w-full bg-creme/70" />
+        <p className="my-4 overflow-hidden whitespace-nowrap text-center font-display text-[13cqw] font-medium leading-[1.2] sm:my-0">
+          On se revoit&nbsp;?
+        </p>
       </div>
     </motion.footer>
-  )
+  );
 }
