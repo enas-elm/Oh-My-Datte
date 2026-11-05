@@ -7,9 +7,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 
 const photos = [
   { src: "/images/product/img_0159.webp", alt: "Coffrets Oh My Datte fermés, alignés autour d'un coffret ouvert" },
-  { src: "/images/product/img_0102.webp", alt: "Plateau de dattes fourrées et enrobées" },
+  { src: "/images/product/img_0102.webp", alt: "Plateau doré de dattes enrobées de chocolat blanc à la pistache et de chocolat noir aux amandes" },
   { src: "/images/product/img_0169.webp", alt: "Coffret de trois dattes ouvert" },
-  { src: "/images/product/img_0150.webp", alt: "Dattes Oh My Datte en détail" },
+  { src: "/images/product/img_0150.webp", alt: "Assiette de dattes enrobées de chocolat noir et de chocolat blanc" },
 ]
 
 // Cible tactile de 44 px, pastille visible de 34 px très translucide
