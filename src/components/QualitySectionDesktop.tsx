@@ -1,213 +1,193 @@
 "use client"
 
 import Image from "next/image"
-import { motion } from "motion/react"
-import type { QualityState } from "./QualitySection"
+import { useEffect, useRef } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import type { QualityImage, QualityState } from "./QualitySection"
 
-type DesktopRefs = {
-    pinnedRef: React.RefObject<HTMLDivElement | null>
-    brushRef: React.RefObject<HTMLDivElement | null>
-    postPinRef: React.RefObject<HTMLDivElement | null>
+gsap.registerPlugin(ScrollTrigger)
 
-    leftText1Ref: React.RefObject<HTMLDivElement | null>
-    rightText1Ref: React.RefObject<HTMLDivElement | null>
-    topImg1Ref: React.RefObject<HTMLDivElement | null>
-    bottomImg1Ref: React.RefObject<HTMLDivElement | null>
+// Front du repeint : un bord organique, comme la passe d'un pinceau chargé.
+// Somme de deux ondulations lentes et d'un fin frémissement (valeurs fixes).
+// --w va de -5 (rien) à 105 (tout) ; les décalages sont en % de la hauteur.
+const WIPE_POINTS = 40
+const WIPE_EDGE = Array.from({ length: WIPE_POINTS + 1 }, (_, i) => {
+  const t = i / WIPE_POINTS
+  const lent = Math.sin(t * Math.PI * 2.3 + 0.6) * 1.1 + Math.sin(t * Math.PI * 5.1 + 1.9) * 0.55
+  const fin = Math.sin(t * Math.PI * 17 + 0.4) * 0.18 + Math.sin(t * Math.PI * 29 + 2.2) * 0.1
+  return Math.round((2 + lent + fin) * 100) / 100
+})
+const WIPE = `polygon(${WIPE_EDGE.map((o, i) => `${(i * 100) / WIPE_POINTS}% calc(100% - var(--w) * 1% + ${o}%)`).join(", ")}, 100% 100%, 0% 100%)`
 
-    leftText2Ref: React.RefObject<HTMLDivElement | null>
-    rightText2Ref: React.RefObject<HTMLDivElement | null>
-    topImg2Ref: React.RefObject<HTMLDivElement | null>
-    bottomImg2Ref: React.RefObject<HTMLDivElement | null>
-
-    dot1Ref: React.RefObject<HTMLDivElement | null>
-    dot2Ref: React.RefObject<HTMLDivElement | null>
+function TextBlock({ index, title, paragraphs }: { index: number; title: string; paragraphs: string[] }) {
+  return (
+    <div className="max-w-md space-y-4">
+      <span className="block font-display text-[15px] font-semibold tracking-[0.25em] text-chocolat-doux lining-nums">
+        {String(index).padStart(2, "0")} / 04
+      </span>
+      <h3 className="text-[1.6rem] font-semibold uppercase leading-tight tracking-[0.04em]">{title}</h3>
+      {paragraphs.map((p) => (
+        <p key={p} className="text-[1.05rem] leading-[1.75]">
+          {p}
+        </p>
+      ))}
+    </div>
+  )
 }
 
-export default function QualitySectionDesktop({ states, refs }: { states: QualityState[]; refs: DesktopRefs }) {
-    const {
-        pinnedRef,
-        brushRef,
-        postPinRef,
-        leftText1Ref,
-        rightText1Ref,
-        topImg1Ref,
-        bottomImg1Ref,
-        leftText2Ref,
-        rightText2Ref,
-        topImg2Ref,
-        bottomImg2Ref,
-        dot1Ref,
-        dot2Ref,
-    } = refs
+function Ingredient({ img }: { img: QualityImage }) {
+  return (
+    <Image
+      src={img.src}
+      alt={img.alt}
+      width={img.w}
+      height={img.h}
+      className="h-[28vh] max-h-[240px] w-auto object-contain drop-shadow-datte"
+      style={{ rotate: `${img.rotation ?? 0}deg` }}
+    />
+  )
+}
 
-    return (
-        <section id="qualite" className="hidden md:block my-32 container mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Header */}
-            <div className="flex w-full justify-between mx-auto items-center gap-8 sm:gap-20 mb-0">
-                <motion.div
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    style={{ originX: 1 }}
-                    className="bg-choco-500 pointer-events-none select-none h-[1px] w-full"
-                />
-                <h2 className="uppercase text-center text-[clamp(2rem,4vw,7rem)] leading-snug">
-                    <motion.span
-                        initial={{ opacity: 0, filter: "blur(5px)", y: 20 }}
-                        whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                        viewport={{ once: true, amount: 0.5 }}
-                        transition={{ duration: 0.6, ease: "easeOut" as const }}
-                        className="block whitespace-nowrap"
-                    >
-                        Des produits
-                    </motion.span>
-                    <motion.span
-                        initial={{ opacity: 0, filter: "blur(5px)", y: 20 }}
-                        whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                        viewport={{ once: true, amount: 0.5 }}
-                        transition={{ duration: 0.6, ease: "easeOut" as const, delay: 0.15 }}
-                        className="block"
-                    >
-                        de qualité
-                    </motion.span>
-                </h2>
-                <motion.div
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    style={{ originX: 0 }}
-                    className="bg-choco-500 pointer-events-none select-none h-[1px] w-full"
-                />
+/**
+ * Desktop : la section s'épingle et le défilement fait passer d'un état à
+ * l'autre. Une seule timeline pilote tout, en phases qui ne se chevauchent
+ * pas : rien ne peut se superposer, même en défilant très vite.
+ */
+export default function QualitySectionDesktop({ states }: { states: QualityState[] }) {
+  const pinnedRef = useRef<HTMLDivElement>(null)
+  const entryRef = useRef<HTMLDivElement>(null)
+  const group1Ref = useRef<HTMLDivElement>(null)
+  const group2Ref = useRef<HTMLDivElement>(null)
+  const wipeRef = useRef<HTMLDivElement>(null)
+  const texts1Ref = useRef<HTMLDivElement[]>([])
+  const texts2Ref = useRef<HTMLDivElement[]>([])
+  const dotsRef = useRef<HTMLSpanElement[]>([])
+
+  useEffect(() => {
+    const pinned = pinnedRef.current
+    if (!pinned) return
+
+    const mm = gsap.matchMedia()
+
+    mm.add("(min-width: 1024px)", () => {
+      const texts1 = texts1Ref.current
+      const texts2 = texts2Ref.current
+      const [dot1, dot2] = dotsRef.current
+
+      gsap.set(texts2, { autoAlpha: 0, y: 48 })
+      gsap.set(group2Ref.current, { autoAlpha: 0, yPercent: 30 })
+      gsap.set(wipeRef.current, { "--w": -5 })
+
+      // Entrée des ingrédients avant l'épinglage (élément distinct de la timeline)
+      gsap.fromTo(
+        entryRef.current,
+        { autoAlpha: 0, yPercent: 25 },
+        {
+          autoAlpha: 1,
+          yPercent: 0,
+          ease: "none",
+          scrollTrigger: { trigger: pinned, start: "top 75%", end: "top 15%", scrub: 0.6 },
+        },
+      )
+
+      const tl = gsap.timeline({
+        defaults: { ease: "power2.inOut" },
+        scrollTrigger: {
+          trigger: pinned,
+          start: "top top",
+          end: () => `+=${window.innerHeight * 2}`,
+          pin: true,
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+        },
+      })
+
+      tl.to({}, { duration: 0.5 })
+        .addLabel("sortie")
+        // 1. l'état 1 défile vers le haut et sort
+        .to(texts1, { y: -48, autoAlpha: 0, duration: 0.7, stagger: 0.08 }, "sortie")
+        .to(group1Ref.current, { yPercent: -30, autoAlpha: 0, duration: 0.8 }, "sortie")
+        // 2. le trait se repeint de bas en haut
+        .to(wipeRef.current, { "--w": 105, duration: 0.9 }, "sortie+=0.35")
+        .to(dot1, { scale: 1, opacity: 0.35, duration: 0.3 }, "sortie+=0.5")
+        .to(dot2, { scale: 1.5, opacity: 1, duration: 0.3 }, "sortie+=0.5")
+        // 3. l'état 2 arrive par le bas, une fois l'état 1 sorti
+        .to(group2Ref.current, { yPercent: 0, autoAlpha: 1, duration: 0.8 }, "sortie+=0.95")
+        .to(texts2, { y: 0, autoAlpha: 1, duration: 0.7, stagger: 0.08 }, "sortie+=1")
+        .to({}, { duration: 0.5 })
+    })
+
+    return () => mm.revert()
+  }, [])
+
+  const setText = (store: React.RefObject<HTMLDivElement[]>, i: number) => (el: HTMLDivElement | null) => {
+    if (el) store.current[i] = el
+  }
+
+  return (
+    <div className="hidden lg:block">
+      <div ref={pinnedRef} className="relative h-screen">
+        {/* progression */}
+        <div aria-hidden="true" className="absolute right-4 top-1/2 z-20 flex -translate-y-1/2 flex-col gap-4">
+          {[0, 1].map((i) => (
+            <span
+              key={i}
+              ref={(el) => {
+                if (el) dotsRef.current[i] = el
+              }}
+              className="block size-2 rounded-full bg-chocolat"
+              style={i === 0 ? { transform: "scale(1.5)" } : { opacity: 0.35 }}
+            />
+          ))}
+        </div>
+
+        <div className="flex h-full items-center pt-20">
+          <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-10 pr-12 xl:gap-16">
+            {/* Gauche */}
+            <div className="relative flex min-h-[48vh] items-center justify-end">
+              <div ref={setText(texts1Ref, 0)} className="absolute inset-0 flex items-center justify-end">
+                <TextBlock index={1} {...states[0].left} />
+              </div>
+              <div ref={setText(texts2Ref, 0)} className="invisible absolute inset-0 flex items-center justify-end">
+                <TextBlock index={3} {...states[1].left} />
+              </div>
             </div>
 
-            {/* Pinned area */}
-            <div ref={pinnedRef} className="h-screen relative overflow-hidden">
-                {/* dots */}
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3">
-                    <div ref={dot1Ref} className="w-2 h-2 rounded-full bg-choco-500 opacity-30" />
-                    <div ref={dot2Ref} className="w-2 h-2 rounded-full bg-choco-500 opacity-30" />
+            {/* Centre : trait pinceau et ingrédients */}
+            <div className="relative flex h-[72vh] w-[220px] items-center justify-center xl:w-[250px]">
+              <div aria-hidden="true" className="pinceau-vertical absolute inset-0" style={{ backgroundColor: states[0].brush }} />
+              <div
+                ref={wipeRef}
+                aria-hidden="true"
+                className="pinceau-vertical absolute inset-0"
+                style={{ backgroundColor: states[1].brush, clipPath: WIPE, ["--w" as string]: -5 }}
+              />
+
+              <div ref={entryRef} className="absolute inset-0">
+                <div ref={group1Ref} className="absolute inset-0 flex flex-col items-center justify-evenly">
+                  <Ingredient img={states[0].topImage} />
+                  <Ingredient img={states[0].bottomImage} />
                 </div>
-
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center pt-20">
-                    <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-6 lg:gap-10 xl:gap-16 w-full">
-                        {/* LEFT */}
-                        <div className="relative min-h-[40vh] flex items-center justify-end">
-                            <div ref={leftText1Ref} className="absolute inset-0 flex items-center justify-end">
-                                <motion.div
-                                    className="space-y-2"
-                                    initial={{ opacity: 0, filter: "blur(10px)", y: 20 }}
-                                    whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                                    viewport={{ once: true, amount: 0.5 }}
-                                    transition={{ duration: 0.6, ease: "easeOut" as const, delay: 0.15 }}
-                                >
-                                    <div className="space-y-4 max-w-md">
-                                        <span className="text-xs tracking-[0.3em] uppercase text-choco-100 block">01 / 04</span>
-                                        <h4 className="uppercase text-[clamp(1.125rem,2.5vw,1.5rem)]">{states[0].left.title}</h4>
-                                        {states[0].left.paragraphs.map((p, j) => (
-                                            <p key={j} className="text-base lg:text-lg leading-relaxed">
-                                                {p}
-                                            </p>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            </div>
-
-                            <div ref={leftText2Ref} className="absolute inset-0 flex items-center justify-end">
-                                <div className="space-y-4 max-w-md">
-                                    <span className="text-xs tracking-[0.3em] uppercase text-choco-100 block">03 / 04</span>
-                                    <h4 className="uppercase text-[clamp(1.125rem,2.5vw,1.5rem)]">{states[1].left.title}</h4>
-                                    {states[1].left.paragraphs.map((p, j) => (
-                                        <p key={j} className="text-base lg:text-lg leading-relaxed">
-                                            {p}
-                                        </p>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* CENTER */}
-                        <div ref={brushRef} className="relative flex items-center justify-center w-[200px] lg:w-[260px] h-[75vh] overflow-hidden">
-                            <Image
-                                src="/images/green-brush-bg.svg"
-                                alt=""
-                                width={200}
-                                height={697}
-                                className="absolute h-full w-auto pointer-events-none select-none"
-                            />
-
-                            <div ref={topImg1Ref} className="absolute inset-0 z-10 flex items-center justify-center scale-[1.35]">
-                                <Image src={states[0].topImage.src} alt={states[0].topImage.alt} width={states[0].topImage.w} height={states[0].topImage.h} className="object-contain drop-shadow-lg" />
-                            </div>
-
-                            <div ref={topImg2Ref} className="absolute inset-0 z-10 flex items-center justify-center scale-[1.35]">
-                                <Image
-                                    src={states[1].topImage.src}
-                                    alt={states[1].topImage.alt}
-                                    width={states[1].topImage.w}
-                                    height={states[1].topImage.h}
-                                    className="object-contain drop-shadow-lg"
-                                    style={{ rotate: `${states[1].topImage.rotation ?? 0}deg` }}
-                                />
-                            </div>
-
-                            <div ref={bottomImg1Ref} className="absolute inset-0 z-10 flex items-center justify-center scale-[1.35]">
-                                <Image src={states[0].bottomImage.src} alt={states[0].bottomImage.alt} width={states[0].bottomImage.w} height={states[0].bottomImage.h} className="object-contain drop-shadow-lg" />
-                            </div>
-
-                            <div ref={bottomImg2Ref} className="absolute inset-0 z-10 flex items-center justify-center scale-[1.35]">
-                                <Image
-                                    src={states[1].bottomImage.src}
-                                    alt={states[1].bottomImage.alt}
-                                    width={states[1].bottomImage.w}
-                                    height={states[1].bottomImage.h}
-                                    className="object-contain drop-shadow-lg"
-                                    style={{ rotate: `${states[1].bottomImage.rotation ?? 0}deg` }}
-                                />
-                            </div>
-                        </div>
-
-                        {/* RIGHT */}
-                        <div className="relative min-h-[40vh] flex items-center">
-                            <div ref={rightText1Ref} className="absolute inset-0 flex items-center">
-                                <motion.div
-                                    className="space-y-2"
-                                    initial={{ opacity: 0, filter: "blur(10px)", y: 20 }}
-                                    whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                                    viewport={{ once: true, amount: 0.5 }}
-                                    transition={{ duration: 0.6, ease: "easeOut" as const, delay: 0.15 }}
-                                >
-                                    <div className="space-y-4 max-w-md">
-                                        <span className="text-xs tracking-[0.3em] uppercase text-choco-100 block">02 / 04</span>
-                                        <h4 className="uppercase text-[clamp(1.125rem,2.5vw,1.5rem)]">{states[0].right.title}</h4>
-                                        {states[0].right.paragraphs.map((p, j) => (
-                                            <p key={j} className="text-base lg:text-lg leading-relaxed">
-                                                {p}
-                                            </p>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            </div>
-
-                            <div ref={rightText2Ref} className="absolute inset-0 flex items-center">
-                                <div className="space-y-4 max-w-md">
-                                    <span className="text-xs tracking-[0.3em] uppercase text-choco-100 block">04 / 04</span>
-                                    <h4 className="uppercase text-[clamp(1.125rem,2.5vw,1.5rem)]">{states[1].right.title}</h4>
-                                    {states[1].right.paragraphs.map((p, j) => (
-                                        <p key={j} className="text-base lg:text-lg leading-relaxed">
-                                            {p}
-                                        </p>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
+              <div ref={group2Ref} className="invisible absolute inset-0 flex flex-col items-center justify-evenly">
+                <Ingredient img={states[1].topImage} />
+                <Ingredient img={states[1].bottomImage} />
+              </div>
             </div>
 
-            {/* post-pin marker */}
-            <div ref={postPinRef} className="h-0" aria-hidden="true" />
-        </section>
-    )
+            {/* Droite */}
+            <div className="relative flex min-h-[48vh] items-center">
+              <div ref={setText(texts1Ref, 1)} className="absolute inset-0 flex items-center">
+                <TextBlock index={2} {...states[0].right} />
+              </div>
+              <div ref={setText(texts2Ref, 1)} className="invisible absolute inset-0 flex items-center">
+                <TextBlock index={4} {...states[1].right} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }

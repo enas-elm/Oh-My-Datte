@@ -1,103 +1,38 @@
-'use client';
-
-import Image from 'next/image';
-import React from 'react';
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react';
+import Reveal from '@/components/animations/Reveal';
+import { products } from '@/lib/dattes';
 import { ProductCard } from './ProductCard';
 
-export interface Product {
-  imagePath: string;
-  title: string;
-  subtitle: string;
-  description: string;
-}
-
-
 export default function ProductSection() {
-  const titleRef = useRef(null);
-  const titleInView = useInView(titleRef, { once: true, margin: '-60px' });
-
-
-  const products: Product[] = [
-    {
-      imagePath: '/images/nosdattes/intrepide.png',
-      title: "L'Intrépide",
-      subtitle: 'Noir · Cacahuète',
-      description:
-        'L’Intrépide ne demande pas la permission. Sous sa carapace de chocolat noir intense, elle cache un cœur de beurre de cacahuète généreux et des éclats croquants qui bousculent les codes.\n\nC’est la datte des audacieux : directe, efficace, et terriblement addictive.',
-    },
-    {
-      imagePath: '/images/nosdattes/irresistible.png',
-      title: "L'Irrésistible",
-      subtitle: 'Blanc · Pistache',
-      description:
-        'Elle entre en scène et le temps s’arrête. Vêtue d’un velouté de chocolat blanc et d’un cœur fondant à la pistache, L\'Irrésistible mise sur l’éclat.\n\nDouce mais affirmée, elle offre un équilibre précieux entre luxe et délicatesse. On ne lui résiste pas, on succombe.',
-    },
-    {
-      imagePath: '/images/nosdattes/cool-kid.png',
-      title: "Le Cool Kid",
-      subtitle: 'Noir · Praliné',
-      description:
-        'L’allure chic, l’esprit libre. Le Cool Kid revisite le classique avec un praliné noisette-amande qui fond en bouche. Enrobé de chocolat noir, il impose son style sans en faire trop.\n\nC’est la gourmandise chill par excellence, celle qu’on invite à toutes les occasions.',
-    },
-    {
-      imagePath: '/images/nosdattes/sage.png',
-      title: "Le Sage",
-      subtitle: 'Noir · Coco',
-      description:
-        'L’équilibre trouvé entre l’intensité du cacao et la sérénité des îles. Le Sage apaise le caractère du chocolat noir par un cœur fondant de praliné coco.\n\nUn voyage intérieur, posé et réfléchi, pour ceux qui cherchent la profondeur sous la gourmandise.',
-    },
-  ];
-
   return (
-    <section className="my-20 md:my-32 py-52 sm:py-80 relative text-vanilla overflow-hidden">
-      <Image
-        id='vos-dattes'
-        src="/images/product-bg.svg"
-        alt=""
-        fill
-        className="scale-x-150 translate-y-[4%] object-cover z-0"
-      />
+    <section
+      id="dattes"
+      aria-labelledby="dattes-titre"
+      className="aplat-cacao section-ancre my-16 py-[calc(var(--bord)+4rem)] text-creme md:my-24 md:py-[calc(var(--bord)+6rem)]"
+    >
+      <div aria-hidden="true" className="aplat-cacao__fond">
+        <span className="bord bord--haut" />
+        <span className="corps" />
+        <span className="bord bord--bas" />
+      </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <h2
-          ref={titleRef}
-          className="text-[clamp(2rem,4vw,7rem)] leading-snug mb-16 sm:mb-28"
-        >
-          <motion.span
-            className="uppercase"
-            initial={{ opacity: 0, filter: 'blur(14px)' }}
-            animate={titleInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-            transition={{ duration: 0.45, ease: 'easeOut' }}
-          >
-            Rencontrez{' '}
-          </motion.span>
-          <motion.span
-            className="uppercase"
-            initial={{ opacity: 0, filter: 'blur(14px)' }}
-            animate={titleInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-            transition={{ duration: 0.45, ease: 'easeOut' }}
-          >
-            vos
-          </motion.span>
-
-          <motion.span
-            className="block font-allura leading-none font text-[clamp(4rem,7vw,11rem)]"
-            initial={{ opacity: 0, filter: 'blur(18px)' }}
-            animate={titleInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-            transition={{ duration: 0.45, ease: 'easeOut' }}
-          >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 id="dattes-titre" className="mb-20 text-center sm:mb-28">
+          <Reveal as="span" blur={14} className="block text-[clamp(2rem,4vw,3.5rem)] uppercase leading-[1.3] tracking-[0.02em]">
+            Rencontrez vos
+          </Reveal>
+          <Reveal as="span" blur={18} delay={0.1} className="block font-script text-[clamp(4.5rem,7vw,7rem)] font-normal leading-none">
             Dattes
-          </motion.span>
+          </Reveal>
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 gap-y-32 md:gap-y-42">
+        <ul className="grid grid-cols-1 gap-x-12 gap-y-24 md:grid-cols-2 md:gap-y-32">
           {products.map((product, i) => (
-            <ProductCard key={i} product={product} index={i} />
+            <li key={product.id}>
+              <ProductCard product={product} index={i} />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
-  )
+  );
 }

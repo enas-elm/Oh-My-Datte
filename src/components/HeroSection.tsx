@@ -1,165 +1,137 @@
 'use client';
 
 import Image from 'next/image';
-import SmoothLink from "@/components/animations/SmoothLink"
-import { motion, useScroll, useTransform } from 'motion/react';
-import { useRef } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react';
+import SmoothLink from '@/components/animations/SmoothLink';
+import { buttonClasses } from '@/components/Button';
+
+const MotionImage = motion.create(Image);
+
+// Pendant le défilement, chaque datte change lentement d'échelle et de
+// profondeur, une seule fois sur toute la course : un mouvement ample et
+// continu plutôt qu'une pulsation.
+const DEPTH = [
+  { scale: [1, 1.08], y: [0, -18] },
+  { scale: [1, 0.94], y: [0, 14] },
+  { scale: [1, 1.05], y: [0, -10] },
+];
+
+const dattes = [
+  { src: '/images/inside-datte.png', w: 208, className: 'w-[clamp(84px,18vw,180px)]' },
+  { src: '/images/irresistible-irl.png', w: 224, className: 'w-[clamp(84px,20vw,208px)]' },
+  { src: '/images/intrepide-irl.png', w: 232, className: 'w-[clamp(84px,22vw,208px)] relative top-4' },
+];
+
+const surtitres = ["Dattes d'exception", 'Événements', 'Atelier artisanal'];
+
+const appear = (delay: number) => ({
+  initial: { opacity: 0, filter: 'blur(10px)' },
+  animate: { opacity: 1, filter: 'blur(0px)' },
+  transition: { duration: 0.4, delay },
+});
+
+function Datte({ index, progress, delay }: { index: number; progress: MotionValue<number>; delay: number }) {
+  const reduce = useReducedMotion();
+  const depth = DEPTH[index];
+  const scale = useTransform(progress, [0, 1], reduce ? [1, 1] : depth.scale);
+  const y = useTransform(progress, [0, 1], reduce ? [0, 0] : depth.y);
+  const d = dattes[index];
+  return (
+    // apparition au chargement sur l'enveloppe, profondeur au défilement sur l'image
+    <motion.div
+      className={`shrink-0 ${d.className}`}
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.3, delay, scale: { type: 'spring', visualDuration: 0.4, bounce: 0.5 } }}
+    >
+      <MotionImage
+        src={d.src}
+        alt=""
+        width={d.w}
+        height={d.w}
+        priority={index < 2}
+        sizes="(max-width: 640px) 90px, 210px"
+        className="h-auto w-full object-contain drop-shadow-datte will-change-transform"
+        style={{ scale, y }}
+      />
+    </motion.div>
+  );
+}
+
+// Course horizontale des dattes (début, fin), en % de la rangée
+const SLIDE = {
+  desktop: ['10%', '-21%'],
+  mobile: ['4%', '-34%'],
+};
+
+function useIsMobile() {
+  const [mobile, setMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)');
+    const update = () => setMobile(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+  return mobile;
+}
 
 export default function HeroSection() {
   const targetRef = useRef(null);
+  const reduce = useReducedMotion();
 
-  // On suit la progression du scroll sur l'élément cible
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
-
-  // On transforme le scroll (0 à 1) en translation x (de 0% à -50%)
-  const x = useTransform(scrollYProgress, [0, 1], ['16%', '-25%']);
-
-  const percentRange = () => {
-    return Array.from({ length: 6 }, (_, i) => i / (6 - 1))
-  }
-
-  const valueRange = (min: number, max: number) => {
-    return Array.from({ length: 6 }, () => Math.random() * (max - min) + min)
-  }
-
-  // Effet de bounce sur les images avec le scroll
-  const scale1 = useTransform(scrollYProgress, percentRange(), valueRange(0.9, 1.1));
-  const scale2 = useTransform(scrollYProgress, percentRange(), valueRange(0.9, 1.1));
-  const scale3 = useTransform(scrollYProgress, percentRange(), valueRange(0.9, 1.1));
-
-  const MotionImage = motion.create(Image);
+  // Pas de blocage du défilement : le glissement des dattes se joue pendant
+  // que le hero remonte, et se termine quand son milieu atteint le haut.
+  const { scrollYProgress } = useScroll({ target: targetRef, offset: ['start start', 'center start'] });
+  const mobile = useIsMobile();
+  const course = reduce ? ['0%', '0%'] : mobile ? SLIDE.mobile : SLIDE.desktop;
+  const x = useTransform(scrollYProgress, [0, 1], course);
 
   return (
-    // 350vh définit la durée du scroll
-    <section ref={targetRef} className="mt-[calc(var(--navbar-height)+100px)] h-[200vh] relative">
-      <div className="sticky top-[calc(var(--navbar-height)+100px)] py-3 text-center overflow-hidden">
-        <h1 className="font-times text-center">
+    <section ref={targetRef} className="relative mt-[var(--navbar-hauteur)]">
+      <div className="relative overflow-hidden pb-10 pt-14 text-center sm:pt-[100px]">
+        <h1 className="relative text-chocolat">
           <motion.span
-            className="text-[clamp(2.5rem,5vw,7rem)] select-none"
-            initial={{ opacity: 0, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
-            transition={{ duration: 0.4, delay: 0.1 }}
+            {...appear(0.1)}
+            className="block select-none text-[clamp(2.4rem,5vw,4.5rem)] uppercase leading-[1.1] tracking-[0.02em]"
           >
-            VOTRE{' '}
+            Votre nouveau
           </motion.span>
           <motion.span
-            className="text-[clamp(2.5rem,5vw,7rem)] select-none"
-            initial={{ opacity: 0, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-          >
-            NOUVEAU
-          </motion.span>
-          <motion.span
-            className="font-allura block text-[clamp(6rem,20vw,192px)] leading-none mt-8 relative z-10 select-none"
-            initial={{ opacity: 0, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
-            transition={{ duration: 0.4, delay: 0.3 }}
+            {...appear(0.3)}
+            className="relative z-10 -mt-1 block select-none font-script text-[clamp(6rem,20vw,12rem)] font-normal leading-none sm:mt-4"
           >
             Crunsh
           </motion.span>
         </h1>
-        <motion.div style={{ x }} className="absolute left-16 sm:left-44 right-0 top-8 sm:top-10 flex items-center gap-[18vw] w-full px-4 pointer-events-none">
-          <MotionImage
-            src="/images/inside-datte.png"
-            alt="Bowl of dates"
-            width={208}
-            height={208}
-            className="object-contain w-[clamp(88px,18vw,208px)] max-w-[180px] h-auto"
-            style={{ scale: scale1 }}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{
-              duration: 0.3,
-              delay: 0.1,
-              scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-            }}
-          />
-          <MotionImage
-            src="/images/irresistible-irl.png"
-            alt="Bowl of dates"
-            width={224}
-            height={224}
-            className="object-contain w-[clamp(88px,20vw,208px)] max-w-[224px] h-auto relative"
-            style={{ scale: scale2 }}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{
-              duration: 0.3,
-              delay: 0.1,
-              scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-            }}
-          />
-          <MotionImage
-            src="/images/intrepide-irl.png"
-            alt="Bowl of dates"
-            width={232}
-            height={232}
-            className="object-contain w-[clamp(88px,22vw,208px)] max-w-[232px] h-auto relative top-4"
-            style={{ scale: scale3 }}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{
-              duration: 0.3,
-              delay: 0.2,
-              scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-            }}
-          />
+
+        {/* Mobile : les dattes glissent entre « Crunsh » et les surtitres.
+            Desktop : elles flottent autour du titre. */}
+        <motion.div
+          aria-hidden="true"
+          style={{ x }}
+          className="pointer-events-none relative left-16 mt-2 flex h-[104px] w-full items-center gap-[18vw] px-4 sm:absolute sm:left-44 sm:right-0 sm:top-[140px] sm:mt-0 sm:h-auto"
+        >
+          <Datte index={0} progress={scrollYProgress} delay={0.1} />
+          <Datte index={1} progress={scrollYProgress} delay={0.1} />
+          <Datte index={2} progress={scrollYProgress} delay={0.2} />
         </motion.div>
 
-        <p className="flex items-center justify-center gap-3 sm:gap-8 mt-7 mb-14 flex-col md:flex-row md:flex-wrap">
-          <motion.span
-            initial={{ opacity: 0, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-            className="uppercase tracking-[0.25em] text-[13px] sm:text-[15px] font-times"
-          >
-            Dattes d&apos;Exception
-          </motion.span>
-          <motion.span
-            className="inline-block w-6 h-[1.5px] bg-red shrink-0 "
-            aria-hidden="true"
-            initial={{ opacity: 0, filter: "blur(10px)" }}
-            animate={{ opacity: 1, filter: "blur(0px)" }}
-            transition={{ duration: 0.4, delay: 0.3 }}
-          />
-          <motion.span
-            initial={{ opacity: 0, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
-            transition={{ duration: 0.4, delay: 0.4 }}
-            className="uppercase tracking-[0.25em] text-[13px] sm:text-[15px] font-times"
-          >
-            Événements
-          </motion.span>
-          <motion.span
-            className="inline-block w-6 h-[1.5px] bg-red shrink-0"
-            aria-hidden="true"
-            initial={{ opacity: 0, filter: "blur(10px)" }}
-            animate={{ opacity: 1, filter: "blur(0px)" }}
-            transition={{ duration: 0.4, delay: 0.3 }}
-          />
-          <motion.span
-            initial={{ opacity: 0, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
-            transition={{ duration: 0.4, delay: 0.6 }}
-            className="uppercase tracking-[0.25em] text-[13px] sm:text-[15px] font-times"
-          >
-            Atelier Artisanal
-          </motion.span>
+        <p className="mt-6 flex flex-col items-center justify-center gap-3 font-display text-[15px] font-semibold uppercase tracking-[0.25em] sm:mt-10 md:flex-row md:gap-8">
+          {surtitres.map((mot, i) => (
+            <Fragment key={mot}>
+              {i > 0 && (
+                <motion.span {...appear(0.3 + i * 0.1)} aria-hidden="true" className="h-[1.5px] w-6 shrink-0 bg-rouge" />
+              )}
+              <motion.span {...appear(0.2 + i * 0.2)}>{mot}</motion.span>
+            </Fragment>
+          ))}
         </p>
-        <motion.div
-          className="inline-block"
-          initial={{ opacity: 0, filter: 'blur(10px)' }}
-          animate={{ opacity: 1, filter: 'blur(0px)' }}
-          transition={{ duration: 0.4, delay: 0.8 }}
-        >
-          <SmoothLink
-            href="#contact"
-            className='inline-flex border border-choco-500 font-times bg-choco-500 text-vanilla py-3 px-4 shadow-button text-xl hover:bg-transparent hover:text-choco-500 transition-colors duration-300 ease-in-out focus-visible:outline-1 focus-visible:outline-offset-3 focus-visible:outline-choco-500'
-          >
-            COMMANDER
+
+        <motion.div {...appear(0.8)} className="mt-12 sm:mt-14">
+          <SmoothLink href="#dattes" className={buttonClasses('chocolat')}>
+            Découvrir les dattes
           </SmoothLink>
         </motion.div>
       </div>

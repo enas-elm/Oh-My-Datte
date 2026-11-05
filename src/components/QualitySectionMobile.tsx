@@ -1,178 +1,137 @@
 "use client"
 
 import Image from "next/image"
-import { motion } from "motion/react"
+import { useRef, useState } from "react"
+import { motion, useReducedMotion } from "motion/react"
+import Reveal from "@/components/animations/Reveal"
 import type { QualityState } from "./QualitySection"
-import { useEffect, useRef } from "react"
-import gsap from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-gsap.registerPlugin(ScrollTrigger)
 
+const EASE = [0.32, 0.72, 0, 1] as const
+
+/**
+ * Mobile et tablette : un seul trait pinceau portant deux ingrédients, et un
+ * seul bloc de texte (01 à 04). On passe d'un bloc à l'autre en glissant ou
+ * avec les points : le texte défile latéralement, puis les ingrédients
+ * quand on change d'état (blocs 1-2 : fruit, blocs 3-4 : chocolat).
+ */
 export default function QualitySectionMobile({ states }: { states: QualityState[] }) {
-    const blocks = [
-        { ...states[0].left },
-        { ...states[0].right },
-        { ...states[1].left },
-        { ...states[1].right },
-    ]
-    const set1Ref = useRef<HTMLDivElement>(null)
-    const set2Ref = useRef<HTMLDivElement>(null)
+  const blocks = states.flatMap((s) => [s.left, s.right])
+  const [active, setActive] = useState(0)
+  const reduce = useReducedMotion()
+  const startX = useRef<number | null>(null)
+  const state = Math.floor(active / 2)
 
-    // trigger qui correspond au “passage” vers la 2e moitié (03/04)
-    const switchTriggerRef = useRef<HTMLDivElement>(null)
-    useEffect(() => {
-        const set1 = set1Ref.current
-        const set2 = set2Ref.current
-        const trig = switchTriggerRef.current
-        if (!set1 || !set2 || !trig) return
+  const go = (i: number) => setActive(Math.max(0, Math.min(blocks.length - 1, i)))
 
-        const mm = gsap.matchMedia()
+  // Glisser horizontalement change de bloc ; le défilement vertical reste libre
+  const onPointerDown = (e: React.PointerEvent) => {
+    startX.current = e.clientX
+  }
+  const onPointerUp = (e: React.PointerEvent) => {
+    if (startX.current === null) return
+    const dx = e.clientX - startX.current
+    startX.current = null
+    if (Math.abs(dx) > 40) go(active + (dx < 0 ? 1 : -1))
+  }
 
-        mm.add("(max-width: 767px)", () => {
-            // état initial = state1 visible
-            gsap.set(set1, { autoAlpha: 1, y: 0, filter: "blur(0px)" })
-            gsap.set(set2, { autoAlpha: 0, y: 12, filter: "blur(6px)" })
+  const slide = (offset: number, delay = 0) => ({
+    x: reduce ? 0 : Math.sign(offset) * 64,
+    opacity: offset === 0 ? 1 : 0,
+    transition: { duration: reduce ? 0.2 : 0.55, ease: EASE, delay: offset === 0 ? delay : 0 },
+  })
 
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: trig,
-                    start: "top 70%",   // quand on arrive au bloc 03/04
-                    end: "top 35%",     // transition terminée un peu plus haut
-                    scrub: 0.8,
-                },
-            })
-
-            // "EXIT state1" + "ENTER state2" (comme desktop)
-            tl.to(set1, { autoAlpha: 0, y: -12, filter: "blur(6px)", ease: "power1.out" }, 0)
-            tl.to(set2, { autoAlpha: 1, y: 0, filter: "blur(0px)", ease: "power1.out" }, 0)
-
-            return () => {
-                tl.scrollTrigger?.kill()
-                tl.kill()
-            }
-        })
-
-        return () => mm.revert()
-    }, [])
-
-    const state1Top = states[0].topImage
-    const state1Bottom = states[0].bottomImage
-    const state2Top = states[1].topImage
-    const state2Bottom = states[1].bottomImage
-
-    return (
-        <section id="qualite" className="md:hidden my-14 container mx-auto px-4 sm:px-6 overflow-x-clip">
-            {/* Header */}
-            <div className="flex w-full justify-between mx-auto items-center gap-8 sm:gap-20 mb-24">
-                <motion.div
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    style={{ originX: 1 }}
-                    className="bg-choco-500 pointer-events-none select-none h-[1px] w-full"
+  return (
+    <Reveal className="mx-auto mt-14 max-w-xl md:mt-20 lg:hidden">
+      <div
+        role="region"
+        aria-roledescription="carrousel"
+        aria-label="Nos engagements qualité"
+        className="touch-pan-y select-none"
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        onPointerCancel={() => (startX.current = null)}
+        onKeyDown={(e) => {
+          if (e.key === "ArrowRight") go(active + 1)
+          if (e.key === "ArrowLeft") go(active - 1)
+        }}
+      >
+        {/* Trait pinceau : la couleur suit l'état */}
+        <div className="relative mx-auto flex h-[170px] w-full max-w-[400px] items-center justify-center overflow-hidden">
+          <motion.div
+            aria-hidden="true"
+            className="pinceau-tuile absolute inset-0"
+            initial={false}
+            animate={{ backgroundColor: states[state].brush }}
+            transition={{ duration: 0.6, ease: EASE, delay: 0.15 }}
+            style={{ rotate: "-2deg" }}
+          />
+          {states.map((s, k) => (
+            <motion.div
+              key={s.left.title}
+              aria-hidden={k !== state}
+              className="absolute inset-0 flex items-center justify-center gap-8"
+              initial={false}
+              animate={slide(k - state, 0.2)}
+            >
+              {[s.topImage, s.bottomImage].map((img) => (
+                <Image
+                  key={img.src}
+                  src={img.src}
+                  alt={k === state ? img.alt : ""}
+                  width={img.w}
+                  height={img.h}
+                  className="h-[118px] w-auto object-contain drop-shadow-datte"
+                  style={{ rotate: `${img.rotation ?? 0}deg` }}
                 />
-                <h2 className="uppercase text-center text-[clamp(2rem,4vw,7rem)] leading-snug">
-                    <motion.span
-                        initial={{ opacity: 0, filter: "blur(5px)", y: 20 }}
-                        whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                        viewport={{ once: true, amount: 0.5 }}
-                        transition={{ duration: 0.6, ease: "easeOut" as const }}
-                        className="block"
-                    >
-                        Des&nbsp;produits
-                    </motion.span>
-                    <motion.span
-                        initial={{ opacity: 0, filter: "blur(5px)", y: 20 }}
-                        whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                        viewport={{ once: true, amount: 0.5 }}
-                        transition={{ duration: 0.6, ease: "easeOut" as const, delay: 0.15 }}
-                        className="block"
-                    >
-                        de&nbsp;qualité
-                    </motion.span>
-                </h2>
-                <motion.div
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    style={{ originX: 0 }}
-                    className="bg-choco-500 pointer-events-none select-none h-[1px] w-full"
-                />
-            </div>
+              ))}
+            </motion.div>
+          ))}
+        </div>
 
-            {/* Grid (ta version mobile) */}
-            <div className="grid grid-flow-col grid-cols-[3fr_2fr] grid-rows-4 gap-y-16 mx-auto">
-                {blocks.map((b, i) => (
-                    <div key={i}>
+        {/* Textes empilés dans la même cellule : la hauteur ne saute pas */}
+        <div className="mt-8 grid overflow-hidden" aria-live="polite">
+          {blocks.map((block, i) => (
+            <motion.div
+              key={block.title}
+              className="col-start-1 row-start-1 space-y-3"
+              aria-hidden={i !== active}
+              inert={i !== active}
+              initial={false}
+              animate={slide(i - active)}
+            >
+              <span className="block font-display text-[15px] font-semibold tracking-[0.25em] text-chocolat-doux lining-nums">
+                {String(i + 1).padStart(2, "0")} / 04
+              </span>
+              <h3 className="text-[1.45rem] font-semibold uppercase leading-tight tracking-[0.04em]">{block.title}</h3>
+              {block.paragraphs.map((p) => (
+                <p key={p} className="leading-[1.75]">
+                  {p}
+                </p>
+              ))}
+            </motion.div>
+          ))}
+        </div>
 
-                        {/* 👉 TRIGGER EXACTEMENT ICI */}
-                        {i === 2 && (
-                            <div
-                                ref={switchTriggerRef}
-                                className="h-1"
-                                aria-hidden="true"
-                            />
-                        )}
-
-                        <div className="space-y-2">
-                            <h4 className="uppercase text-[clamp(1.125rem,4vw,1.75rem)]">
-                                {b.title}
-                            </h4>
-
-                            {b.paragraphs.map((p, idx) => (
-                                <p key={idx}>{p}</p>
-                            ))}
-                        </div>
-
-                    </div>
-                ))}
-
-                <div className="row-span-4 sticky top-1/3 self-start justify-self-end -mr-10">
-                    <div className="relative bg-[url(/images/green-brush-bg.svg)] bg-no-repeat bg-center bg-contain w-[230px] h-[370px]">
-                        {/* STATE 1 : datte-1 + pistachio */}
-                        <div ref={set1Ref} className="absolute inset-0 flex flex-col items-center justify-center gap-12">
-                            <Image
-                                src={state1Top.src}
-                                alt={state1Top.alt}
-                                width={123}
-                                height={172}
-                                className="object-contain"
-                                style={{ rotate: `${state1Top.rotation ?? 0}deg` }}
-                            />
-                            <Image
-                                src={state1Bottom.src}
-                                alt={state1Bottom.alt}
-                                width={100}
-                                height={100}
-                                className="object-contain"
-                                style={{ rotate: `${state1Bottom.rotation ?? 0}deg` }}
-                            />
-                        </div>
-
-                        {/* STATE 2 : chocolate + datte-2-shadow */}
-                        <div ref={set2Ref} className="absolute inset-0 flex flex-col items-center justify-center gap-12">
-                            <Image
-                                src={state2Top.src}
-                                alt={state2Top.alt}
-                                width={123}
-                                height={154}
-                                className="object-contain"
-                                style={{ rotate: `${state2Top.rotation ?? 0}deg` }}
-                            />
-                            <Image
-                                src={state2Bottom.src}
-                                alt={state2Bottom.alt}
-                                width={123}
-                                height={185}
-                                className="object-contain"
-                                style={{ rotate: `${state2Bottom.rotation ?? 0}deg` }}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
+        {/* Points : position et navigation */}
+        <div className="mt-6 flex items-center justify-center">
+          {blocks.map((b, i) => (
+            <button
+              key={b.title}
+              type="button"
+              onClick={() => go(i)}
+              aria-label={`${i + 1} sur ${blocks.length} : ${b.title}`}
+              aria-current={i === active}
+              className="group flex h-11 items-center justify-center px-[5px]"
+            >
+              <span
+                className={`block h-1.5 rounded-full transition-all duration-500 ${
+                  i === active ? "w-6 bg-chocolat" : "w-1.5 bg-chocolat/30 group-hover:bg-chocolat/60"
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+    </Reveal>
+  )
 }

@@ -1,27 +1,51 @@
 import './globals.css';
 import type { ReactNode } from 'react';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+import { Allura, Archivo, Cormorant_Garamond } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SmoothScrollProvider } from '@/components/animations/SmoothScrollProvider';
 
 import { Navbar } from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-cormorant',
+  display: 'swap',
+});
+
+const allura = Allura({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-allura',
+  display: 'swap',
+});
+
+const archivo = Archivo({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  style: ['normal', 'italic'],
+  variable: '--font-archivo',
+  display: 'swap',
+});
+
+const description =
+  "Oh My Datte, c'est l'atelier artisanal qui transforme la datte en une véritable création pâtissière. L'assurance d'offrir une confiserie originale qui surprendra vos convives. Dattes deglet nour, pistache, chocolat, chocolat blanc.";
+
 export const metadata: Metadata = {
   title: {
     default: 'Oh My Datte - Confiserie de dattes artisanales',
     template: '%s | Oh My Datte',
   },
-  description:
-    "Oh My Datte, c'est l'atelier artisanal qui transforme la datte en une véritable création pâtissière. L'assurance d'offrir une confiserie originale qui surprendra vos convives. Dattes deglet nour, pistache, chocolat, chocolat blanc.",
+  description,
   metadataBase: new URL('https://www.ohmydatte.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'Oh My Datte - Confiserie de dattes artisanales',
-    description:
-      "Oh My Datte, c'est l'atelier artisanal qui transforme la datte en une véritable création pâtissière. L'assurance d'offrir une confiserie originale qui surprendra vos convives. Dattes deglet nour, pistache, chocolat, chocolat blanc.",
+    description,
     url: 'https://www.ohmydatte.com',
     siteName: 'Oh My Datte',
     locale: 'fr_FR',
@@ -48,19 +72,35 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: '#fffcf6',
+  colorScheme: 'only light',
+};
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="fr" style={{ colorScheme: 'light only' }}>
-      <body className="bg-vanilla text-choco-500 antialiased">
-        <header className="container fixed top-0 left-0 right-0 z-50 mx-auto px-4 sm:px-6 lg:px-8">
+    <html
+      lang="fr"
+      style={{ colorScheme: 'light only' }}
+      className={`${cormorant.variable} ${allura.variable} ${archivo.variable}`}
+    >
+      <body className="bg-creme font-sans text-chocolat antialiased">
+        <a
+          href="#contenu"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-creme focus:px-4 focus:py-3 focus:shadow-navbar"
+        >
+          Aller au contenu
+        </a>
+
+        <header className="container fixed inset-x-0 top-0 z-50 mx-auto px-4 sm:px-6 lg:px-8">
           <Navbar />
         </header>
 
         <SmoothScrollProvider>
-          <main>{children}</main>
+          <main id="contenu">{children}</main>
+          <Footer />
         </SmoothScrollProvider>
-        
-        <Footer/>
+
         <Analytics />
       </body>
     </html>

@@ -1,31 +1,45 @@
 'use client'
 
 import { useEffect } from 'react'
-import Lenis from '@studio-freight/lenis'
+import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { MotionConfig } from 'motion/react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.1, smoothWheel: true })
-    function raf(time: number) {
-      lenis.raf(time)
-      gsap.ticker.tick()
-      requestAnimationFrame(raf)
-    }
-    requestAnimationFrame(raf)
+declare global {
+  interface Window {
+    lenis?: Lenis
+  }
+}
 
-    lenis.on('scroll', () => {
-      ScrollTrigger.update()
-    })
+export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
+  // Ancienne ancre partagée (#vos-dattes) : on redirige vers #dattes
+  useEffect(() => {
+    if (window.location.hash !== '#vos-dattes') return
+    window.history.replaceState(null, '', '#dattes')
+    requestAnimationFrame(() => document.getElementById('dattes')?.scrollIntoView())
+  }, [])
+
+  useEffect(() => {
+    // Défilement natif si l'utilisateur limite les animations
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const lenis = new Lenis({ lerp: 0.1, smoothWheel: true })
+    window.lenis = lenis
+
+    lenis.on('scroll', ScrollTrigger.update)
+    const tick = (time: number) => lenis.raf(time * 1000)
+    gsap.ticker.add(tick)
+    gsap.ticker.lagSmoothing(0)
 
     return () => {
+      gsap.ticker.remove(tick)
       lenis.destroy()
-      ScrollTrigger.killAll()
+      delete window.lenis
     }
   }, [])
 
-  return <>{children}</>
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>
 }
